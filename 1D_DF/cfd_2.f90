@@ -6,12 +6,15 @@
 !	Aproximacion numerica de la ecuacion difusion para 1D
 !					dU/dt = D d2u/dx2
 ! 
-!	utilizando un esquema explicito:
+!	utilizando un esquema implicito:
 !		DF hacia adelante (tiempo)
 !		DF centrado (espacio)
 ! 
 !	tipo de discretizacion
 !		Malla regular
+! 
+! 	solver
+!		Algoritmo de Thomas
 ! 
 !----------------------------------------------------------
 
@@ -28,7 +31,9 @@ program CDF_1D
 	!variables del programa
 	integer							:: i,k
 	double precision				:: d_x,d_t,n_fourier
-	double precision,dimension(n)	:: x,T_1,T_2
+	double precision,dimension(n)	:: x,d2,b,T_1,T_2
+	double precision,dimension(2:n)	:: d1
+	double precision,dimension(1:n-1):: d3
 	integer,dimension(n)			:: indx
 	
 	!discretizacion del dominio (malla regular)
@@ -49,6 +54,19 @@ program CDF_1D
 	
 	!condicion inicial
 	T_1(:) = (/ (0 , i=1,n) /)
+	
+	!se escriben los vectores que definen a la 
+	!matriz A del sistema (Ax=b)
+		
+	d1(2:n-1) = (/ (-D*d_t/d_x , i=1,n-2) /)
+	d1(n) = 0d0
+	
+	d3(1) = 0d0
+	d3(2:n-1) = (/ (-D*d_t/d_x , i=1,n-2) /)
+	
+	d2(1) = 1d0
+	d2(2:n-1) = (/ (1d0 + 2d0*D*d_t/d_x , i=1,n-2) /)
+	d2(n) = 1d0
 		
 	do k = 1,10	!(pasos de tiempo)
 	
@@ -57,18 +75,12 @@ program CDF_1D
 		!AQUI ALGO
 		! nodo_n: neumann (natural)
 		!AQUI ALGO
+		
+		b(1) = 10d0
+		b(2:n-1) = T_1(2:n-1)
+		b(n) = 0d0
 	
-		!nodo_1:
-		T_2(1) = 10d0
-		
-		!nodos interiores:
-		do i = 2 , n-1
-			T_2(i) = (d_t*D/d_x**2d0) * &
-			& (T_1(i-1)-2d0*T_1(i)+T_1(i+1)) + T_1(i)
-		end do
-		
-		!nodo_n:
-		T_2(n) = 0d0
+		call thomas(d1,d2,d3,T_2,b,n)
 	
 		!exportar datos
 		write(1,*) 'paso de tiempo : ', k
@@ -84,4 +96,4 @@ program CDF_1D
 
 end program
 
-
+	

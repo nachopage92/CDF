@@ -1,0 +1,29 @@
+set terminal gif animate delay 5
+set xlabel 't'
+set ylabel 'y'
+set macros
+set xrange [0:1]
+set yrange [-6:6]
+
+i=1
+set output '../graficos/lf_1.gif'
+set title 'Esquema Leap-Frog'
+load 'loop_p3s1_1.txt'
+
+###############################################
+
+set terminal gif animate delay 5
+set xlabel 't'
+set ylabel 'y'
+set macros
+set xrange [0:1]
+set yrange [-6:6]
+
+i=1
+set output '../graficos/lf_2.gif'
+set title 'Esquema Leap-Frog'
+load 'loop_p3s1_2.txt'
+
+###############################################
+
+

@@ -1,0 +1,16 @@
+set terminal svg enhanced background rgb 'white'
+set xlabel 't'
+set ylabel 'y'
+set macros
+
+n=26
+set yrange [0:7e-7]
+
+set title 'Euler implicito'
+set output '../graficos/graficoS1_1.svg'
+plot for [col=2:n+1] '../datos/datos_S1_1.txt' using 1:col with lines notitle
+
+set title 'Crank Nicolson'
+set output '../graficos/graficoS1_2.svg'
+plot for [col=2:n+1] '../datos/datos_S1_2.txt' using 1:col with lines notitle
+

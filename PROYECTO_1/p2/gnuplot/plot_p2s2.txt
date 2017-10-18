@@ -1,0 +1,28 @@
+set terminal gif animate delay 4
+set xlabel 't'
+set ylabel 'y'
+set macros
+
+n=101
+set yrange [0:0.0003]
+
+i=1
+set output '../graficos/euler.gif'
+set title 'Euler implicito'
+load 'loop_p2s2_1.txt'
+
+###############################################
+
+set terminal gif animate delay 4
+set xlabel 't'
+set ylabel 'y'
+set macros
+
+n=101
+set yrange [0:0.0003]
+
+i=1
+set output '../graficos/cn.gif'
+set title 'Crank Nicolson'
+load 'loop_p2s2_2.txt'
+

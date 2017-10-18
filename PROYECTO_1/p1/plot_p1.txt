@@ -1,0 +1,22 @@
+set terminal svg enhanced background rgb 'white'
+set xlabel 'n'
+set ylabel 'A'
+set macros
+
+#PLOT PREGUNTA 1
+nn="`head -1 'fort.1'`"
+n=@nn
+set output 'grafico1_1.svg'
+plot [0:n] 'fort.1' using 1:2 with lines,\
+'fort.1' using 1:3 with lines
+set logscale x
+set output 'grafico1_2.svg'
+plot [0.1:n] 'fort.1' using 1:2 with lines,\
+'fort.1' using 1:3 with lines
+
+#PLOT PREGUNTA 2
+unset logscale
+nn="`head -1 'fort.2'`"
+n=@nn
+set output 'grafico2.svg'
+plot [0:n] 'fort.2' using 1:2 with lines

@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Resumen}{3}
+\contentsline {section}{\numberline {2}Introducción}{4}
+\contentsline {section}{\numberline {3}Metodología}{5}
+\contentsline {subsection}{\numberline {3.1}'para la preguntita 1'}{5}
+\contentsline {subsection}{\numberline {3.2}'para la preguntita 2'}{5}
+\contentsline {subsection}{\numberline {3.3}'para la preguntita 3'}{5}
+\contentsline {section}{\numberline {4}Desarrollo y Análisis}{6}
+\contentsline {subsection}{\numberline {4.1}Ejercicios en Fortran}{6}
+\contentsline {subsubsection}{\numberline {4.1.1}Ejercicio 1}{6}
+\contentsline {subsubsection}{\numberline {4.1.2}Ejercicio 2}{7}
+\contentsline {subsection}{\numberline {4.2}Estudio del comportamiento mecánico de una arteria}{7}
+\contentsline {subsection}{\numberline {4.3}Parte 1: Movimiento de una pared arterial}{7}
+\contentsline {subsubsection}{\numberline {4.3.1}Simulación 1}{8}
+\contentsline {subsection}{\numberline {4.4}Parte 2: Un modelo hiperbólico para la interacción de la sangre con la pared}{10}
+\contentsline {subsection}{\numberline {4.5}Atractor de Lorenz}{10}
+\contentsline {section}{\numberline {5}Conclusiones y Observaciones}{11}

@@ -1,0 +1,42 @@
+set terminal pdfcairo enhanced
+set macros
+
+#--------------------------------------------------------------
+
+#PLOT PREGUNTA 1
+
+set title 'A(n) vs n'
+set logscale x
+set xlabel 'n'
+set ylabel 'A'
+
+set output '../graficos/grafico_p1_1.pdf'
+plot \
+'../datos/datos_p1_1.dat' using 1:2 with lines title 'simple precision',\
+'../datos/datos_p1_1.dat' using 1:3 with lines title 'doble precision'
+set output '../../INFORME/parte2/graficos/grafico_p1_1.pdf'
+plot \
+'../datos/datos_p1_1.dat' using 1:2 with lines title 'simple precision',\
+'../datos/datos_p1_1.dat' using 1:3 with lines title 'doble precision'
+
+set output '../graficos/grafico_p1_2.pdf'
+plot \
+'../datos/datos_p1_2.dat' using 1:2 with lines title 'simple precision',\
+'../datos/datos_p1_2.dat' using 1:3 with lines title 'doble precision' ,\
+'../datos/datos_p1_2.dat' using 1:4 with lines title 'cuadruple precision'
+set output '../../INFORME/parte2/graficos/grafico_p1_2.pdf'
+plot \
+'../datos/datos_p1_2.dat' using 1:2 with lines title 'simple precision',\
+'../datos/datos_p1_2.dat' using 1:3 with lines title 'doble precision' ,\
+'../datos/datos_p1_2.dat' using 1:4 with lines title 'cuadruple precision'
+
+#--------------------------------------------------------------
+
+#PLOT PREGUNTA 2
+unset logscale
+nn="`head -1 '../datos/datos_p2.dat'`"
+n=@nn
+set output '../graficos/grafico_p2.pdf'
+plot [0:n] '../datos/datos_p2.dat' using 1:2 with lines notitle
+set output '../../INFORME/parte2/graficos/grafico_p2.pdf'
+plot [0:n] '../datos/datos_p2.dat' using 1:2 with lines notitle

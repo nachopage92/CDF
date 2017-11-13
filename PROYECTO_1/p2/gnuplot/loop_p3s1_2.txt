@@ -1,4 +1,0 @@
-plot '../datos/datos_S3_2.txt' using 1:i+1 with lines title columnhead(i)
-
-i=i+1
-if (i<=80) reread

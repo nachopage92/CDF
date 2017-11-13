@@ -1,0 +1,25 @@
+Ecuación de onda
+
+\begin{equation}
+\dfrac{\partial^2 y}{\partial t^2} - \gamma \dfrac{\partial^2 y}{\partial x^2} = f
+\end{equation} 
+
+Esquema de discretización Newmark
+
+\begin{equation}
+v = \dfrac{\partial u}{\partial t}
+\end{equation}
+
+Luego, el desarrollo de Taylor de $v(t+ \Delta t) = t^{n+1}$ para un paso de tiempo $\Delta t$ es
+
+\begin{equation}
+v^{n+1} = v^{n} + \Delta t \dfrac{\partial v}{\partial t} (t= \xi)
+\end{equation}
+
+para $\xi \in [t,t+\Delta t]$ .como
+
+\begin{equation}
+\dfrac{\partial v}{partial t} = \dfrac{\partial^2 u}{\partial t^2} = \gamma \dfrac{\partial^2 u}{\partial x^2} + f 
+\end{equation}
+
+Reemplazando en la (ECUACION!) se tiene 

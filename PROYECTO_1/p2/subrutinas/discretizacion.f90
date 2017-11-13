@@ -7,7 +7,7 @@ subroutine discretizacion(k,nx,nt,dx,dt)
 	real(kind=8),intent(out)::dx,dt
 !-----------------------------------
 	dt = 1._8 / (2._8**k*10)
-	dx = 2._8*dt
+	dx = dt
 	nt = nint(1._8/dt)
 	nx = nint(1._8/dx)
 end subroutine

@@ -1,0 +1,40 @@
+#--------------------------------------------------------------
+#		PLOT EJERCICIO 1 (EJERCICIOS EN FORTRAN)
+#--------------------------------------------------------------
+
+#PLOT PREGUNTA 2
+
+set terminal pdfcairo enhanced
+
+set title 'Serie Fibonacci (u vs n) '
+set xlabel 'n'
+set ylabel 'u'
+set logscale y
+
+#--------------------------------------------------------------
+
+set logscale y
+set output '../graficos/grafico_p2_1.pdf'
+plot "<(sed -n '1,20p' ../datos/datos_p2_1.dat)" using 1:2 with lines notitle
+
+set output '../graficos/grafico_p2_real.pdf'
+plot '../datos/datos_p2_2.dat' using 1:2 with lines notitle
+
+unset logscale y
+set output '../graficos/grafico_p2_2.pdf'
+plot '../datos/datos_p2_1.dat' using 1:2 with lines notitle
+
+#--------------------------------------------------------------
+
+set logscale y
+set output '../../INFORME/parte2/graficos/grafico_p2_1.pdf'
+plot "<(sed -n '1,20p' ../datos/datos_p2_1.dat)" using 1:2 with lines notitle
+
+set output '../../INFORME/parte2/graficos/grafico_p2_real.pdf'
+plot '../datos/datos_p2_2.dat' using 1:2 with lines notitle
+
+unset logscale y
+set output '../../INFORME/parte2/graficos/grafico_p2_2.pdf'
+plot '../datos/datos_p2_1.dat' using 1:2 with lines notitle
+
+#--------------------------------------------------------------

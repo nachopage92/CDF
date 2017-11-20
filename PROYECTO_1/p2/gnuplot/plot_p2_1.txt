@@ -1,0 +1,281 @@
+#--------------------------------------------------------------
+#	PLOT EJERCICIO 2 (ESTUDIO COMPORTAMIENTO ARTERIA. PT1)
+#						SIMULACION 1
+#--------------------------------------------------------------
+
+set terminal pdfcairo enhanced
+set macros
+set autoscale y
+
+#numero de pasos
+nt=26 #tiempo
+nx=11 #espacio
+
+#-------------------- EULER IMPLICITO ------------------------
+
+#------------------- beta = sqrt(alfa)
+
+set title 'Euler implicito (y vs t) (x=50.0[mm] y dt=10^-4) beta=sqrt(alfa)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_euler_S1_y_b1.pdf'
+plot '../datos/S1/datos_euler_S1_y_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S1_y_b1.pdf'
+replot
+
+set title 'Euler implicito (dy/dt vs t) (x=50.0[mm] y dt=10^-4) beta=sqrt(alfa)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_euler_S1_dy_b1.pdf'
+plot '../datos/S1/datos_euler_S1_dy_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S1_dy_b1.pdf'
+replot
+
+#------------------- beta = alfa
+
+set title 'Euler implicito (y vs t) (x=50.0[mm] y dt=10^-4) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_euler_S1_y_b2.pdf'
+plot '../datos/S1/datos_euler_S1_y_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S1_y_b2.pdf'
+replot
+
+set title 'Euler implicito (dy/dt vs t) (x=50.0[mm] y dt=10^-4) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_euler_S1_dy_b2.pdf'
+plot '../datos/S1/datos_euler_S1_dy_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S1_dy_b2.pdf'
+replot
+
+#-------------------- CRANK NICOLSON ------------------------
+
+#--------- beta = sqrt(alfa)
+
+set title 'Crank Nicolson (y vs t) (x=50.0[mm]) beta=sqrt(alfa)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_cn_S1_y_b1.pdf'
+plot '../datos/S1/datos_cn_S1_y_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S1_y_b1.pdf'
+replot
+
+set title 'Crank Nicolson (dy/dt vs t) (x=50.0[mm]) beta=sqrt(alfa)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_cn_S1_dy_b1.pdf'
+plot '../datos/S1/datos_cn_S1_dy_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S1_dy_b1.pdf'
+replot
+
+#----- beta = alfa
+
+set title 'Crank Nicolson (y vs t) (x=50.0[mm]) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_cn_S1_y_b2.pdf'
+plot '../datos/S1/datos_cn_S1_y_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S1_y_b2.pdf'
+replot
+
+set title 'Crank Nicolson (dy/dt vs t) (x=50.0[mm]) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/grafico_cn_S1_dy_b2.pdf'
+plot '../datos/S1/datos_cn_S1_dy_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S1_dy_b2.pdf'
+replot
+
+#-------------------- COMPARACION EULER-CN ------------------------
+
+#----- beta = sqrt(alfa)
+
+set title 'Comparación Euler Implicito y Crank Nicolson (y vs t) (x=50.0[mm]) beta=sqrt(alfa)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/comparacion_euler_cn_b2.pdf'
+plot '../datos/S1/datos_euler_S1_y_b2.txt' using 1:2 with linespoints title 'Euler Implícito' ,\
+	 '../datos/S1/datos_cn_S1_y_b2.txt' using 1:2 with lines title 'Crank Nicolson' 
+set output '../../INFORME/parte3/graficos/comparacion_euler_cn_b2.pdf'
+replot
+
+#----- beta = alfa
+
+set title 'Comparación Euler Implicito y Crank Nicolson (y vs t) (x=50.0[mm]) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:0.0025]
+set output '../graficos/S1/comparacion_euler_cn_b1.pdf'
+plot '../datos/S1/datos_euler_S1_y_b1.txt' using 1:2 with linespoints title 'Euler Implícito' ,\
+	 '../datos/S1/datos_cn_S1_y_b1.txt' using 1:2 with lines title 'Crank Nicolson' 
+set output '../../INFORME/parte3/graficos/comparacion_euler_cn_b1.pdf'
+replot
+
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+reset
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+#--------------------------------------------------------------
+#	PLOT EJERCICIO 2 (ESTUDIO COMPORTAMIENTO ARTERIA. PT1)
+#						SIMULACION 2
+#--------------------------------------------------------------
+
+set terminal pdfcairo enhanced
+set macros
+set autoscale y
+
+#numero de pasos
+nt=10 #tiempo
+nx=11 #espacio
+
+#-------------------- EULER IMPLICITO ------------------------
+
+#------------------- beta = sqrt(alfa)
+
+set title 'Euler implicito (y vs t) (x=50.0[mm] y dt=0.1) beta=sqrt(alfa)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_euler_S2_y_b1.pdf'
+plot '../datos/S2/datos_euler_S2_y_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S2_y_b1.pdf'
+replot
+
+set title 'Euler implicito (dy/dt vs t) (x=50.0[mm] y dt=0.1) beta=sqrt(alfa)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_euler_S2_dy_b1.pdf'
+plot '../datos/S2/datos_euler_S2_dy_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S2_dy_b1.pdf'
+replot
+
+#------------------- beta = alfa
+
+set title 'Euler implicito (y vs t) (x=50.0[mm] y dt=0.1) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_euler_S2_y_b2.pdf'
+plot '../datos/S2/datos_euler_S2_y_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S2_y_b2.pdf'
+replot
+
+set title 'Euler implicito (dy/dt vs t) (x=50.0[mm] y dt=0.1) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_euler_S2_dy_b2.pdf'
+plot '../datos/S2/datos_euler_S2_dy_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_euler_S2_dy_b2.pdf'
+replot
+
+#-------------------- CRANK NICOLSON ------------------------
+
+#--------- beta = sqrt(alfa)
+
+set title 'Crank Nicolson (y vs t) (x=50.0[mm]) alfa=sqrt(beta)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_cn_S2_y_b1.pdf'
+plot '../datos/S2/datos_cn_S2_y_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S2_y_b1.pdf'
+replot
+
+set title 'Crank Nicolson (dy/dt vs t) (x=50.0[mm]) alfa=sqrt(beta)'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_cn_S2_dy_b1.pdf'
+plot '../datos/S2/datos_cn_S2_dy_b1.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S2_dy_b1.pdf'
+replot
+
+#----- beta = alfa
+
+set title 'Crank Nicolson (y vs t) (x=50.0[mm]) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_cn_S2_y_b2.pdf'
+plot '../datos/S2/datos_cn_S2_y_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S2_y_b2.pdf'
+replot
+
+set title 'Crank Nicolson (dy/dt vs t) (x=50.0[mm]) beta = alfa'
+set xlabel 't'
+set ylabel 'y'
+set xrange [0:10]
+set output '../graficos/S2/grafico_cn_S2_dy_b2.pdf'
+plot '../datos/S2/datos_cn_S2_dy_b2.txt' using 1:2 with lines notitle
+set output '../../INFORME/parte3/graficos/grafico_cn_S2_dy_b2.pdf'
+replot
+
+
+#---------------PLOT Y y DY/DT EULER IMPLICITO ------------------------
+
+#----- beta = alfa
+
+set title 'Euler implicito (y , dy/dt vs t) (x=50.0[mm]) beta = alfa'
+set xlabel 't'
+unset ylabel 
+set xrange [0:10]
+set output '../graficos/S2/grafico_euler_S2_ambos_b1.pdf'
+plot '../datos/S2/datos_euler_S2_y_b1.txt' using 1:2 with lines title 'y' ,\
+	 '../datos/S2/datos_euler_S2_dy_b1.txt' using 1:2 with linespoints title 'dy/dt'
+set output '../../INFORME/parte3/graficos/grafico_euler_S2_ambos_b1.pdf'
+replot
+
+#----- beta = sqrt(alfa)
+
+set title 'Euler implicito (y , dy/dt vs t) (x=50.0[mm]) beta=sqrt(alfa)'
+set xlabel 't'
+unset ylabel 
+set xrange [0:10]
+set output '../graficos/S2/grafico_euler_S2_ambos_b2.pdf'
+plot '../datos/S2/datos_euler_S2_y_b1.txt' using 1:2 with lines title 'y' ,\
+	 '../datos/S2/datos_euler_S2_dy_b1.txt' using 1:2 with linespoints title 'dy/dt'
+set output '../../INFORME/parte3/graficos/grafico_euler_S2_ambos_b2.pdf'
+replot
+
+#---------------PLOT Y y DY/DT EULER IMPLICITO ------------------------
+
+set title 'Crank Nicolson (y , dy/dt vs t) (x=50.0[mm]) beta = alfa'
+set xlabel 't'
+unset ylabel 
+set xrange [0:10]
+set output '../graficos/S2/grafico_cn_S2_ambos_b1.pdf'
+plot '../datos/S2/datos_cn_S2_y_b1.txt' using 1:2 with lines title 'y' ,\
+	 '../datos/S2/datos_cn_S2_dy_b1.txt' using 1:2 with linespoints title 'dy/dt'
+set output '../../INFORME/parte3/graficos/grafico_cn_S2_ambos_b1.pdf'
+replot
+
+#----- beta = sqrt(alfa)
+
+set title 'Crank Nicolson (y , dy/dt vs t) (x=50.0[mm]) beta=sqrt(alfa)'
+set xlabel 't'
+unset ylabel 
+set xrange [0:10]
+set output '../graficos/S2/grafico_cn_S2_ambos_b2.pdf'
+plot '../datos/S2/datos_cn_S2_y_b1.txt' using 1:2 with lines title 'y' ,\
+	 '../datos/S2/datos_cn_S2_dy_b1.txt' using 1:2 linetype 1 dashtype 6 title 'dy/dt'
+set output '../../INFORME/parte3/graficos/grafico_cn_S2_ambos_b2.pdf'
+replot

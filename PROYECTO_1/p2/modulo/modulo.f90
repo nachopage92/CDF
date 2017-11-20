@@ -11,5 +11,6 @@ module modulo_pregunta2
 	&	b		= 133.32d0 ,				&
 	&	dp		= 0.25d0*b ,				&
 	&	a		= 10d0*b ,					&
-	&	w		= 2d0*pi/0.8d0 
+	&	w		= 2d0*pi/0.8d0 ,			&
+	&	sigma	= 1d0
 end module

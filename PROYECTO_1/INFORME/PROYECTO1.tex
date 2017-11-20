@@ -121,70 +121,48 @@ Asignatura & IPM468 \\
 %---------------------------------------------
 
 \section{Metodología}
-
-%---NOTA MENTAL PARA MI
-\subsection{'para la preguntita 1'}
-\begin{itemize}
-\item hablar de fortran, programación orientada a objetos
-\item hablar de la precision de la maquina
-\item hablar de inestabilidad numerica
-\item hablar de las series numericas (convergencia)
-\item hablar de la serie fibbonacci
-\item hablar de las subrutinas
-\end{itemize}
-%---FIN NOTA MENTAL
-%---NOTA MENTAL PARA MI
-\subsection{'para la preguntita 2'}
-\begin{itemize}
-\item hablar de euler implicito, familia esquema theta (crank nicolson), leapfrog, newmark
-\item hablar de estabilidad espacio-tiempo (pasos de tiempo, dx,etc)
-\item hablar de hablar de las arterias desde el punto de vista mec de fluidos
-\item estimación del error
-\item razon de convergencia de la malla (como afecta la malla en los resultados)
-\item ...
-\end{itemize}
-%---FIN NOTA MENTAL
-%---NOTA MENTAL PARA MI
-\subsection{'para la preguntita 3'}
-\begin{itemize}
-\item LEER!!!
-\end{itemize}
-%---FIN NOTA MENTAL
-
-
 \input{./parte1/parte1.tex}
-
-
-
 
 \newpage
 %---------------------------------------------
-\section{Desarrollo y Análisis}
+
+\section{Desarrollo y Análisis} \label{DESARROLLO_Y_ANALISIS}
+
 %----
+
 \subsection{Ejercicios en Fortran}
 \input{./parte2/parte2.tex}
+
 %----
+
 \subsection{Estudio del comportamiento mecánico de una arteria}
-\input{./parte3/parte3.tex}
+\input{./parte3/parte3_1.tex}
+\input{./parte3/parte3_2.tex}
+
 %----
+
 \subsection{Atractor de Lorenz}
 \input{./parte4/parte4.tex}
 
 \newpage
 %---------------------------------------------
+
 \section{Conclusiones y Observaciones}
 
 \newpage
 %---------------------------------------------
 
 \begin{thebibliography}{3}
-\bibitem{belytschko} \textsc{Dolbow, J., Belytschko, T.,} \textit{An Introduction to Programming the Meshless Element Free Garlekin Method},Archives of Computational Methods in Engineering vol. 5, 3, 207-241 (1998)
 
-\bibitem{liu} \textsc{G.R. Liu} y \textsc{Y.T. Gu}, \textit{An Introduction to Meshfree Methods and Their Programming},
-Editorial Springer, 2005, capítulos 1-3 y 6, ISBN-10 1-4020-3228-5
+\bibitem{lorenz} \textsc{Lorenz, E.} , \textit{Deterministic Nonperiodic Flow}, Journal of the Atmospheric Science, vol. 20, pag. 130-141, 1963
 
-\bibitem{liu2} \textsc{G.R. Liu}, \textit{Meshfree Methods: Moving Beyond The Finite Element Method}, 2da edición,
-Editorial CRC Press, 2010, capítulos 1 y 2, ISBN 978-1-4200-8209-8
+\bibitem{fortran} \textsc{Chapman, S.} , \textit{Fortran 90/95 for Scientits and Engineers}, Ediforial Mcgraw-Hill, 2003, ISBN-13: 978-0072922387
+
+\bibitem{num_mat} \textsc{Quarteroni, A.} , \textsc{Sacco, R.} y \textsc{Saleri, F.} , \textit{Numerical Mathematics},
+Editorial Springer, 2000, ISBN 0-387-98959-5
+
+\bibitem{met_num} \textsc{Chapra, S.} y \textsc{Canale, R.} , \textit{Métodos numéricos para ingenieros}, 5ta edición,
+Editorial McGraw-Hill, 2007, ISBN-13: 978-970-10-6114-5
 \end{thebibliography}
 
 \end{document}

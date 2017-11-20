@@ -1,0 +1,50 @@
+
+
+###############################################
+
+set terminal gif animate delay 10
+set xlabel 't'
+set ylabel 'y'
+set macros
+set xrange [0:1]
+set yrange [-6:6]
+
+i=1
+j=1
+set output '../graficos/lf_1.gif'
+set title 'Solucion analitica'
+load 'loop_p3.txt'
+
+###############################################
+
+set terminal gif animate delay 10
+set xlabel 't'
+set ylabel 'y'
+set macros
+set xrange [0:1]
+set yrange [-6:6]
+
+i=1
+j=2
+set output '../graficos/lf_2.gif'
+set title 'Esquema Leap-Frog'
+load 'loop_p3.txt'
+
+###############################################
+
+set terminal gif animate delay 10
+set xlabel 't'
+set ylabel 'y'
+set macros
+set xrange [0:1]
+set yrange [-6:6]
+
+i=1
+j=3
+set output '../graficos/lf_3.gif'
+set title 'Esquema Newmark'
+load 'loop_p3.txt'
+
+###############################################
+
+

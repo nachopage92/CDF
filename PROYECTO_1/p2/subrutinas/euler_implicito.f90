@@ -12,10 +12,10 @@ subroutine euler_implicito(alfa,beta,gama,t,dt,x,y_0,y_1)
 	real(kind=np),dimension(2)		:: yn0,yn1,f_0
 	real(kind=np),dimension(2,2)	:: Matrix_A
 !---------------------------------------------
-	Matrix_A(1,:) = (/ 1._8+beta*dt , dt /)
+	Matrix_A(1,:) = (/ 1._8 + beta*dt , dt /)
 	Matrix_A(2,:) = (/ -alfa*dt , 1._8 /)
-	Matrix_A = Matrix_A/(1._8+beta*dt+alfa*dt**2._8)
-	f_0(:) = (/ 0._8 , x*dt*gama*dp*(a+b*cos(w*(t-dt))) /)
+	Matrix_A = Matrix_A / ( 1._8 + beta*dt + alfa*dt**2._8 )
+	f_0(:) = (/ 0._8 , x*dt*gama*dp*(a+b*cos(w*(t))) /)
 	do i=1,2
 		suma=0d0
 		do j=1,2

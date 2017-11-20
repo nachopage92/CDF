@@ -1,0 +1,190 @@
+%Estudio del comportamiento mecánico de una arteria
+
+\subsection{Parte 2: Un modelo hiperbólico para la interacción de la sangre con la pared}
+
+Si para el mismo fenomeno descrito en la Parte 1 no se desprecia la interacción axial entre los anillos, entonces la ecuación (\ref{PROBLEMA_PARTE_2}) se modifica resultado en,
+
+\begin{equation} \label{PROBLEMA_PARTE_2_2}
+\dfrac{\partial^2 u}{\partial t^2} - \gamma^2 \dfrac{\partial^2 u}{\partial x^2} = f \hspace{0,5cm} x \in ] \alpha , \beta [
+\end{equation}
+
+Se denota la coordenada longitudinal $x$. $\sigma_x$ es la componente radial del esfuerzo axial y $L$ es el largo del cilindro considerado. Despreciando el factor de $y$ de la ecuación (\ref{PROBLEMA_PARTE_2_2}) y considerando $p-p_0 = f$ entonces se obtiene la ecuación de onda en una dimensión
+
+\begin{equation} \label{E_ONDA}
+\dfrac{\partial^2 u}{\partial t^2} - \gamma \dfrac{\partial^2 u}{\partial x^2} = f
+\end{equation}
+
+Se emplean los esquemas de Leap-Frog y Newmark para discretizar la ecuación anterior.
+
+\subsubsection{Simulación 1: Leap-Frog}
+
+El termino fuente utilizado para la simulación es $ f = ( 1 + \pi^2 \gamma^2 ) e^{-t} sin( \pi x ) $. Empleando un esquema de diferencias centradas en el espacio,
+
+\begin{equation}
+\dfrac{ \partial^2 u }{ \partial t^2 } = \gamma^2 \dfrac{ u_{j+1}^n - 2 u_j^n + u_{j-1}^n }{ \Delta x ^2} + 
+ ( 1 + \pi^2 \gamma^2 ) e^{-t} sin( \pi x_j ) 
+\end{equation}
+
+Se utiliza un esquema de integración de Leap-Frog,
+
+\begin{equation}
+u^{n+1}_j - 2u^n_j + u^{n-1} = (\gamma \lambda)^2 ( u^n_{j-1} -2 u^n_j + u^n_{j+1} ) + f^n_j
+\end{equation}
+
+donde $\lambda=\dfrac{\Delta t}{\Delta x}$
+
+Se estudia la estabilidad del método: 
+
+\subsubsection*{Discretización espacial}
+
+Se realiza una descomposición modal
+
+\begin{align*}
+S e ^ { i k_j p \Delta x } &= \dfrac{\gamma^2}{\Delta x^2} \left( e ^ { i k_j (p+1) \Delta x } - 2 e ^ { i k_j p \Delta x } + e ^ { i k_j (p-1) \Delta x } \right) \\
+&= \underbrace{\dfrac{2 \gamma^2}{\Delta x^2} \left( cos(k_j \Delta x) - 1 \right)}_{\Omega_j} e ^ { i k_j p \Delta x}
+\end{align*}
+
+Es decir,
+
+\begin{equation} \label{OMEGA_LF}
+\Omega_j = \dfrac{2 \gamma^2}{\Delta x^2} \left( cos(k_j \Delta x) - 1 \right)
+\end{equation}
+
+Notar que $\Omega = \Re(\Omega_j)$. Se debe cumplir que
+
+\begin{equation}
+\Re(\Omega_j) \leq 0
+\end{equation}
+
+luego,
+
+\begin{equation}
+\Big| \dfrac{2 \gamma^2 }{ \Delta^2 } \leq 0
+\end{equation}
+
+\begin{equation}
+\dfrac{-4 \gamma^2}{\Delta x^2} \leq \Re(\Omega_j) \leq 0
+\end{equation}
+
+\subsubsection*{Discretización temporal}
+
+Estudia la estabilidad en el tiempo: se reemplaza $u_{j} = \omega$
+
+\begin{equation}
+\dfrac{\omega^{n+1} -2\omega^{n} + \omega^{n+1}}{\Delta t^2} = \vect{S} = \Omega_j \omega^n
+\end{equation}
+
+reeordenando
+
+\begin{equation}
+\omega^{n+1} - (\Omega_j \Delta t^2 +2) \omega^n + \omega^{n-1}
+\end{equation}
+
+utilizando $z_p$ (ver Sección ¿?, ecuación (¿?))
+
+\begin{equation}
+z_p^2 - \left( \Omega_j \Delta t^2 +2 \right) z_p + 1 = 0
+\end{equation}
+
+diviendo por $z_p$ (supuesto: $z_p \neq 0$, el estado transiente)
+
+\begin{equation}
+\left( \Omega_j \Delta t^2 + 2 \right) = \dfrac{1}{z_p} + z_p
+\end{equation}
+
+Se impone como solución $z_p = e^{i \theta}$ (notar que $|z_p| \leq 1$) . Reemplazando en la ecuación anterior,
+
+\begin{equation}
+\left( \Omega_j \Delta t^2 + 2 \right) = e^{i \theta} + e^{-i \theta} = 2 cos(\theta)
+\end{equation}
+
+La estabilidad se consigue acotando el lado izquierdo de la ecuación, obteniendo
+
+\begin{equation}
+-4 \leq \Re(\Omega_j \Delta t^2) \leq 0 
+\end{equation}
+
+reemplazando $\Omega_j$ obtenido de la ecuación (\ref{OMEGA_LF}) y considerando $\Omega_j = \Re (\Omega_j)$ resulta,
+
+\begin{equation}
+-4 \leq \dfrac{\gamma^2 \Delta t^2}{\Delta x^2} \left( cos(k_j \Delta x) - 1 \right)  \leq 0
+\end{equation}
+
+El criterio de estabilidad es
+
+\begin{equation}
+\dfrac{\gamma^2 \Delta t^2}{\Delta x^2} \leq 2
+\end{equation}
+
+$\gamma^2 \Delta t^2 / \Delta x^2 $ se puede interpretar como $(CFL)^2$ donde $CFL$ es el número de Courant-Friedrichs-Lewy
+
+PENDIENTE -ESCRIBI LAS ECUACIONES, FALTA EXPLICARLAS !!!!!!!!!!!!!!!!
+
+\subsubsection{Simulación 1: Newmark}
+
+De la ecuacion (¿?) (Sección 1) se tiene $\partial u / \partial t = v$
+
+\begin{equation}
+\dfrac{\partial v}{\partial t} = \gamma ^2 \left[ \Theta \left( \dfrac{ u_{j+1}^{n+1} -2u_{j}^{n+1} + u_{j-1}^{n+1} }{\Delta x^2} \right) - (1-\Theta) \left( \dfrac{ u_{j+1}^{n} -2u_{j}^{n} + u_{j-1}^{n} }{\Delta x^2} \right) \right]
+\end{equation} 
+
+\subsubsection{Discretización espacial}
+
+Se utiliza $\Theta=0.5$ (Esquema Crank Nicolson)
+
+\begin{equation}
+\dfrac{\partial v}{\partial t} = \left[ \left( \vect{S} e^{i k_j p \Delta x} \right)^{n+1} + \left( \vect{S} e^{i k_j p \Delta x} \right)^{n}  \right]
+\end{equation}
+
+Se resulve $(\vect(S))^n$
+
+\begin{align*}
+S e ^ { i k_j p \Delta x } &= \dfrac{\gamma^2}{2 \Delta x^2} \left( e ^ { i k_j (p+1) \Delta x } - 2 e ^ { i k_j p \Delta x } + e ^ { i k_j (p-1) \Delta x } \right) \\
+&= \underbrace{\dfrac{\gamma^2}{\Delta x^2} \left( cos(k_j \Delta x) - 1 \right)}_{\Omega_j} e ^ { i k_j p \Delta x}
+\end{align*}
+
+es decir,
+
+\begin{equation} \label{OMEGA_j}
+\Omega_j = \dfrac{\gamma^2}{\Delta x^2} \left( cos(k_j \Delta x) - 1 \right)
+\end{equation}
+
+\begin{equation} \label{CONDICION_OMEGA_j_NM}
+\dfrac{-2 \gamma^2}{\Delta x^2} \leq \Re(\Omega_j) \leq 0
+\end{equation}
+
+Se obtiene el mismo resultado para $(\vect(S))^{n+1}$, Sumando $(\vect(S))^{n+1} + (\vect(S))^{n}$ luego obtenemos la mismas ecuación obtenida en la discretización Leap-Frog. Por lo tanto, la condición de $\Re(\Omega_j')$ ($\Omega_j' = \Omega_j^{n+1} + \Omega_j^{n}$)
+
+\begin{equation}
+\dfrac{-4 \gamma^2}{\Delta x^2} \leq \Re(\Omega_j') \leq 0
+\end{equation}
+
+Como $u_j$ y $v_j$ emplean diferencias finitas centradas se obtienen los mismos valores propios de $\vect{S}$
+
+\subsubsection*{Discretización temporal}
+
+Se integra la ecuación $\partial v / \partial t$. Se utiliza la notación $v_j = \omega$
+
+\begin{equation}
+\dfrac{\omega^{n+1}-\omega^n}{\Delta t} = \Omega_j^{n+1} \omega^{n+1} + \Omega_j^{n} \omega^{n}
+\end{equation}
+
+agrupando términos
+
+\begin{equation}
+\omega^{n+1} = \underbrace{ \dfrac{1+\Omega_j \Delta t}{1-\Omega_j \Delta t} }_{z_p} \omega^n
+\end{equation}
+
+como $\Omega_j = \Re(\Omega_j)$, entonces
+
+\begin{equation} \label{zp_nm_v}
+z_p = \dfrac{ 1 + \Omega_j }{ 1-\Omega_j}
+\end{equation}
+
+tomando en cuenta la condición \ref{CONDICION_OMEGA_j_NM} se verifica que
+
+\begin{equation}
+-1 \leq z_p \leq 1
+\end{equation}
+
+

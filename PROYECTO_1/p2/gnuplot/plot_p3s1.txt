@@ -1,4 +1,4 @@
-
+# nt = 10 , 20 , 40 , 80
 
 ###############################################
 
@@ -11,7 +11,7 @@ set yrange [-6:6]
 
 i=1
 j=1
-set output '../graficos/lf_1.gif'
+set output '../graficos/S3/exact.gif'
 set title 'Solucion analitica'
 load 'loop_p3.txt'
 
@@ -26,7 +26,7 @@ set yrange [-6:6]
 
 i=1
 j=2
-set output '../graficos/lf_2.gif'
+set output '../graficos/S3/lf.gif'
 set title 'Esquema Leap-Frog'
 load 'loop_p3.txt'
 
@@ -41,7 +41,7 @@ set yrange [-6:6]
 
 i=1
 j=3
-set output '../graficos/lf_3.gif'
+set output '../graficos/S3/nm.gif'
 set title 'Esquema Newmark'
 load 'loop_p3.txt'
 

@@ -1,25 +1,218 @@
-Ecuación de onda
+%METODOLOGÍA
 
+%-------------------------------------------------------------- 
+
+\subsection{Precisión numérica en Fortran}
+Fortran (\textit{Formula Translator} o \textit{Traductor de Fórmulas}) es un lenguaje de programación orientado a objetos y de alto nivel utilizado para la computación científica en distintas disciplinas del área de las ciencias. Fortran posee distintos tipos de objetos:
+
+\begin{description}
+\item [character] cadena de uno o varios caracteres \vspace{-0,2cm}
+\item [integer] números enteros positivos y negativos \vspace{-0,2cm}
+\item [logical] valores lógicos o booleanos (\texttt{.true.} o \texttt{.false.})\vspace{-0,2cm}
+\item [real] números reales positivos y negativos  \vspace{-0,2cm}
+\item [complex] números complejos compuestos de una parte real y una imaginaria \vspace{-0,2cm}
+\item [tipos derivados] tipos especificados por usuario
+\end{description}
+
+Los objetos de clase \texttt{real} poseen ciertos parámetros que describen sus características. Un paramétro relevante a estudiar es la precisión que describe a un objeto declarado como \texttt{real}
+
+\begin{center}
+\begin{table} [H]
+\begin{tabular}{lll}
+Entero & $−2.147.483.648 \leq i \leq 2.147.483.647$ & $-$ \\
+Real Simple Precisión & $1.2 \times 10^{−38} \leq |x| \leq 3.4 \times 10^{38}$  & 7 cifras significativas\\
+Real Doble Precision & $2.2 \times 10^{−308} \leq |x| \leq 1.8 \times 10^{308}$ & 16 cifras significativas
+\end{tabular}
+\caption{Características de precisión de reales en Fortran} \label{TABLA_FORTRAN}
+\end{table}
+\end{center}
+
+La especificación del parámetro precisión especificará el tamaño de memoria asignada al objeto. Dependiendo de la naturaleza del cálculo empleado será más conveniente utilizar una u otra precisión.
+
+%--------------------------------------------------------------
+%--------------------------------------------------------------
+%--------------------------------------------------------------
+%-------------------------------------------------------------- 
+
+\subsection{Método de Diferencias Finitas}
+
+Una manera de aproximar numéricamente derivadas presentes en una ecuación diferencial ordinaria o parcial es mediante el método de Diferencias Finitas, que consiste representar las razones de cambio como una diferencia de valores nodales discretos. Se desprende del desarrollo de series de Taylor de la función incógnita: Sea $\phi(x)$ una función diferenciales en una dimensión en un dominio de interés, entonces el valor de $\phi(x + \Delta x)$ se puede expresar mediante el desarrollo en series de Taylor:
+
+\begin{equation} \label{serie_taylor}
+\phi( x + \Delta x ) = \sum_{n=0}^{\infty} \dfrac{\Delta x^n}{n!} \dfrac{ \partial \phi^{(n)} } { \partial ^n} \Big|_x
+\end{equation}
+Para una diferencia $+\Delta x$ se tiene,
+\begin{equation} \label{delta+}
+\phi( x + \Delta x ) = \phi(x) + \Delta x \dfrac{\partial \phi }{\partial x} \Big|_x + \dfrac{  (\Delta x)^2 }{2} \dfrac{\partial^2 \phi }{\partial x^2} \Big|_x + \dfrac{ (\Delta x)^3 }{6} \dfrac{\partial^3 \phi }{\partial x^3} \Big|_x + \cdots
+\end{equation}
+Para una diferencia $-\Delta x$ se tiene
+\begin{equation} \label{delta-}
+\phi( x - \Delta x ) = \phi(x) - \Delta x \dfrac{\partial \phi }{\partial x} \Big|_x + \dfrac{  (\Delta x)^2 }{2} \dfrac{\partial^2 \phi }{\partial x^2} \Big|_x - \dfrac{ (\Delta x)^3 }{6} \dfrac{\partial^3 \phi }{\partial x^3} \Big|_x + \cdots
+\end{equation}
+Distintas combinaciones de las ecuaciones (\ref{delta+}) y (\ref{delta-}) permiten obtener las aproximaciones de distintos ordendes de derivada.\\
+
+Truncando el desarrollo de la serie se obtiene la aproximación. Al conocer la expresión analitica en (\ref{serie_taylor}) se puede determinar el orden el error obtenido. El desarrollo en una dimensión se extiende a dimensiones superiores. A continuación se exponen los tipos de aproximaciones utilizados en este trabajo:
+
+\paragraph{ Diferencia hacia atras (Backward) } Aproximando la primera derivada de $\phi(x)$ mediante diferencias hacia atras resulta: 
 \begin{equation}
-\dfrac{\partial^2 y}{\partial t^2} - \gamma \dfrac{\partial^2 y}{\partial x^2} = f
+\dfrac{ \partial \phi }{ \partial x } \Big|_{x=x_i} = \dfrac{ \phi(x_i) - \phi(x_{i-1}) }{\Delta x} + o(\Delta x ^ 1)
 \end{equation} 
-
-Esquema de discretización Newmark
-
+$o(\Delta x)$ agrupa el términos truncados de la serie y representa el error de la aproximación, de tal manera que,
 \begin{equation}
-v = \dfrac{\partial u}{\partial t}
+\dfrac{ \partial \phi _i }{ \partial x } \approx \dfrac{ \phi_i - \phi_{i-1} }{\Delta x}
+\end{equation} 
+Donde $\phi_i$ denota el valor nodal que discretiza a la función en el dominio ($\phi(x_i) = \phi_i$) , En este caso se tiene un error de orden 1
+
+\paragraph{Diferencias centradas } Aproximando la segunda derivada de $\phi(x)$ utilizando diferencias finitas centradas resulta:
+\begin{equation}
+\dfrac{\partial^2 \phi}{\partial x^2} \Big| _{x_i} = \dfrac{ \phi(x_{i+1}) - 2 \phi (x_i) +\phi(x_{i-1}) }{ \Delta x^2 } + o(\Delta x^2 )
+\end{equation}
+Este esquema de aproximación posee un error de orden 2. Analogo al caso anterior la aproximación se plantea como,
+\begin{equation}
+\dfrac{\partial^2 \phi}{\partial x^2} \Big| _{x_i} \approx \dfrac{ \phi_{i+1} - 2 \phi_i +\phi_{i-1} }{ \Delta x^2 }
 \end{equation}
 
-Luego, el desarrollo de Taylor de $v(t+ \Delta t) = t^{n+1}$ para un paso de tiempo $\Delta t$ es
+El método de diferencias finitas se aplica para discretizar derivadas espaciales y temporales. Estas últimas determinan los esquemas de integración temporales.
 
+\subsection{Esquema de integración temporal}
+
+Sea una ecuación diferencial de $\phi(t)$ tal que,
 \begin{equation}
-v^{n+1} = v^{n} + \Delta t \dfrac{\partial v}{\partial t} (t= \xi)
+\left\{
+\begin{matrix}
+\dfrac{d \phi(t)}{dt} = f(t,\phi(t)) \\
+\phi(t=0) = \phi_0
+\end{matrix}
+\right.
+\end{equation}
+Se tiene un problema de Cauchy o de valor inicial. La solución de $\phi$ está dada por,
+\begin{equation}
+\int_{t_n}^{t_{n+1}} \dfrac{d \phi(t)}{dt} = \int_{t_n}^{t_{n+1}} f(t,\phi(t)) dt
+\end{equation}
+Del teorema fundamental del cálculo se tiene,
+\begin{equation} \label{integracion_temporal}
+\phi(t_{n+1}) - \phi({t_n})  = \int_{t_n}^{t_{n+1}}  f(t,\phi(t)) dt
 \end{equation}
 
-para $\xi \in [t,t+\Delta t]$ .como
+Según como se integre el término de la derecha de la ecuación en (\ref{integracion_temporal}) se obtienen los distintos esquemas de integración. 
 
+\subsubsection{Esquema Euler Implicito}
+El esquema de Euler Implicito (Backward) se define como,
 \begin{equation}
-\dfrac{\partial v}{partial t} = \dfrac{\partial^2 u}{\partial t^2} = \gamma \dfrac{\partial^2 u}{\partial x^2} + f 
+\phi^{n+1} = \phi^n + \Delta t f(t_{n+1},\phi(t_{n+1}))
+\end{equation}
+Este esquema requiere conocer el valor del pasos $t_{n}$ y $t_{n+1}$. Este tipo de esquemas son conocidos como esquemas de dos pasos (\textit{two level scheme})
+
+\subsubsection{Esquema integración de $\Theta$}
+La familia de esquemas $\Theta$ se describen como,
+\begin{equation}
+\phi^{n+1} = \phi^n + \Theta f(t_{n},\phi(t_{n}) + (1-\Theta) f(t_{n+1},\phi(t_{n+1})
+\end{equation}
+Para el valor de $\Theta = \frac{1}{2}$ se tiene el esquema de Crank Nicolson:
+\begin{equation}
+\phi^{n+1} = \phi^n + \dfrac{\Delta t}{2} \left( f(t_{n},\phi(t_{n}) + f(t_{n+1},\phi(t_{n+1}) \right)
 \end{equation}
 
-Reemplazando en la (ECUACION!) se tiene 
+\subsubsection{Esquema Leap-Frog}
+Los esquemas Leap-Frog corresponden a una discretizacion central de la derivada temporal.
+\begin{equation}
+\phi^{n+1} = \phi^{n-1} + 2 \Delta t f(t_n,\phi(t_n))
+\end{equation}
+Se calcula el valor de $\phi$ en el tiempo $t_{n+1}$ a partir de dos valores anteriores $t_n$ y $t_{n-1}$. Estos tipos de esquema son llamadas de tres pasos (\textit{three level scheme})
+
+\subsubsection{Esquema Newmark}
+Consiste en un esquema de dos pasos para el cálculo de $\phi$ y su derivada $\partial \phi (t) / \partial t$. Sea $\psi(t) = \partial \phi(t) / \partial t$, se integra $\psi$ utilizando un esquema $\Theta$,
+\begin{equation}
+\psi_{n+1} = \psi_n + \Delta t \left[ \Theta \dfrac{\partial \psi}{\partial t}^{n} \Big|_t + (1-\Theta) \dfrac{\partial \psi}{\partial t}^{n+1} \Big|_t \right]
+\end{equation}
+Para integrar $\phi$ se utiliza un esquema explícito donde el último término utiliza un esquema $\Theta$
+\begin{equation}
+\phi_{n+1} = \phi_n + \Delta t \psi + (\Delta t)^2 \left[ \beta \dfrac{\partial \psi}{\partial t}^n \Big|_t + (1-\beta) \dfrac{\partial \psi}{\partial t}^{n+1} \Big|_t \right]
+\end{equation}
+donde $\beta$ es un parámetro que reemplaza a $\Theta$ e integra al factor $2$ del desarrollo de la serie de Taylor.
+
+\subsubsection{Método Runge Kutta de orden 4}
+Los métodos de Runge Kutta conocidos como métodos \textit{Predictor-Corrector}: Se calcula uno o varios valores intermedios de la función incógnita $\phi^*$, llamados predictores, para finalmente calcular el resultado final $\phi(t+\Delta t)$ (corrector). \\
+
+El método Runge Kutta de orden 4 consiste en calcular tres pasos de predicción y el último paso de corrección:
+
+\begin{itemize}
+\item $1^{\mbox{ra}}$ predicción: Euler Explícito \vspace{-0,2cm}
+\item $2^{\mbox{da}}$ predicción: Euler Implícito \vspace{-0,2cm}
+\item $3^{\mbox{ra}}$ predicción: Leap-Frog \vspace{-0,2cm}
+\item Corrección: Método de integración de Simpson 
+\end{itemize}
+
+Luego, se puede expresar como:
+
+\begin{align}
+\phi^*_{n+1/2} &= \phi_n + \dfrac{\Delta t}{2} f(t_n,\phi_n)\\
+\phi^{**}_{n+1/2} &= \phi_n + \dfrac{\Delta t}{2} f(t_{n+1/2},\phi^*_{n+1/2})\\
+\phi^*_{n+1} &= \phi_n + \Delta t f(t_{n+1/2},\phi^{**}_{n+1/2})\\
+\phi_{n+1} &= \phi_n + \dfrac{\Delta t}{6} \left[ f(t_n,\phi_n) + 2 f(t_{n+1/2},\phi^*_{n+1/2}) + 2 f(t_{n+1/2},\phi^{**}_{n+1/2}) + f(t_{n+1},\phi^*_{n+1}) \right] 
+\end{align}
+
+\subsection{Analisis Espectral}
+La discretización de una ecuación diferencial de $u=u(\vec{x},t)$ se puede expresar en una notación matricial: Sea $\vec{U}$ el vector que contiene los valores $u_i$ $ (i=1, \ldots ,n)$.
+\begin{equation} \label{analisis_espectral_general}
+\dfrac{d \vec{U}}{d t} = \vect{S} \vec{U} + \vec{Q}
+\end{equation}
+Donde $\vect{S}$ es la matriz asociada a la discretización espacial y $\vec{Q}$ es el vector que contiene los componentes del término fuente. Esta ecuación se descompone a partir de sus valores propios (Descomposición modal), en ella se desacopla la incognita en espacio y tiempo. Para cada componente del vector $\vec{U}$ se tiene,
+\begin{equation} \label{analisis_espectral_descompuesto}
+\dfrac{d \overline{U}_j}{d t} = \Omega_j \overline{U}_j + Q_j
+\end{equation}
+donde,
+\begin{equation}
+\vec{\overline{U}}(\vec{x},t) = \sum_{j=1}^N \vec{\overline{U}}_j(t) V^{(j)}(\vec{x})
+\hspace{0,8cm} \mbox{y} \hspace{0,8cm}
+Q = \sum_{j=1}^N Q_j V^{(j)}
+\end{equation}
+$\Omega_j$ son los autovalores asociados a la dirección del vector propio $V^{(j)}$ de la matriz $\vect{S}$; $N$ es el número de dimensiones de la ecuación (\ref{analisis_espectral_general}). Luego, su solución analítica en función de sus valores propios viene dado por,
+\begin{equation}
+\overline{U}_j(t) = \left( U^0 + \dfrac{Q_j}{\Omega_j} \right) e^{\Omega_j t} - \dfrac{Q_j}{\Omega_j}
+\end{equation}
+Donde $U^0$ es la condición inicial del problema de Cauchy. 
+
+\subsubsection{Factor de Amplificación}
+
+Es de interés conocer el comportamiento de la solución transiente de $\vec{U}$. Para ello se supone $Q=0$ (solución homogenea) y se denota como $U^T$ la solución transiente,
+\begin{equation} \label{solución transiente}
+U_j^T(t) = U^0 e^{\Omega_jt}
+\end{equation}
+Se define el factor de amplificación $G(\Omega_j)$,
+\begin{equation} \label{def_G}
+\overline{U}_j^T (n \Delta t) = G(\Omega_j) \overline{U}_j^T \left( \left[ n-1 \right] \Delta t \right)
+\end{equation}
+
+Notar que $G = G(\Omega_j)$ es función de la discretización espacial. Reemplazando (\ref{solución transiente}) en (\ref{def_G}),
+
+\begin{equation}
+\overline{U}_j^0 e^{\Omega_j n \Delta t} = G(\Omega_j) \overline{U}_j^0 e^{\Omega_j (n-1) \Delta t}
+\end{equation}
+
+Despejando $G(\Omega_j)$ se obtiene el factor de amplicación para un paso de tiempo (de $ (n-1) \Delta t$ a $n \Delta t$)
+
+\begin{equation}
+G = e^{\Omega_j \Delta t}
+\end{equation}
+
+Entonces, el factor de amplificación $G$ calculado desde la solución inicial $U^0$ hasta el paso de tiempo $n \Delta t$ se obtiene,
+
+\begin{equation}
+G = e^{\Omega_j n \Delta t}
+\end{equation}
+
+Para garantizar que la solución transiente sea estable se debe cumplir que,
+
+\begin{equation}
+| G(\Omega_j) | = | e^{ \left[ \Re(\Omega_j) \right] + \left[ \Im(\Omega_j) n \Delta t \right] i} | < 1
+\end{equation}
+
+lo que implica que
+
+\begin{equation}
+\Re(\Omega_j) \leq 0
+\end{equation}
+
+Se desprende la ecuación anterior que $\Re(\Omega_j)$ esta asociado al error de disipación (exponencial), mientras que $\Im(\Omega_j)$ al error de dispersión (oscilación)
+

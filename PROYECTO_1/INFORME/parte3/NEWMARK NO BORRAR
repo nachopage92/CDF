@@ -1,0 +1,100 @@
+\begin{equation}
+v = \dfrac{\partial u}{\partial t}
+\end{equation}
+
+Luego, el desarrollo de Taylor de $v(t+ \Delta t) = v^{n+1}$ para un paso de tiempo $\Delta t$ es
+
+\begin{equation}
+\dfrac{ v^{n+1} - v^{n} } { \Delta t } = \dfrac{\partial v}{\partial t} (t= \xi)
+\end{equation}
+
+para $\xi \in [t,t+\Delta t]$. O bien
+
+\begin{equation}
+\dfrac{ v^{n+1} - v^{n} } { \Delta t } = \dfrac{\partial v}{\partial t} + O(\Delta t)
+\end{equation}
+
+Donde $O(\Delta t)$ es el error de la aproximación. La derivada temporal de $v(t)$ se obtiene a partir de la ecuación (ECUACION)
+
+\begin{equation}
+\dfrac{\partial v}{\partial t} = \dfrac{\partial^2 u}{\partial t^2} = \gamma \dfrac{\partial^2 u}{\partial x^2} + f(x,t)
+\end{equation}
+
+Reemplazando en la ecuacion (ECUACION)
+
+\begin{equation}
+\dfrac{v^{n+1} - v^{n}}{ \Delta t } =  \dfrac{\partial^2 u}{\partial x^2} (t= \xi) + f(t= \xi)
+\end{equation} 
+
+Discretizando mediante diferencias finitas centradas para la coordenada espacial se obtiene e implementado un esquema de integración $\theta$ se obtiene
+
+\begin{equation}
+\begin{split}
+\dfrac{ v^{n+1}_j - v^n_j } { \Delta t } = & \dfrac{ \gamma^2 } { \Delta x^2 } ( \theta ) \left(  u^{n+1}_{j-1} - 2 u^{n+1}_{j} + u^{n+1}_{j+1} \right) \\
+& + \dfrac{ \gamma^2 } { \Delta x^2 } ( 1 - \theta ) \left( u^{n}_{j-1} - 2 u^{n}_{j} + u^{n}_{j+1} \right) \\
+& + ( \theta ) f^{n+1}_j + ( 1 - \theta ) f^n_j + O(\Delta t)
+\end{split}
+\end{equation}
+
+O bien
+
+\begin{equation}
+\begin{split}
+v^{n+1}_j = & v^n_j + \dfrac{ (\gamma \lambda)^2 }{ \Delta t } ( \theta ) \left(  u^{n+1}_{j-1} - 2 u^{n+1}_{j} + u^{n+1}_{j+1} \right) \\ 
+& +  \dfrac{ (\gamma \lambda)^2 }{ \Delta t } ( 1 - \theta ) \left( u^{n}_{j-1} - 2 u^{n}_{j} + u^{n}_{j+1} \right) \\
+& + ( \theta ) f^{n+1}_j + ( 1 - \theta ) f^n_j + O(\Delta t)^2
+\end{split}
+\end{equation}
+
+Donde $0 < \theta < 1$
+
+Se tiene entonces que la aproximación numérica de $\vec{v}^{n+1}$ es de orden $O(\Delta t)^2$ (error de segundo orden)
+
+Desarrollando la serie de Taylor de $u( t + \Delta t)$ se tiene que,
+
+\begin{equation}
+\dfrac{u^n+1 - u^n} = \dfrac{\partial u}{\partial t} + \dfrac{\Delta t}{2} \dfrac{\partial^2 u}{\partial t^2} + O(h)^2 
+\end{equation}
+
+Considerando las ecuaciones (ECUACIONES1) y (ECUACIONES2) en la ecuacion (ECUACION) se tiene que
+
+\begin{equation}
+\dfrac{ u^{n+1} - u^n }{ \Delta t } = v + \dfrac{\Delta t}{2} \left( \dfrac{\partial^2 u}{\partial t^2} + f(x,t) \right) + O(h)^2
+\end{equation}
+
+Discretizando mediante diferencias finitas centradas para la coordenada espacial se obtiene e implementado un esquema de integración $\theta$ (denotado con $\beta$ en este caso) se obtiene
+
+\begin{equation}
+\begin{split}
+u^{n+1} = & u^n + \Delta t \, v + \dfrac{ \gamma^2 }{ 2 } \dfrac{ ( \Delta t)^2 }{ (\Delta x)^2 } ( \beta ) \left[ u^{n+1}_{j-1} - 2 u^{n+1}_{j} + u^{n+1}_{j+1} \right] \\
+ & + \dfrac{ \gamma^2 }{ 2 } \dfrac{ ( \Delta t)^2 }{ (\Delta x)^2 } ( 1 - \beta ) \left[ u^{n}_{j-1} - 2 u^{n}_{j} + u^{n}_{j+1} \right] \\
+ & + \dfrac{ ( \Delta t )^2 }{ 2 } \left[ \beta f^{n+1}_j + (1-\beta) f^n_j \right] + O(h)^3
+\end{split}
+\end{equation}
+
+O bien
+
+\begin{equation}
+\begin{split}
+u^{n+1} = & u^n + \Delta t \, v + ( \gamma \lambda )^2  \left[ \beta ( u^{n+1}_{j-1} - 2 u^{n+1}_{j} + u^{n+1}_{j+1} ) \right] \\
+ & + ( \gamma \lambda )^2 \left[ ( \dfrac{1}{2} - \beta ) ( u^{n}_{j-1} - 2 u^{n}_{j} + u^{n}_{j+1} ) \right] \\
+ & + ( \Delta t )^2 \left[ \beta f^{n+1}_j + (\dfrac{1}{2}-\beta) f^n_j \right] + O(h)^3 
+\end{split}
+\end{equation}
+
+Donde $0 < \beta < \dfrac{1}{2}$
+
+QUE HACER CON ESTO? VA O NO?
+
+Se exponen esquemas de integración aplicados a dos ecuación utilizadas en la Secció \ref{DESARROLLO_Y_ANALISIS}
+
+Ecuacion diferencial parcial ordinaria lineal de la forma:
+\begin{equation}
+\dfrac{d^2 y(t)}{d t^2} + \beta \dfrac{dy(t)}{dt} + \alpha y(t) = f(t)
+\end{equation}
+La que a su vez puede expresarse como
+
+Ecuación de onda en una dimensión:
+\begin{equation}
+\dfrac{\partial^2 y}{\partial t^2} - \gamma^2 \frac{\partial^2 y}{\partial x^2} = f(x,t)
+\end{equation} 

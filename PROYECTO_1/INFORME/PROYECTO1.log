@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.9.20)  12 NOV 2017 22:40
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.9.20)  20 NOV 2017 00:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -895,24 +895,187 @@ Overfull \hbox (35.88637pt too wide) in paragraph at lines 62--75
 \tf@toc=\write3
 \openout3 = `PROYECTO1.toc'.
 
- [2] [3] [4] (./parte1/parte1.tex) [5]
-(./parte2/parte2.tex
-File: ./parte2/graficos/grafico_p1_1.pdf Graphic file (type QTm)
- <use  "./parte2/graficos/grafico_p1_1.pdf" >
-File: ./parte2/graficos/grafico_p1_2.pdf Graphic file (type QTm)
+ [2] [3] [4] (./parte1/parte1.tex
+LaTeX Font Info:    Try loading font information for EU1+lmtt on input line 11.
 
-<use  "./parte2/graficos/grafico_p1_2.pdf" > [6]
-File: ./parte2/graficos/grafico_p2.pdf Graphic file (type QTm)
 
-<use  "./parte2/graficos/grafico_p2.pdf" >) (./parte3/parte3.tex [7] [8]
-[9]) (./parte4/parte4.tex) [10] [11] [12] (./PROYECTO1.aux) ) 
+(/usr/share/texlive/texmf-dist/tex/latex/euenc/eu1lmtt.fd
+File: eu1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Underfull \hbox (badness 10000) in paragraph at lines 51--53
+
+ []
+
+[5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+
+ []
+
+[7]) [8] (./parte2/parte2.tex
+Underfull \hbox (badness 10000) in paragraph at lines 6--8
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--16
+
+ []
+
+File: ./parte2/graficos/grafico_p1.pdf Graphic file (type QTm)
+<use  "./parte2/graficos/grafico_p1.pdf" >
+File: ./parte2/graficos/grafico_p1_error.pdf Graphic file (type QTm)
+
+<use  "./parte2/graficos/grafico_p1_error.pdf" > [9]
+Underfull \hbox (badness 10000) in paragraph at lines 41--42
+
+ []
+
+File: ./parte2/graficos/grafico_p2_1.pdf Graphic file (type QTm)
+<use  "./parte2/graficos/grafico_p2_1.pdf" >
+File: ./parte2/graficos/grafico_p2_2.pdf Graphic file (type QTm)
+
+<use  "./parte2/graficos/grafico_p2_2.pdf" > [10]
+File: ./parte2/graficos/grafico_p2_real.pdf Graphic file (type QTm)
+
+<use  "./parte2/graficos/grafico_p2_real.pdf" > [11]
+File: ./parte2/graficos/diagrama_de_flujo.pdf Graphic file (type QTm)
+
+<use  "./parte2/graficos/diagrama_de_flujo.pdf" >) (./parte3/parte3_1.tex
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
+
+ []
+
+[14]
+File: ./parte3/graficos/grafico_euler_S1_y_b1.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_euler_S1_y_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 209--210
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_euler_S1_dy_b1.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_euler_S1_dy_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 215--216
+[][] 
+ []
+
+[15]
+File: ./parte3/graficos/grafico_euler_S1_y_b2.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_euler_S1_y_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 227--228
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_euler_S1_dy_b2.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_euler_S1_dy_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 233--234
+[][] 
+ []
+
+[16] [17] [18]
+File: ./parte3/graficos/grafico_cn_S1_y_b1.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_cn_S1_y_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 368--369
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_cn_S1_dy_b1.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_cn_S1_dy_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 374--375
+[][] 
+ []
+
+[19]
+File: ./parte3/graficos/grafico_cn_S1_y_b2.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_cn_S1_y_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 385--386
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_cn_S1_dy_b2.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_cn_S1_dy_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 391--392
+[][] 
+ []
+
+[20]
+File: ./parte3/graficos/grafico_euler_S2_y_b1.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_euler_S2_y_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 409--410
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_euler_S2_dy_b1.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_euler_S2_dy_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 415--416
+[][] 
+ []
+
+[21]
+File: ./parte3/graficos/grafico_euler_S2_y_b2.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_euler_S2_y_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 425--426
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_euler_S2_dy_b2.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_euler_S2_dy_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 431--432
+[][] 
+ []
+
+[22]
+File: ./parte3/graficos/grafico_cn_S2_y_b1.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_cn_S2_y_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 447--448
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_cn_S2_dy_b1.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_cn_S2_dy_b1.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 453--454
+[][] 
+ []
+
+[23]
+File: ./parte3/graficos/grafico_cn_S2_y_b2.pdf Graphic file (type QTm)
+ <use  "./parte3/graficos/grafico_cn_S2_y_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 463--464
+[][] 
+ []
+
+File: ./parte3/graficos/grafico_cn_S2_dy_b2.pdf Graphic file (type QTm)
+<use  "./parte3/graficos/grafico_cn_S2_dy_b2.pdf" >
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 469--470
+[][] 
+ []
+
+[24]) (./parte3/parte3_2.tex
+
+LaTeX Warning: Reference `PROBLEMA_PARTE_2' on page 25 undefined on input line 
+5.
+
+[25] [26] [27]) (./parte4/parte4.tex) [28] [29] [30] (./PROYECTO1.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 24713 strings out of 493638
- 469158 string characters out of 6146796
- 530137 words of memory out of 5000000
- 27844 multiletter control sequences out of 15000+600000
- 8208 words of font info for 45 fonts, out of 8000000 for 9000
+ 24871 strings out of 493638
+ 472698 string characters out of 6146796
+ 529668 words of memory out of 5000000
+ 27968 multiletter control sequences out of 15000+600000
+ 8240 words of font info for 49 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
- 48i,11n,53p,10370b,263s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,16n,77p,10370b,607s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on PROYECTO1.pdf (12 pages).
+Output written on PROYECTO1.pdf (30 pages).

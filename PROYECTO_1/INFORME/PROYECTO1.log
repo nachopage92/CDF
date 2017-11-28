@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.9.20)  20 NOV 2017 00:21
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.9.20)  20 NOV 2017 15:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -787,29 +787,54 @@ Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \enit@inbox=\box75
 \enitdp@description=\count190
 )
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count191
+\lst@gtempboxa=\box76
+\lst@token=\toks41
+\lst@length=\count192
+\lst@currlwidth=\dimen287
+\lst@column=\count193
+\lst@pos=\count194
+\lst@lostspace=\dimen288
+\lst@width=\dimen289
+\lst@newlines=\count195
+\lst@lineno=\count196
+\lst@maxwidth=\dimen290
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count197
+\lst@skipnumbers=\count198
+\lst@framebox=\box77
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
 (./PROYECTO1.aux)
 \openout1 = `PROYECTO1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for EU1/lmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 58.
-LaTeX Font Info:    Try loading font information for T3+cmr on input line 58.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for EU1/lmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 59.
+LaTeX Font Info:    Try loading font information for T3+cmr on input line 59.
  (/usr/share/texmf/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
-LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    ... okay on input line 59.
 .................................................
 . fontspec info: "setup-math"
 . 
@@ -817,67 +842,69 @@ LaTeX Font Info:    ... okay on input line 58.
 .................................................
 \symlegacymaths=\mathgroup9
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 58.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 58.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 58.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 58.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 58.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 58.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 58.
-LaTeX Font Info:    Redeclaring math accent \check on input line 58.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 58.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 58.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 58.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 58.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 59.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 59.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 59.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 59.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 59.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 59.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 59.
+LaTeX Font Info:    Redeclaring math accent \check on input line 59.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 59.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 59.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 59.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 59.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU1' for symbol font
-(Font)              `operators' in the math version `normal' on input line 58.
+(Font)              `operators' in the math version `normal' on input line 59.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> EU1/lmr/m/n on input line 58.
+(Font)                  OT1/cmr/m/n --> EU1/lmr/m/n on input line 59.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU1' for symbol font
-(Font)              `operators' in the math version `bold' on input line 58.
+(Font)              `operators' in the math version `bold' on input line 59.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> EU1/lmr/m/n on input line 58.
+(Font)                  OT1/cmr/bx/n --> EU1/lmr/m/n on input line 59.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  EU1/lmr/m/n --> EU1/lmr/m/n on input line 58.
+(Font)                  EU1/lmr/m/n --> EU1/lmr/m/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> EU1/lmr/m/it on input line 58.
+(Font)                  OT1/cmr/m/it --> EU1/lmr/m/it on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> EU1/lmr/bx/n on input line 58.
+(Font)                  OT1/cmr/bx/n --> EU1/lmr/bx/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> EU1/lmss/m/n on input line 58.
+(Font)                  OT1/cmss/m/n --> EU1/lmss/m/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> EU1/lmtt/m/n on input line 58.
+(Font)                  OT1/cmtt/m/n --> EU1/lmtt/m/n on input line 59.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  EU1/lmr/m/n --> EU1/lmr/bx/n on input line 58.
+(Font)                  EU1/lmr/m/n --> EU1/lmr/bx/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> EU1/lmr/bx/it on input line 58.
+(Font)                  OT1/cmr/bx/it --> EU1/lmr/bx/it on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> EU1/lmss/bx/n on input line 58.
+(Font)                  OT1/cmss/bx/n --> EU1/lmss/bx/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> EU1/lmtt/bx/n on input line 58.
+(Font)                  OT1/cmtt/m/n --> EU1/lmtt/bx/n on input line 59.
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count199
 File: logoutfsm.jpg Graphic file (type QTm)
 
 <use  "logoutfsm.jpg" >
-LaTeX Font Info:    Try loading font information for U+msa on input line 67.
+LaTeX Font Info:    Try loading font information for U+msa on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 67.
+LaTeX Font Info:    Try loading font information for U+msb on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -885,7 +912,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: logomec1.jpg Graphic file (type QTm)
 
 <use  "logomec1.jpg" >
-Overfull \hbox (35.88637pt too wide) in paragraph at lines 62--75
+Overfull \hbox (35.88637pt too wide) in paragraph at lines 63--76
 []  $[]$    $[]$ 
  []
 
@@ -895,23 +922,38 @@ Overfull \hbox (35.88637pt too wide) in paragraph at lines 62--75
 \tf@toc=\write3
 \openout3 = `PROYECTO1.toc'.
 
- [2] [3] [4] (./parte1/parte1.tex
-LaTeX Font Info:    Try loading font information for EU1+lmtt on input line 11.
-
+ [2]
+LaTeX Font Info:    Try loading font information for EU1+lmtt on input line 105
+.
 
 (/usr/share/texlive/texmf-dist/tex/latex/euenc/eu1lmtt.fd
 File: eu1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
+Underfull \hbox (badness 10000) in paragraph at lines 105--106
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--108
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
+
+ []
+
+[3] (./parte1/parte1.tex
 Underfull \hbox (badness 10000) in paragraph at lines 51--53
 
  []
 
-[5] [6]
+[4] [5]
 Underfull \hbox (badness 10000) in paragraph at lines 135--136
 
  []
 
-[7]) [8] (./parte2/parte2.tex
+[6]) [7] (./parte2/parte2.tex
 Underfull \hbox (badness 10000) in paragraph at lines 6--8
 
  []
@@ -925,7 +967,7 @@ File: ./parte2/graficos/grafico_p1.pdf Graphic file (type QTm)
 <use  "./parte2/graficos/grafico_p1.pdf" >
 File: ./parte2/graficos/grafico_p1_error.pdf Graphic file (type QTm)
 
-<use  "./parte2/graficos/grafico_p1_error.pdf" > [9]
+<use  "./parte2/graficos/grafico_p1_error.pdf" > [8]
 Underfull \hbox (badness 10000) in paragraph at lines 41--42
 
  []
@@ -934,10 +976,10 @@ File: ./parte2/graficos/grafico_p2_1.pdf Graphic file (type QTm)
 <use  "./parte2/graficos/grafico_p2_1.pdf" >
 File: ./parte2/graficos/grafico_p2_2.pdf Graphic file (type QTm)
 
-<use  "./parte2/graficos/grafico_p2_2.pdf" > [10]
+<use  "./parte2/graficos/grafico_p2_2.pdf" > [9]
 File: ./parte2/graficos/grafico_p2_real.pdf Graphic file (type QTm)
 
-<use  "./parte2/graficos/grafico_p2_real.pdf" > [11]
+<use  "./parte2/graficos/grafico_p2_real.pdf" > [10]
 File: ./parte2/graficos/diagrama_de_flujo.pdf Graphic file (type QTm)
 
 <use  "./parte2/graficos/diagrama_de_flujo.pdf" >) (./parte3/parte3_1.tex
@@ -945,137 +987,596 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-[12]
+[11]
 Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
  []
 
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
 
  []
 
+
+LaTeX Warning: Reference `PROBLEMA_PARTE2_CORREGIDO' on page 13 undefined on in
+put line 86.
+
+
+LaTeX Warning: Reference `PROBLEMA_PARTE2_CORREGIDO' on page 13 undefined on in
+put line 135.
+
+[13]
+
+LaTeX Warning: Reference `PROBLEMA_PARTE2_CORREGIDO' on page 14 undefined on in
+put line 168.
+
 [14]
+Underfull \hbox (badness 10000) in paragraph at lines 248--250
+
+ []
+
+
+LaTeX Warning: Reference `PROBLEMA_PARTE2_CORREGIDO' on page 15 undefined on in
+put line 257.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 263--264
+
+ []
+
+[16]
 File: ./parte3/graficos/grafico_euler_S1_y_b1.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_euler_S1_y_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 209--210
-[][] 
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 383--384
+ [][] 
  []
 
 File: ./parte3/graficos/grafico_euler_S1_dy_b1.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_euler_S1_dy_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 215--216
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 389--390
 [][] 
  []
 
-[15]
+[17]
 File: ./parte3/graficos/grafico_euler_S1_y_b2.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_euler_S1_y_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 227--228
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 400--401
 [][] 
  []
 
 File: ./parte3/graficos/grafico_euler_S1_dy_b2.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_euler_S1_dy_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 233--234
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 406--407
 [][] 
  []
 
-[16] [17] [18]
+[18]
 File: ./parte3/graficos/grafico_cn_S1_y_b1.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_cn_S1_y_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 368--369
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 422--423
 [][] 
  []
 
 File: ./parte3/graficos/grafico_cn_S1_dy_b1.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_cn_S1_dy_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 374--375
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 428--429
 [][] 
  []
 
 [19]
 File: ./parte3/graficos/grafico_cn_S1_y_b2.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_cn_S1_y_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 385--386
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 439--440
 [][] 
  []
 
 File: ./parte3/graficos/grafico_cn_S1_dy_b2.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_cn_S1_dy_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 391--392
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 445--446
 [][] 
  []
 
 [20]
 File: ./parte3/graficos/grafico_euler_S2_y_b1.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_euler_S2_y_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 409--410
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 461--462
 [][] 
  []
 
 File: ./parte3/graficos/grafico_euler_S2_dy_b1.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_euler_S2_dy_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 415--416
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 467--468
 [][] 
  []
 
 [21]
 File: ./parte3/graficos/grafico_euler_S2_y_b2.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_euler_S2_y_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 425--426
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 478--479
 [][] 
  []
 
 File: ./parte3/graficos/grafico_euler_S2_dy_b2.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_euler_S2_dy_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 431--432
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 484--485
 [][] 
  []
 
 [22]
 File: ./parte3/graficos/grafico_cn_S2_y_b1.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_cn_S2_y_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 447--448
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 500--501
 [][] 
  []
 
 File: ./parte3/graficos/grafico_cn_S2_dy_b1.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_cn_S2_dy_b1.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 453--454
+Overfull \hbox (233.31042pt too wide) in paragraph at lines 506--507
 [][] 
  []
 
 [23]
 File: ./parte3/graficos/grafico_cn_S2_y_b2.pdf Graphic file (type QTm)
  <use  "./parte3/graficos/grafico_cn_S2_y_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 463--464
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 517--518
 [][] 
  []
 
 File: ./parte3/graficos/grafico_cn_S2_dy_b2.pdf Graphic file (type QTm)
 <use  "./parte3/graficos/grafico_cn_S2_dy_b2.pdf" >
-Overfull \hbox (233.31042pt too wide) in paragraph at lines 469--470
+Overfull \hbox (19.91476pt too wide) in paragraph at lines 523--524
 [][] 
  []
 
-[24]) (./parte3/parte3_2.tex
+[24] [25]) (./parte3/parte3_2.tex [26] [27] (./parte3/TABLA_CONVERGENCIA.tex))
+(./parte4/parte4.tex [28]
+Underfull \hbox (badness 10000) in paragraph at lines 19--20
 
-LaTeX Warning: Reference `PROBLEMA_PARTE_2' on page 25 undefined on input line 
-5.
+ []
 
-[25] [26] [27]) (./parte4/parte4.tex) [28] [29] [30] (./PROYECTO1.aux)
+File: ./parte4/graficos/FIGURA1.pdf Graphic file (type QTm)
+<use  "./parte4/graficos/FIGURA1.pdf" > [29]
+File: ./parte4/graficos/FIGURA2.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/FIGURA2.pdf" > [30]
+File: ./parte4/graficos/grafico_P3_3d_ra05.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra05.pdf" > [31]
+File: ./parte4/graficos/grafico_P3_3d_ra10.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra10.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra28.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra28.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra00.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra00.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra03.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra03.pdf" >
+Overfull \hbox (59.1307pt too wide) in paragraph at lines 70--71
+[]  [][] 
+ []
+
+[32]
+File: ./parte4/graficos/grafico_P3_3d_ra06.pdf Graphic file (type QTm)
+ <use  "./parte4/graficos/grafico_P3_3d_ra06.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra09.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra09.pdf" >
+Overfull \hbox (59.1307pt too wide) in paragraph at lines 75--76
+[]  [][] 
+ []
+
+File: ./parte4/graficos/grafico_P3_3d_ra12.pdf Graphic file (type QTm)
+<use  "./parte4/graficos/grafico_P3_3d_ra12.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra15.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra15.pdf" >
+Overfull \hbox (59.1307pt too wide) in paragraph at lines 80--81
+[]  [][] 
+ []
+
+File: ./parte4/graficos/grafico_P3_3d_ra18.pdf Graphic file (type QTm)
+<use  "./parte4/graficos/grafico_P3_3d_ra18.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra18.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra18.pdf" >
+Overfull \hbox (59.1307pt too wide) in paragraph at lines 85--86
+[]  [][] 
+ []
+
+[33]
+File: ./parte4/graficos/grafico_P3_3d_ra21.pdf Graphic file (type QTm)
+ <use  "./parte4/graficos/grafico_P3_3d_ra21.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra24.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra24.pdf" >
+Overfull \hbox (59.1307pt too wide) in paragraph at lines 90--91
+[]  [][] 
+ []
+
+File: ./parte4/graficos/grafico_P3_3d_ra27.pdf Graphic file (type QTm)
+<use  "./parte4/graficos/grafico_P3_3d_ra27.pdf" >
+File: ./parte4/graficos/grafico_P3_3d_ra30.pdf Graphic file (type QTm)
+
+<use  "./parte4/graficos/grafico_P3_3d_ra30.pdf" >
+Overfull \hbox (59.1307pt too wide) in paragraph at lines 95--96
+[]  [][] 
+ []
+
+) [34]
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--151
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 152--153
+
+ []
+
+
+LaTeX Warning: Reference `PROBLEMA_PARTE2_CORREGIDO' on page 35 undefined on in
+put line 155.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 156--158
+
+ []
+
+[35] [36] [37] [38] [39] [40] [41] [42] [43]
+Overfull \hbox (83.21385pt too wide) in paragraph at lines 525--526
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (47.21349pt too wide) in paragraph at lines 526--527
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (83.21385pt too wide) in paragraph at lines 536--537
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 537--538
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (35.21336pt too wide) in paragraph at lines 548--549
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (41.21342pt too wide) in paragraph at lines 555--556
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 562--563
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (23.21324pt too wide) in paragraph at lines 569--570
+[][][][][][][][][][][][][][][][] 
+ []
+
+[44]
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 583--584
+[][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 584--585
+[][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 585--586
+[][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 586--587
+[][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 587--588
+[][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 588--590
+[][][][] 
+ []
+
+
+Overfull \hbox (83.21385pt too wide) in paragraph at lines 613--614
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (41.21342pt too wide) in paragraph at lines 614--615
+[][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (83.21385pt too wide) in paragraph at lines 623--624
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 624--625
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[45]
+Overfull \hbox (35.21336pt too wide) in paragraph at lines 635--636
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (41.21342pt too wide) in paragraph at lines 642--643
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 649--650
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (23.21324pt too wide) in paragraph at lines 656--657
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (53.21355pt too wide) in paragraph at lines 684--685
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (53.21355pt too wide) in paragraph at lines 685--686
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (53.21355pt too wide) in paragraph at lines 687--688
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (59.21361pt too wide) in paragraph at lines 688--689
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[46]
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 744--745
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+
+Overfull \hbox (77.21379pt too wide) in paragraph at lines 745--746
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+
+ []
+
+[47]
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 746--748
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (11.21312pt too wide) in paragraph at lines 751--753
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (59.21361pt too wide) in paragraph at lines 761--762
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (41.21342pt too wide) in paragraph at lines 781--782
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (59.21361pt too wide) in paragraph at lines 783--784
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (41.21341pt too wide) in paragraph at lines 785--786
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (65.21367pt too wide) in paragraph at lines 787--788
+[][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[48]
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 803--804
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 806--807
+[][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (53.21355pt too wide) in paragraph at lines 813--814
+[][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (71.21373pt too wide) in paragraph at lines 814--816
+[][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 843--844
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (35.21336pt too wide) in paragraph at lines 844--845
+[][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[49]
+Overfull \hbox (23.21324pt too wide) in paragraph at lines 882--883
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (23.21324pt too wide) in paragraph at lines 886--887
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 892--893
+[][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (89.21391pt too wide) in paragraph at lines 896--897
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 899--900
+[][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (47.21349pt too wide) in paragraph at lines 903--904
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 906--907
+[][][][][][][][][][][][][][][][][] 
+ []
+
+[50]
+Overfull \hbox (47.21349pt too wide) in paragraph at lines 910--911
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 926--927
+[][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 928--929
+[][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 944--945
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 946--947
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (47.21349pt too wide) in paragraph at lines 947--948
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 949--950
+[][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (35.21336pt too wide) in paragraph at lines 961--962
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 962--963
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (47.21349pt too wide) in paragraph at lines 963--964
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[51]
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 965--966
+[][][][][][][][][][][][][][][][][][] 
+ []
+
+[52] [53]
+Overfull \hbox (11.2131pt too wide) in paragraph at lines 1102--1104
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+[54]
+Overfull \hbox (23.21324pt too wide) in paragraph at lines 1155--1156
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.21318pt too wide) in paragraph at lines 1173--1174
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (11.21307pt too wide) in paragraph at lines 1177--1178
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[55] [56] [57]
+Overfull \hbox (23.21324pt too wide) in paragraph at lines 1348--1349
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[58] [59] [60] [61] (./PROYECTO1.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 24871 strings out of 493638
- 472698 string characters out of 6146796
- 529668 words of memory out of 5000000
- 27968 multiletter control sequences out of 15000+600000
- 8240 words of font info for 49 fonts, out of 8000000 for 9000
+ 26118 strings out of 493638
+ 491403 string characters out of 6146796
+ 582999 words of memory out of 5000000
+ 29172 multiletter control sequences out of 15000+600000
+ 13180 words of font info for 66 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
- 48i,16n,77p,10370b,607s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,16n,77p,10370b,1413s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on PROYECTO1.pdf (30 pages).
+Output written on PROYECTO1.pdf (61 pages).

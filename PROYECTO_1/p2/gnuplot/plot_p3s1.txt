@@ -1,8 +1,9 @@
-# nt = 10 , 20 , 40 , 80
+# nt_lf = 40 , 80 , 160 , 320
+# nt_nm = 10 , 20 , 40 , 80
 
 ###############################################
 
-set terminal gif animate delay 10
+set terminal gif animate delay 8
 set xlabel 't'
 set ylabel 'y'
 set macros
@@ -13,11 +14,11 @@ i=1
 j=1
 set output '../graficos/S3/exact.gif'
 set title 'Solucion analitica'
-load 'loop_p3.txt'
+load 'loop_p3_80.txt'
 
 ###############################################
 
-set terminal gif animate delay 10
+set terminal gif animate delay 2
 set xlabel 't'
 set ylabel 'y'
 set macros
@@ -28,11 +29,11 @@ i=1
 j=2
 set output '../graficos/S3/lf.gif'
 set title 'Esquema Leap-Frog'
-load 'loop_p3.txt'
+load 'loop_p3_320.txt'
 
 ###############################################
 
-set terminal gif animate delay 10
+set terminal gif animate delay 8
 set xlabel 't'
 set ylabel 'y'
 set macros
@@ -40,10 +41,10 @@ set xrange [0:1]
 set yrange [-6:6]
 
 i=1
-j=3
+j=1
 set output '../graficos/S3/nm.gif'
 set title 'Esquema Newmark'
-load 'loop_p3.txt'
+load 'loop_p3_80.txt'
 
 ###############################################
 

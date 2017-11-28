@@ -1,0 +1,8 @@
+if (j==1) \
+plot '../datos/S3/datos_S3_1.txt' using 1:i+1 with lines title columnhead(i) 
+
+if (j==3) \
+plot '../datos/S3/datos_S3_3.txt' using 1:i+1 with lines title columnhead(i) 
+
+i=i+1
+if (i<=80) reread

@@ -13,7 +13,7 @@ subroutine leap_frog(gama,lambda,t,dt,x,y_0,y_1,y_2)
 	real(kind=8),dimension(:),allocatable::f
 !---------------------------
 	n=size(x)
-	alfa = lambda*gama**2._8
+	alfa = (lambda*gama)**2._8
 	allocate(f(n))
 	f(:) = (/ ( (1._8+pi**2._8*gama**2._8)*exp(-t)*sin(pi*x(i)) , i=1,n) /)  * dt**2._8
 	y_2(1) = 0._8

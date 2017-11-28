@@ -8,7 +8,6 @@ P2_1: P2_1.f90
 	$(SUBDIR)/eingval.f90 \
 	$(SUBDIR)/euler_implicito.f90 \
 	$(SUBDIR)/crank_nicolson.f90 \
-	$(SUBDIR)/exportar_datos_S1.f90 \
 	P2_1.f90
 	
 P2_2: P2_2.f90
@@ -17,6 +16,13 @@ P2_2: P2_2.f90
 	$(SUBDIR)/leap_frog.f90 \
 	$(SUBDIR)/newmark.f90 \
 	P2_2.f90
+	
+P2_3: P2_3.f90
+	$(FC) -o P2_3 -I$(MODDIR) \
+	$(SUBDIR)/discretizacion.f90 \
+	$(SUBDIR)/leap_frog.f90 \
+	$(SUBDIR)/newmark.f90 \
+	P2_3.f90
 	
 modulo_pregunta2.mod:
 	cd $(MODDIR) && $(MAKE)

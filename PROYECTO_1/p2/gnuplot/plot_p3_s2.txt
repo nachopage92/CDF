@@ -1,0 +1,17 @@
+set terminal pdfcairo enhanced
+
+set xlabel 'x'
+set ylabel 't'
+set zlabel 'u' 
+
+#set xrange [0:4]
+#set yrange [3:6]
+set zrange [-0.5:1]
+
+set autoscale
+set hidden3d
+set dgrid3d 50,50 qnorm 2
+
+set title 'PROVI'
+set output '../graficos/S4/provi.pdf'
+splot '../datos/S4/datos_P3_S2_1.dat' with lines notitle

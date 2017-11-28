@@ -4,8 +4,10 @@ program Pregunta_3
 	integer::n,m,i,j
 	real(kind=8) :: tiempo_total,dt,Pr,beta,t
 	real(kind=8),dimension(3) :: z0,z1,Ra
-	character(len=8) :: folder='./datos/'
+	real(kind=8),dimension(11)::Ra_2
+	character(len=8)::folder='./datos/'
 	character(len=2),dimension(3) :: ra_n
+	character(len=2),dimension(11) :: ra_n2
 	!--------------------------------
 
 	!discretizacion tiempo	
@@ -39,5 +41,43 @@ program Pregunta_3
 		end do
 		close(unit=10)
 	end do
+
+!----------------------------------------
+
+	!variar lentamente Ra
+	Ra_2(:) = (/ (3.0*(j-1) , j=1,11) /)
+
+	ra_n2(1) = '00'
+	ra_n2(2) = '03'
+	ra_n2(3) = '06'
+	ra_n2(4) = '09'
+	ra_n2(5) = '12'
+	ra_n2(6) = '15'
+	ra_n2(7) = '18'
+	ra_n2(8) = '21'
+	ra_n2(9) = '24'
+	ra_n2(10) = '27'
+	ra_n2(11) = '30'
+
+	do j=1,11
+		open(unit=10, file=folder//'datos_P3_'//ra_n2(j)//'.dat', action='write')
+		!inicializacion
+		n = 0
+		z0(:) = (/ 0._8 , 1._8 , 0._8 /)
+		write(10,*) n , t , 10._8*z0(1) , 10._8*z0(2) , 10._8*z0(3)
+		!subrutina RK4 -> Ra = 0.5
+		do i=1,m
+			call rk4(Pr,Ra(j),beta,t,dt,z0,z1)
+			z0 = z1
+			n = n+1
+			t = t+dt
+			if ( mod(n,5) .eq. 0 ) then
+				write(10,*) n , t , 10._8*z0(1) , 10._8*z0(2) , 10._8*z0(3)
+			end if
+		end do
+		close(unit=10)
+	end do
+	
+	call system('cd gnuplot/ && gnuplot plot_P3.txt')
 end program
 

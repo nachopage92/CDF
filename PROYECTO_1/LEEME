@@ -1,0 +1,15 @@
+para compilar programas
+
+ir a carpeta p1
+ejecutar make P1_1
+ejecutar make P1_2 
+ejecutar make P1_3 
+
+ir a carpeta p2
+ejecutar make P2_1 
+ejecutar make P2_2 
+ejecutar make P2_3
+
+ir a carpeta p3 
+ejecutar make
+

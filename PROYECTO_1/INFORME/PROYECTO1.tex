@@ -13,6 +13,7 @@
 \usepackage{pstricks-add}
 \usepackage{bm}
 \usepackage{enumitem} %cara utilizar distintos enumerate item
+\usepackage{listings} %para poner codigos
 
 
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}} % P{} (mayúscula) en vez de p{} (minúscula)
@@ -99,20 +100,15 @@ Asignatura & IPM468 \\
 \newpage
 %---------------------------------------------
 
-\section{Resumen}
-
-
-
-
-
-
-\newpage
-%---------------------------------------------
-
 \section{Introducción}
 
+En el presente trabajo se estudia el método de diferencias finitas aplicado a la resolución de problemas modelados por ecuaciones diferenciales. El estudio se basa en programar distintas rutinas escritas en lenguaje Fortran que permite implementar los algoritmos a estudiar. Se divide en en tres secciones: La primera parte  consiste en el estudio del parámetro \texttt{precision} que permite establecer el número de cifras significativas asociada a un objeto de programación, y cómo la elección de este parámetro afecta los cálculos numéricos. \\
 
+La segunda parte se estudia el comportamiento de una arteria sometida a esfuerzos asociados al bombeo sanguineo. Se modela el radio de la pared de la arteria como cilindros que se deforman radialmente y dicho comportamiento puede modelarse como una ecuación diferencial lineal de primer orden o como una ecuación diferencial hiperbólica, dependiendo de los supuestos escogidos. Se implementan los métodos de integración temporal Euler Implícito, Crank Nicolson, Leap-Frog y Newmark. La idea es estudiar la estabilidad del método teóricamente y comparar los resultados obtenidos por el programa implementado.\\
 
+La última parte está orientada a la implementación al estudio de la resolución de sistemas dinámicos caóticos, correspondientes a modelos simplificados de la convección de Rayleight-Benand. Se obtiene un sistema de ecuaciones diferenciales de orden 1, tridimensional y no lineal. Se implementan una rutina Runge Kutta 4 (RK4) para la resolución del sistema. Se estudia además el comportamiento del mismo al variar los parametros que lo gobiernan.\\
+
+Se anexa al final del informe los cógidos y rutina implementadas.
 
 
 
@@ -149,6 +145,1309 @@ Asignatura & IPM468 \\
 
 \section{Conclusiones y Observaciones}
 
+\paragraph{Ejercicios en Fortran} Se estudió la relevancia del parámetro \texttt{precision} en la implementación de las rutinas. En el Ejercicio 1 se observa que para un número determinado de operaciones la precisión representa un freno debido a la debil resolución numérica, es decir, para una cantidad de decimales que se supera la cantidad de cifras significativas no alteran al objeto, por que la operación virtualmente no ocurre. \\
+
+El caso contrario ocurre en el Ejercicio 2. Se trabajó con número enteros y reales y se observó el comportamiento de ambos al representar la serie Fibonacci. La inestabilidad se presenta cuando la operación numérica produce un número de mayor tamaño del que la memoria asignada puede contemplar. Cuando sucede esto ocurre una asignación de memoria que no representa ninguna operación, es decir, se obtiene un resultado aleatorio sin significancia física ni matematica. \\
+
+El Ejercicio 3 se implementa una subrutina que permite realizar la operación de multiplicación matricial. Se implementa una rutina que realiza la multiplicación cuando las dimensiones de los dos factores son consistentes con los de la operación. La rutina implementada trabaja con un parametro $l$ de tal manera que $l=0$ cuando la operación en satisfactoria, y $l=1$ cuando ocurre un error. Este tipo de consideración son relevantes al momento de implementar algoritmos: Una práctica aconsejable al momento de programar es establercer detenciones o \textit{flags} que permitan identificar cuando ocurre una operación indeseado o se obtienen resultado malogrados. De esta manera se puede identificar facilmente el problema, con los tiempo de revisión y tiempo de cómputo malgastado. \\
+
+\paragraph{Estudio del comportamiento de una arteria. Parte 1} 
+Se implementó una rutina de integración de Euler Implícito y una de Crank Nicolson para la resolución de la ecuación (\ref{PROBLEMA_PARTE2_CORREGIDO}).
+$$ {y}' = \vect{A} \vec{y} + b(x,t)$$
+ Se observa que es una ecuación diferencial ordinaria, donde el término fuente es el único término que es función de la variable espacial $x$. En este caso la descomposición modal $\vect{A} V^{(j)} = \Omega_j V^{(j)}$ tiene una significancia distinta a la descomposición obtenida de un esquema de diferencias finitas: En el primer caso los valores propios están asocidos a la naturaleza del fenomeno (o bien, a la clasifica de la EDO), mientras que en el segundo caso está asociado a la estabilidad de la discretización. \\
+ 
+Euler representa un esquema disipativo de orden 1, mientras que Crank Nicolson es un esquema dispersivo de orden 2. Al comparar las solución se observa que ambos métodos arrojan resultados distintos para un mismo problema. Además para un el caso $\beta=\sqrt{\alpha}$ se obtiene una solución con un término transiente oscilatorio. Se obtuvo numericamente que el método de Crank Nicolson es un esquema dispersivo. En este caso una solución que presenta oscilaciones se resuelve de manera desfavorable con ciertos métodos, particularmente, el método de Crank Nicolson, al ser un esquema dispersivo, agrega errores claramente visibles.
+
+\paragraph{Estudio del comportamiento de una arteria. Parte 2} 
+Se resolvió la ecuación de onda mediante los métodos de Leap-Frog y Newmark. Ambos métodos son \textit{three level scheme} ya que la discretización de la derivada temporal requiere de 3 valores $n$, $n+1$ y $n+2$. Ambos esquemas son de orden 2, luego, se espera que la tabla de convergencia \ref{tabla_lf_nm} se obtuviesen valores cercanos a 2. Discrepancias en los resultados pueden tener algunas posibles explicaciones:
+\begin{itemize}
+\item Iniciación (condiciones iniciales), Para obtener esta tabla se fue necesario conocer la función analítica para calcular los errores. Sin embargo se utilizó la condición inicial $u^0_j$ y se aproximó $u^1_j$ mediante diferencias finitas hacia adelante.
+\item Para la resolución de Newmark se implementó una subrutina \textit{solver} que permite invertir la matriz que acompaña las incognitas $u^{n+1}$ mediante factorización pivoteada LU. Este método no es el más efectivo y puede incluir errores numéricos. Ya que se trata de un sistema tridiagonal (matriz sparse o con varios elementos nulos) lo mejor es utilizar un subrutina que trabaje que estos valores no nulos. Metodos más eficientes pueden verse en \cite{inv}, o utilizando librerias especializadas como LAPACK-BLAS.
+\end{itemize}
+
+
+\newpage
+%---------------------------------------------
+
+\section{Codigos implementados}
+\subsection{Ejercicios en Fortran}
+\subsubsection{Ejercicio 1}
+\begin{lstlisting}
+program EJERCICIOS_EN_FORTRAN_1
+	!-------------------------------------------
+	!PREAMBULO
+	integer::i,inf,contador
+	real(kind=4)::A !simple precision
+	real(kind=8)::B,error !doble precision
+	character(len=22)::datos_p1='./datos/datos_p1.dat'
+	character(len=22)::datos_pe='./datos/datos_p1_error.dat'
+	!-------------------------------------------
+ 	
+ 	!simple y doble precisión
+	A=1._4
+	B=1._8
+	inf=4000000
+	contador=1
+	
+	! los datos generados se exportan al directorio
+	! ./datos/datos_p1.dat
+	open(unit=10,file=datos_p1,action='write')
+	do i=2,inf
+		!contador
+		contador = contador + 1
+		!desarrollo de la serie
+		A = A + ( 1._4 / real(i,kind=4) )
+		B = B + ( 1._8 / real(i,kind=8) )
+		error = (B-real(A,kind=8))/B
+		!cada 1000 operaciones exportar datos
+		if ( contador .eq. 10000 ) then
+			if ( i .gt. 250000 ) then
+				write(10,*) i, A, B, error
+			end if
+			contador=0
+		end if
+	end do 
+	close(unit=10)
+	
+	!-------------------------------------------
+	
+	! se grafica la curva en el directorio
+	! ./graficos/graficos_p1.dat
+	call system ( ' cd ./gnuplot && gnuplot plot_p1_1.txt ' )
+	
+	!-------------------------------------------
+	
+end program
+\end{lstlisting}
+
+\newpage
+\subsubsection{Ejercicio 2}
+\begin{lstlisting}
+program EJERCICIOS_EN_FORTRAN_2
+	!-------------------------------------------
+	!PREAMBULO
+	integer::n,u0,u1,u2,j
+	real(kind=8)::u0_r,u1_r,u2_r
+	character(len=22)::datos_p2_1='./datos/datos_p2_1.dat'
+	character(len=22)::datos_p2_2='./datos/datos_p2_2.dat'
+	!-------------------------------------------
+
+	!se calcula la serie para número enteros
+	n=100
+	u0=0 ; u1=1
+	open(unit=10,file=datos_p2_1,action='write')
+		write(10,*)0,u0
+		write(10,*)1,u1
+		do j=2,n
+			u2=u0+u1
+			write(10,*)j,u2
+			u0=u1
+			u1=u2
+		end do
+	close(unit=10)
+	
+	!se calcula la serie para número reales d. precision
+	n=1500
+	u0_r = 0._8 ; u1_r = 1._8
+	open(unit=10,file=datos_p2_2,action='write')
+		write(10,*)0,u0_r
+		write(10,*)1,u1_r
+		do j=2,n
+			u2_r = u0_r + u1_r
+			write(10,*) j , u2_r
+			u0_r = u1_r
+			u1_r = u2_r
+		end do
+	close(unit=10)
+	
+	!-------------------------------------------
+	
+	! se grafica la curva en el directorio
+	! ./graficos/graficos_p1.dat
+	call system ( ' cd ./gnuplot && gnuplot plot_p1_2.txt ' )
+\end{lstlisting}
+
+\newpage
+\subsubsection{Ejercicio 3}
+\begin{lstlisting}
+!EL PROGRAMA EJECUTA DOS OPERACIONES DE EJEMPLO
+!COMO SE MUESTRA A CONTINUACION
+
+!PRIMER CASO AxB=C (DIMENSIONES CONSISTENTES)
+
+!	A =	1	2	3	4
+!		5	6	7	8
+!		9	10	11	12
+	
+!	B =	1	2
+!		3	4
+!		5	6
+!		7	8
+	
+!SEGUNDO CASO AxD (DIMENSIONES INCOSITENTES)
+
+!	A =	1	2	3	4
+!		5	6	7	8
+!		9	10	11	12
+	
+!	D =	1	2
+!		3	4
+!		5	6
+
+program EJERCICIOS_EN_FORTRAN_3
+	!-------------------------------------------
+	!INTERFACE
+	implicit none
+	interface
+		subroutine matrix_mult(A,B,C,i)
+		real(kind=4),dimension(:,:),intent(in)::A,B
+		real(kind=4),dimension(:,:),intent(out)::C
+		integer,intent(out)::i
+		end subroutine
+	end interface
+	!-------------------------------------------
+	!PREAMBULO
+	
+	!PREGUNTA 3
+	integer::k,i,tmp,tmp_v(2)
+	real(kind=4) :: A(3,4),B(4,2),D(3,2)
+	real(kind=4),allocatable :: C(:,:)
+	
+	!-------------------------------------------
+	
+	!presentacion en pantalla
+	write(*,*) '---------------------'
+	write(*,*) 'EJERCICIOS_EN_FORTRAN_3'
+	write(*,*) 'codigo		: P1_3.f90'
+	write(*,*) 'ejecutable	: P1_3'
+	write(*,*)
+	write(*,*) 'Este programa implementan la'
+	write(*,*) "subrutina 'matrix_mult' en"
+	write(*,*) 'dos casos posibles:'
+	write(*,*)
+	write(*,*) '1. multiplicacion de matrices'
+	write(*,*) 'con dimensiones consistentes'
+	write(*,*) 
+	write(*,*) '2. multiplicacion de matrices'
+	write(*,*) 'con dimensions inconsistentes'
+	write(*,*) '---------------------'
+	
+	!PRIMER CASO AxB=C (DIMENSIONES CONSISTENTES)
+	write(*,*) '---------------------'
+	write(*,*) 'PRIMER CASO AxB=C '//&
+	&'(DIMENSIONES CONSISTENTES)'
+	write(*,*)
+	
+	!se crean las matrices A, B y D
+	A=reshape((/(1._8*k,k=1,12)/),(/3,4/))
+	B=reshape((/(1._8*k,k=1,8)/),(/4,2/))
+	D=reshape((/(1._8*k,k=1,6)/),(/3,2/))
+	
+	
+	!se muestran las matrices A y B matrices
+	write(*,*) 'matriz A'
+	do k=1,3
+		write(*,*) A(k,:)
+	end do
+	write(*,*)
+	write(*,*) 'matriz B'
+	do k=1,4
+		write(*,*) B(k,:)
+	end do
+	write(*,*)
+	
+	!se ejecuta la subrutina matrix_mult
+	call matrix_mult(A,B,C,i)
+
+	!se muestra el resultado C en pantalla
+	if (i.eq.0) then
+		tmp_v=shape(C)
+		tmp=tmp_v(1)
+		do k=1,tmp
+			write(*,*) C(k,:)
+		end do
+	else
+		write(*,*) 'ERROR!'
+		write(*,*) 'DIMENSIONES INCONSISTENTES'
+	end if
+	
+	deallocate(C)
+	!-------------------------------------------
+	
+	!SEGUNDO CASO AxD (DIMENSIONES INCOSITENTES)
+	write(*,*) '---------------------'
+	write(*,*) 'SEGUNDO CASO AxD '//&
+	&'(DIMENSIONES INCONSISTENTES)'
+	write(*,*)
+	
+	!se muestran las matrices A y D matrices
+	write(*,*) 'matriz A'
+	do k=1,3
+		write(*,*) A(k,:)
+	end do
+	write(*,*)
+	write(*,*) 'matriz D'
+	do k=1,3
+		write(*,*) D(k,:)
+	end do
+	write(*,*)
+	
+	!se ejecuta la subrutina matrix_mult
+	call matrix_mult(A,D,C,i)
+	
+	!se muestra el resultado C en pantalla
+	if (i.eq.0) then
+		tmp_v=shape(C)
+		tmp=tmp_v(1)
+		do k=1,tmp
+			write(*,*) C(k,:)
+		end do
+	else
+		write(*,*) 'ERROR!'
+		write(*,*) 'DIMENSIONES INCONSISTENTES'
+	end if
+	
+end program
+\end{lstlisting}
+
+\subsubsection*{Subrutina: matrix\_mult()}
+\begin{lstlisting}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! la subrutina matrix_mult realiza la multiplicacion
+! de las matrices A(na,ma) y B(nb,mb). Si ma=nb ento-
+! nces se obtiene como resultado una matriz C(na,mb)
+! y l=0 . Si ma=/nb entonces l=1
+! 
+! entrada
+! A: matriz lado izquierdo
+! B: matriz lado derecho
+! 
+! salida
+! C: matriz resultante
+! l: indicador de error
+!	l=0 operacion satisfactoria (m. consistentes)
+!	l=1 fallo (matrices inconsistentes)
+! 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+subroutine matrix_mult(A,B,C,l)
+	!entrada
+	real(kind=4),dimension(:,:),intent(in)::A,B
+	!salida
+	integer,intent(out)::l
+	real(kind=4),dimension(:,:),allocatable,intent(out)::C
+	!variables locales
+	integer::i,j
+	integer,dimension(2)::dim_a,dim_b,dim_c
+	real(kind=4)::tmp
+	!-------------------------------------------
+	l=0
+	dim_a=shape(A)
+	dim_b=shape(B)
+	if ( dim_a(2) .ne. dim_b(1) ) then
+		l=1
+		return
+	end if
+	allocate(C(dim_a(1),dim_b(2)))
+	dim_c=(/dim_a(1),dim_b(2)/)
+	do i=1,dim_c(1)
+		do j=1,dim_c(2)
+			tmp=0._8
+			do k=1,dim_a(2) !do k=1,dim_b(1)
+				tmp=tmp+A(i,k)*b(k,j)
+			end do
+			C(i,j)=tmp
+		end do
+	end do
+	!-------------------------------------------
+end subroutine
+\end{lstlisting}
+
+\newpage
+
+\subsection{Estudio del comportamiento mécanico de una arteria}
+
+\subsubsection{Parte 1}
+
+\begin{lstlisting}
+program simulacion_1
+
+	use modulo_pregunta2
+	implicit none
+	
+	integer::i,j,k,nt
+	integer,parameter::nx=11
+	real(kind=np)::alfa,gama,dt,dx
+	real(kind=np),dimension(2)::beta
+	complex(kind=np),dimension(2,2)::lambda
+	real(kind=np),dimension(nx)::x
+	real(kind=np),dimension(:),allocatable::t
+	real(kind=np),dimension(:,:,:,:),allocatable::y_euler,y_cn
+	character(len=11)::data_file1='./datos/S1/'
+	character(len=11)::data_file2='./datos/S2/'
+	character(len=1),dimension(2)::data_beta
+	
+	!--------------------------------------------------
+	!				SIMULACION 1
+	!--------------------------------------------------
+	
+	nt = 26
+	allocate(t(nt),y_euler(nt,nx,2,2),y_cn(nt,nx,2,2))
+	
+	!parametros del problema
+	alfa=E/(rho_w*R_0**2._8)
+	gama=1._8/(rho_w*H)
+	beta(1) = sqrt(alfa)
+	beta(2) = alfa	
+	
+	!discretizacion espacio-tiempo (t=0)
+	dt=0.0001_8
+	dx=0.005_8
+	t(:)=(/ ((i-1)*dt,i=1,nt) /)
+	x(:)=(/ ((i-1)*dx,i=1,nx) /)
+	
+	!condiciones iniciales
+	do i=1,nx
+		y_euler(1,i,:,1) = (/ 0._8 , 0._8 /)
+		y_euler(1,i,:,2) = (/ 0._8 , 0._8 /)
+		y_cn(1,i,:,1) = (/ 0._8 , 0._8 /)
+		y_cn(1,i,:,2) = (/ 0._8 , 0._8 /)
+	end do
+
+!	!calculo valores propios de A
+	call eigenval(alfa,beta(1),lambda(1,1),lambda(1,2))
+	call eigenval(alfa,beta(2),lambda(2,1),lambda(2,2))
+
+	!euler implicito
+	do k=1,2			! beta=sqrt(alfa) y beta=alfa
+		do j=2,nt		! discretizacion tiempo
+			do i=1,nx	! discretizacion espacio
+				call euler_implicito(alfa,beta(k),gama,t(j),dt,x(i),&
+					&y_euler((j-1),i,:,k),y_euler(j,i,:,k))
+			end do
+		end do
+	end do
+	
+	
+	!crank nicholson
+	do k=1,2			! beta=sqrt(alfa) y beta=alfa
+		do j=2,nt		! discretizacion tiempo
+			do i=1,nx	! discretizacion espacio
+				call crank_nicolson(alfa,beta(k),gama,t(j-1:j),x(i),&
+					&y_cn((j-1),i,:,k),y_cn(j,i,:,k))
+			end do
+		end do
+	end do
+	
+	!--------------- exportar datos--------------------
+
+	data_beta(1) = '1' ; data_beta(2) = '2' 
+	do k=1,2
+		!grafica para y_euler(x=0.005,t) vs t 
+		open(unit=10, action="write", &
+		&file=data_file1//'datos_euler_S1_y_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_euler(i,nx,1,k)
+			end do
+		close(10)
+		!grafica para dy_euler(x=0.005,t) vs t
+		open(unit=10, action="write", &
+		&file=data_file1//'datos_euler_S1_dy_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_euler(i,nx,2,k)
+			end do
+		close(10)
+		!grafica para y_cn(x=0.005,t) vs t 
+		open(unit=10, action="write",&
+		&file=data_file1//'datos_cn_S1_y_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_cn(i,nx,1,k)
+			end do
+		close(10)
+		!grafica para dy_cn(x=0.005,t) vs t
+		open(unit=10, action="write",&
+		&file=data_file1//'datos_cn_S1_dy_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_cn(i,nx,2,k)
+			end do
+		close(10)
+	end do
+		
+	deallocate(t,y_euler,y_cn)
+		
+	!---------------- graficar ------------------------
+	
+	call system('cd gnuplot/ && gnuplot plot_p2_1.txt')
+	
+
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
+	!--------------------------------------------------
+	!				SIMULACION 2
+	!--------------------------------------------------
+	
+	!se conservan los parámetros, cambia el paso y el 
+	!intervalo de tiempo
+	nt = 100
+	allocate(t(nt),y_euler(nt,nx,2,2),y_cn(nt,nx,2,2))
+	dt = 0.1_8
+	t(:)=(/ ((i-1)*dt,i=1,nt) /)
+	
+	!condiciones iniciales (t=0)
+	do i=1,nx
+		y_euler(1,i,:,1) = (/ 0._8 , 0._8 /)
+		y_euler(1,i,:,2) = (/ 0._8 , 0._8 /)
+		y_cn(1,i,:,1) = (/ 0._8 , 0._8 /)
+		y_cn(1,i,:,2) = (/ 0._8 , 0._8 /)
+	end do
+	
+	!euler implicito
+	do k=1,2			! beta=sqrt(alfa) y beta=alfa
+		do j=2,nt		! discretizacion tiempo
+			do i=1,nx	! discretizacion espacio
+				call euler_implicito(alfa,beta(k),gama,t(j),dt,x(i),&
+					y_euler((j-1),i,:,k),y_euler(j,i,:,k))
+			end do
+		end do
+	end do
+	
+	!crank nicholson
+	do k=1,2			! beta=sqrt(alfa) y beta=alfa
+		do j=2,nt		! discretizacion tiempo
+			do i=1,nx	! discretizacion espacio
+				call crank_nicolson(alfa,beta(k),gama,t(j-1:j),x(i),&
+					&y_cn((j-1),i,:,k),y_cn(j,i,:,k))
+			end do
+		end do
+	end do
+	
+	!--------------- exportar datos--------------------
+
+	data_beta(1) = '1' ; data_beta(2) = '2' 
+	do k=1,2
+		!grafica para y_euler(x=0.005,t) vs t 
+		open(unit=10, action="write", &
+		&file=data_file2//'datos_euler_S2_y_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_euler(i,nx,1,k)
+			end do
+		close(10)
+		!grafica para dy_euler(x=0.005,t) vs t
+		open(unit=10, action="write", &
+		&file=data_file2//'datos_euler_S2_dy_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_euler(i,nx,2,k)
+			end do
+		close(10)
+		!grafica para y_cn(x=0.005,t) vs t 
+		open(unit=10, action="write",&
+		&file=data_file2//'datos_cn_S2_y_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_cn(i,nx,1,k)
+			end do
+		close(10)
+		!grafica para dy_cn(x=0.005,t) vs t
+		open(unit=10, action="write",&
+		&file=data_file2//'datos_cn_S2_dy_b'//data_beta(k)//'.txt')
+			do i=1,nt
+				write(10,*) t(i) , y_cn(i,nx,2,k)
+			end do
+		close(10)
+	end do
+		
+	deallocate(t,y_euler,y_cn)
+	
+	!---------------- graficar ------------------------
+	
+	call system('cd gnuplot/ && gnuplot plot_p2_1.txt')
+		
+end program
+\end{lstlisting}
+
+\subsubsection*{Subrutina: eigenval()}
+\begin{lstlisting}
+subroutine eigenval(alfa,beta,lamb1,lamb2)
+!---------------------------------------------
+	use modulo_pregunta2
+	implicit none
+	!variables entrada
+	real(kind=np),intent(in)	:: alfa,beta
+	!variables salida
+	complex(kind=np),intent(out)	:: lamb1,lamb2
+!---------------------------------------------
+	if ( beta .ge. 2._8*sqrt(alfa) ) then 
+		lamb1 = complex( 0.5_8*(-beta+sqrt(beta**2d0-4d0*alfa)) , 0._8 )
+		lamb2 = complex( 0.5_8*(-beta-sqrt(beta**2d0-4d0*alfa)) , 0._8 )
+	else
+		lamb1 = complex( -0.5_8*beta , 0.5_8*sqrt(-beta**2d0+4d0*alfa) ) 
+		lamb2 = complex( -0.5_8*beta , -0.5_8*sqrt(-beta**2d0+4d0*alfa) ) 
+	end if
+!---------------------------------------------	
+end subroutine
+\end{lstlisting}
+
+\subsubsection*{Subrutina: euler\_implicito}
+\begin{lstlisting}
+subroutine euler_implicito(alfa,beta,gama,t,dt,x,y_0,y_1)
+!---------------------------------------------
+	use modulo_pregunta2
+	implicit none
+	!variables entrada
+	real(kind=np),intent(in) :: alfa,beta,gama,t,dt,x
+	!variables entrada-salida
+	real(kind=np),dimension(2),intent(inout)	:: y_0,y_1
+	!variables locales
+	integer							:: i,j
+	real(kind=np)					:: suma
+	real(kind=np),dimension(2)		:: yn0,yn1,f_0
+	real(kind=np),dimension(2,2)	:: Matrix_A
+!---------------------------------------------
+	Matrix_A(1,:) = (/ 1._8 + beta*dt , dt /)
+	Matrix_A(2,:) = (/ -alfa*dt , 1._8 /)
+	Matrix_A = Matrix_A / ( 1._8 + beta*dt + alfa*dt**2._8 )
+	f_0(:) = (/ 0._8 , x*dt*gama*dp*(a+b*cos(w*(t))) /)
+	do i=1,2
+		suma=0d0
+		do j=1,2
+			suma = suma + Matrix_A(i,j)*(y_0(j)+f_0(j)) 
+		enddo
+		y_1(i)=suma
+	end do
+end subroutine
+\end{lstlisting}
+
+\subsubsection*{Subrutina: crank\_nicolson()}
+\begin{lstlisting}
+subroutine crank_nicolson(alfa,beta,gama,t,x,y_0,y_1)
+!---------------------------------------------
+	use modulo_pregunta2
+	implicit none
+	!variables entrada
+	real(kind=np),intent(in) :: alfa,beta,gama,x
+	real(kind=np),dimension(2),intent(in)::t
+	!variables entrada-salida
+	real(kind=np),dimension(2),intent(inout)	:: y_0,y_1
+	!variables locales
+	integer							:: i,j
+	real(kind=np)					:: suma,dt
+	real(kind=np),dimension(2)		:: yn0,yn1,f_0
+	real(kind=np),dimension(2,2)	:: Matrix_A,Matrix_B
+!---------------------------------------------
+	dt = t(2) - t(1)
+	
+	!matriz A
+	Matrix_A(1,:) = (/ 1._8 + beta*dt*0.5_8 - alfa*dt**2._8*0.25_8 ,  dt /)
+	Matrix_A(2,:) = (/ -alfa*dt , 1._8 - beta*dt*0.5_8 - alfa*0.25_8*dt**2._8 /)
+	Matrix_A = Matrix_A/(1._8 + beta*dt*0.5_8 + alfa*dt**2._8*0.25_8)
+	
+	!matriz B
+	Matrix_B(1,:) = (/ 1._8 + beta*dt*0.5_8 , dt*0.5_8 /)
+	Matrix_B(2,:) = (/ -alfa*dt*0.5_8 , 1._8 /)
+	Matrix_B = Matrix_B/(1._8 + beta*dt*0.5_8 + alfa*dt**2._8*0.25_8)
+	
+	!vector f_0
+	f_0(:) = (/ 0._8 , x*dt*gama*dp*(a+b*cos(w*t(1)))*0.5_8 + &
+		&x*dt*gama*dp*(a+b*cos(w*t(2)))*0.5_8  /)
+	
+	!calcular y_(n+1) y dy_(n+1) 
+	do i=1,2
+		suma=0d0
+		do j=1,2
+			suma = suma + Matrix_A(i,j)*y_0(j) + Matrix_B(i,j)*f_0(j) 
+		enddo
+		y_1(i)=suma
+	end do
+	
+end subroutine
+\end{lstlisting}
+
+\subsubsection*{Parte 2}
+\begin{lstlisting}
+program simulacion_3
+!-------------------------------------------------
+	use modulo_pregunta2
+	implicit none
+	
+	interface
+		subroutine leap_frog(gama,lambda,t,dt,x,y_0,y_1,y_2)
+			implicit none
+			real(kind=8),intent(in)	:: gama,lambda,t,dt
+			real(kind=8),dimension(:),intent(in) :: x
+			real(kind=8),dimension(:),intent(inout) :: y_0,y_1,y_2
+		end subroutine
+		subroutine newmark(gama,lambda,t,dt,x,theta,beta,u_0,u_1,v_0,v_1)
+			implicit none
+			real(kind=8),intent(in)	:: gama,lambda,t,dt,theta,beta
+			real(kind=8),dimension(:),intent(in) :: x
+			real(kind=8),dimension(:),intent(inout) :: u_0,u_1,v_0,v_1
+		end subroutine
+	end interface
+	
+	type y_data
+		real(kind=8),dimension(:,:),allocatable::kk
+	end type
+	type xt_data
+		real(kind=8),dimension(:),allocatable::kk_
+	end type
+	
+	integer::nx,nt_lf,nt_nm,k,i,j,q1,q2,contador1,contador2,ii,jj
+	integer,dimension(4)::datos_nx
+	integer,dimension(2,4)::datos_nt
+	real(kind=8),dimension(4)::datos_dx
+	real(kind=8),dimension(2,4)::datos_dt
+	real(kind=8)::dx,dt_lf,dt_nm,lambda_lf,lambda_nm,gama,theta,beta
+	real(kind=8),dimension(4,10)::e_lf,e_nm,p_lf,p_nm
+	real(kind=8),dimension(2,10)::tiempo
+	type(y_data),dimension(4)::y_lf,y_nm,dy_nm,y_exacta_lf,y_exacta_nm
+	type(xt_data),dimension(4)::x,t_lf,t_nm
+	character(len=11)::data_folder='./datos/S3/'
+	character(len=20)::data_folder_informe='./../INFORME/parte3/'
+	
+	!para la simulación 2
+	integer::nt
+	real(kind=8)::y_lf1(101,11),y_lf2(401,11),y_nm1(101,11),dy_nm1(101,11),&
+		&y_nm2(401,11),dy_nm2(401,11),dt,TT,xx(11),vt1(101),vt2(401),lambda
+	
+!-------------------------------------------------
+
+	!SIMULACIÓN 1
+
+	do k=1,4
+
+		!discretizacion
+		call discretizacion(k-1,nx,dx,nt_lf,dt_lf,nt_nm,dt_nm)
+		
+		!espacial
+		datos_dx(k)=dx
+		datos_nx(k)=nx
+		
+		!leapfrog
+		datos_dt(1,k)=dt_lf
+		datos_nt(1,k)=nt_lf
+		
+		!newman
+		datos_dt(2,k)=dt_nm
+		datos_nt(2,k)=nt_nm
+		
+		!parametros
+		lambda_lf	= dt_lf/dx
+		lambda_nm	= dt_nm/dx
+		gama	= sigma/(rho_w*H)
+		
+		allocate(x(k)%kk_(nx+1),t_lf(k)%kk_(nt_lf+1),&
+			&t_nm(k)%kk_(nt_nm+1),y_lf(k)%kk(nt_lf+1,nx+1),&
+			&y_nm(k)%kk(nt_nm+1,nx+1),dy_nm(k)%kk(nt_nm+1,nx+1),&
+			&y_exacta_lf(k)%kk(nt_lf+1,nx+1),&
+			&y_exacta_nm(k)%kk(nt_nm+1,nx+1))
+			
+		!discretizacion espacio-tiempo
+		x(k)%kk_(:) = (/ (dx*(i-1),i=1,nx+1) /)
+		t_lf(k)%kk_(:) = (/ (dt_lf*(i-1),i=1,nt_lf+1) /)
+		t_nm(k)%kk_(:) = (/ (dt_nm*(i-1),i=1,nt_nm+1) /)
+		
+		!condicion inicial esquema newmark
+		y_nm(k)%kk(1,:) = (/ (sin(pi*x(k)%kk_(i)),i=1,nx+1) /)
+		dy_nm(k)%kk(1,:)= (/ (-sin(pi*x(k)%kk_(i)),i=1,nx+1) /)
+		
+		!condiciones iniciales esquema leapfrog
+		y_lf(k)%kk(1,:) = (/ (sin(pi*x(k)%kk_(i)),i=1,nx+1) /)
+		y_lf(k)%kk(2,:) = y_lf(k)%kk(1,:) + &
+			&dt_lf*(/ (-sin(pi*x(k)%kk_(i)),i=1,nx+1) /)
+	
+		!integracion temporal LEAP-FROG
+		do i=3,nt_lf+1
+			call leap_frog(gama,lambda_lf,t_lf(k)%kk_(i),&
+				&dt_lf,x(k)%kk_(:),&
+				&y_lf(k)%kk(i-2,:),y_lf(k)%kk(i-1,:),&
+					&y_lf(k)%kk(i,:))
+		end do
+
+		!integracion temporal NEWMARK
+		theta=0.5_8
+		beta=0.25_8
+		do i=2,nt_nm+1
+			call newmark(gama,lambda_nm,t_nm(k)%kk_(i),&
+				&dt_nm,x(k)%kk_(:),theta,beta,&
+				&y_nm(k)%kk(i-1,:),y_nm(k)%kk(i,:),&
+				&dy_nm(k)%kk(i-1,:),dy_nm(k)%kk(i,:))
+		end do
+
+		!solucion analitica
+		do i=1,nt_lf+1
+			y_exacta_lf(k)%kk(i,:) = (/ (exp(-t_lf(k)%kk_(i))*&
+			&sin(pi*x(k)%kk_(j)),j=1,nx+1) /)
+		end do
+		do i=1,nt_nm+1
+			y_exacta_nm(k)%kk(i,:) = (/ (exp(-t_nm(k)%kk_(i))*&
+				&sin(pi*x(k)%kk_(j)),j=1,nx+1) /)
+		end do
+		
+		if (k.eq.4) then
+			!exportar datos
+			open(unit=10, status="unknown", action="write",&
+				& file=data_folder//'datos_S3_1.txt')
+				write(10,*) 'x',t_nm(k)%kk_(:)
+				do i=1,nx+1
+					write(10,*) x(k)%kk_(i),y_exacta_nm(k)%kk(:,i)
+				end do
+			close(10)
+			open(unit=10, status="unknown", action="write",&
+				& file=data_folder//'datos_S3_2.txt')
+				write(10,*) 'x',t_lf(k)%kk_(:)
+				do i=1,nx+1
+					write(10,*) x(k)%kk_(i),y_lf(k)%kk(:,i)
+				end do
+			close(10)
+			open(unit=10, status="unknown", action="write",&
+				& file=data_folder//'datos_S3_3.txt')
+				write(10,*) 'x',t_nm(k)%kk_(:)
+				do i=1,nx+1
+					write(10,*) x(k)%kk_(i),y_nm(k)%kk(:,i)
+				end do
+			close(10)
+		end if
+	end do
+	
+	!------------------------------------
+	
+	!calculo del error
+	!p(1,:) => error e_0
+	do i=1,10
+		!p_lf(1,i) = maxval( abs( y_lf(1)%kk(i+1,:) - &
+			&y_exacta(1)%kk(i+1,:) ) )
+		!p_nm(1,i) = maxval( abs( y_nm(1)%kk(i+1,:) - &
+			&y_exacta(1)%kk(i+1,:) ) )
+		p_lf(1,i) = sqrt(sum( ( y_lf(1)%kk(i+1,:) - &
+			&y_exacta_lf(1)%kk(i+1,:) )**2._8 ))/datos_nx(1)
+		p_nm(1,i) = sqrt(sum( ( y_nm(1)%kk(i+1,:) - &
+			&y_exacta_nm(1)%kk(i+1,:) )**2._8 ))/datos_nx(1)
+	end do
+	
+	!p(k,j) convergencia en cada paso de tiempo j para cada malla k
+	do k=2,4
+	
+		q1=datos_nt(1,k)/10 
+		q2=datos_nt(2,k)/10
+		contador1 = 1
+		contador2 = 1
+		j=1
+		jj=1
+
+	!LEAP-FROG		
+	do i=1,datos_nt(1,k)
+		if (j.eq.q1) then
+			!p_lf(k,contador1) = maxval( abs( y_lf(k)%kk(i,:)&
+				& - y_exacta_lf(k)%kk(i,:) ) )
+			p_lf(k,contador1) = sqrt(sum( ( y_lf(k)%kk(i,:) -&
+				& y_exacta_lf(k)%kk(i,:) )**2._8 ))/datos_nx(k)
+			p_lf(k,contador1) = log(p_lf(1,contador1)/&
+				&p_lf(k,contador1)/log(2._8**dfloat(k-1)))
+			tiempo(1,contador1) = t_lf(k)%kk_(i+1)
+			contador1 = contador1 + 1
+			j = 0
+		end if
+		j = j + 1
+	end do
+		
+	!NEWMARK
+	do i=1,datos_nt(2,k)
+		if (jj.eq.q2) then
+			!p_nm(k,contador2) = maxval( abs( &
+				&y_nm(k)%kk(i,:) - y_exacta_nm(k)%kk(i,:) ) )
+			p_nm(k,contador2) = sqrt(sum( ( y_nm(k)%kk(i,:) -&
+				& y_exacta_nm(k)%kk(i,:) )**2._8 ))/datos_nx(k)
+			p_nm(k,contador2) = log(p_nm(1,contador2)/&
+				&p_nm(k,contador2)/log(2._8**dfloat(k-1)))
+			tiempo(2,contador2) = t_nm(k)%kk_(i+1)
+			contador2 = contador2 + 1
+			jj = 0
+		end if
+		jj= jj + 1
+	end do
+		
+	end do
+	
+	!genera tabla LF
+	open(unit=10, status="unknown", action="write",&
+	& file=data_folder//'TABLA_CONVERGENCIA_LEAPFROG.txt')
+	!'t_j(0)', 'p_LF(1)' , 'p_LF(2)' , 'p_LF(3)'
+	do i=1,10
+		write(10,'(4F8.4)') tiempo(1,i) , p_lf(2,i) ,&
+			& p_lf(3,i) , p_lf(4,i)
+	end do
+	close(10)
+	
+	!genera tabla NW
+	open(unit=10, status="unknown", action="write",&
+	& file=data_folder//'TABLA_CONVERGENCIA_NEWMARK.txt')
+	! 't_j(0)', 'p_NM(1)' , 'p_NM(2)' , 'p_NM(3)'
+	do i=1,10
+		write(10,'(4F8.4)') tiempo(2,i) , p_nm(2,i) ,&
+			& p_nm(3,i) , p_nm(4,i)
+	end do
+	close(10)
+	
+	!exportar tabla al informe
+100 format(' ',2(F8.4,A3,F8.4,A3,F8.4,A3,F8.4,A4))
+	open(unit=10, status="unknown", action="write",&
+	& file=data_folder_informe//'TABLA_CONVERGENCIA.tex')
+	!'t_j(0)', 'p_LF(1)' , 'p_LF(2)' , 'p_LF(3)'
+	do i=1,10
+		write(10,100) tiempo(1,i),'&',p_lf(2,i),'&',&
+			&p_lf(3,i),'&',p_lf(4,i),&
+			&'&', tiempo(2,i),'&',p_nm(2,i),'&',&
+				&p_nm(3,i),'&',p_nm(4,i),'\\'
+	end do
+	close(10)
+	
+	!generar animaciones
+	call system('cd gnuplot/ && gnuplot plot_p3s1.txt')
+	
+!-------------------------------------------------
+
+end program
+\end{lstlisting}
+
+\subsubsection*{Subrutina: discretizacion()}
+\begin{lstlisting}
+subroutine discretizacion(k,nx,dx,nt_lf,dt_lf,nt_nm,dt_nm)
+	implicit none
+	!entrada
+	integer,intent(in)::k
+	!salida
+	integer,intent(out)::nx,nt_lf,nt_nm
+	real(kind=8),intent(out)::dx,dt_lf,dt_nm
+!-----------------------------------
+	! espacial
+	dx = 1._8 / (2._8**k*10)
+	nx = nint(1._8/dx)
+	! tiempo lf
+	dt_lf = 0.25_8*dx
+	nt_lf = nint(1._8/dt_lf)
+	! tiempo nm
+	dt_nm = dx
+	nt_nm = nint(1._8/dt_nm)
+end subroutine
+\end{lstlisting}
+
+\subsubsection*{Subrutina: leap\_frog()}
+\begin{lstlisting}
+subroutine leap_frog(gama,lambda,t,dt,x,y_0,y_1,y_2)
+!---------------------------
+	use modulo_pregunta2
+	implicit none
+	!entrada
+	real(kind=8),intent(in)	:: gama,lambda,t,dt
+	real(kind=8),dimension(:),intent(in) :: x
+	!entrada-salida
+	real(kind=8),dimension(:),intent(inout) :: y_0,y_1,y_2
+	!variables locales
+	integer::n,i
+	real(kind=8)::alfa
+	real(kind=8),dimension(:),allocatable::f
+!---------------------------
+	n=size(x)
+	alfa = (lambda*gama)**2._8
+	allocate(f(n))
+	f(:) = (/ ( (1._8+pi**2._8*gama**2._8)*exp(-t)*&
+		&sin(pi*x(i)) , i=1,n) /)  * dt**2._8
+	y_2(1) = 0._8
+	y_2(2) = (2._8-2._8*alfa)*y_1(2) + alfa*y_1(3) -&
+		& y_0(2) + f(2)
+	do i=3,n-2
+		y_2(i) = alfa*y_1(i-1) + (2._8-2._8*alfa)*y_1(i)&
+			& + alfa*y_1(i+1) - y_0(i) + f(i)
+	end do
+	y_2(n-1) = (2._8-2._8*alfa)*y_1(n-1) + alfa*y_1(n-2)&
+		& - y_0(n-1) + f(n-1)
+	y_2(n) = 0._8
+end subroutine
+\end{lstlisting}
+
+\subsubsection*{Subrutina: newmark()}
+\begin{lstlisting}
+subroutine newmark(gama,lambda,t,dt,x,theta,beta,u_0,u_1,v_0,v_1)
+!---------------------------
+	use modulo_pregunta2
+	implicit none
+	!entrada
+	real(kind=8),intent(in)	:: gama,lambda,t,dt,theta,beta
+	real(kind=8),dimension(:),intent(in) :: x
+	!entrada-salida
+	real(kind=8),dimension(:),intent(inout) :: u_0,u_1,v_0,v_1
+	!variables locales
+	integer::n,nn,i,j,k
+	integer,dimension(:),allocatable::indx
+	real(kind=8)::alfa,tmp,d
+	real(kind=8),dimension(:),allocatable::f_u,f_v
+	real(kind=8),dimension(:,:),allocatable::M,M_inv,AA,tmp_m
+!---------------------------
+	n=size(x)
+	nn=n-2
+	alfa = lambda*gama**2._8
+	
+	allocate(f_u(n),f_v(n))
+	f_u(:) = (/ (  beta*(1._8+pi**2._8*gama**2._8)&
+		&*exp(-t-dt)*sin(pi*x(i)) &
+		&+ (0.5_8-beta)*(1._8+pi**2._8*gama**2._8)&
+			&*exp( -t  )*sin(pi*x(i)) , i=1,n	 ) /)
+	f_v(:) = (/ (     theta*(1._8+pi**2._8*gama**2._8)
+		&*exp(-t-dt)*sin(pi*x(i)) &
+			&+ (1._8-theta)*(1._8+pi**2._8*gama**2._8)&
+				&*exp( -t  )*sin(pi*x(i)) , i=1,n	 ) /)
+	
+	!-----------------------------------
+
+	!crear matriz M (matriz del lado izquierdo de la ecuacion)
+	allocate(M(nn,nn))
+	M(:,:) = 0d0
+	M(1,1) = 1._8 + 2._8*alfa*beta ; M(1,2) = - beta*alfa
+	do i=2,nn-1
+		M(i,i-1:i+1) = (/ - beta*alfa , 1._8 + &
+			&2._8*alfa*beta , - beta*alfa /)
+	end do
+	M(nn,nn-1) = - beta*alfa ; M(nn,nn) = 1._8 +&
+		& 2._8*alfa*beta
+	
+	!invertir matriz M
+	allocate(indx(nn))
+	allocate(M_inv(nn,nn))
+	call invertir_matriz(M,nn,1d-10,M_inv)
+		
+!	tmp_m
+	allocate(tmp_m(nn,nn))
+	do i=1,nn
+		tmp_m(i,:) = (/ (0._8,j=1,nn) /)
+	end do
+	tmp_m(1,1) = 1._8 - alfa + 2._8*alfa*beta ; &
+		&tmp_m(1,2) = 0.5_8*alfa - alfa*beta
+	do i=2,nn-1
+		tmp_m(i,i-1:i+1) = (/ 0.5_8*alfa - alfa*beta &
+			&, 1._8 - alfa + 2._8*alfa*beta , 0.5_8*alfa &
+				&- alfa*beta /)
+	end do
+	tmp_m(nn,nn-1) = 0.5_8*alfa - alfa*beta ;&
+		& tmp_m(nn,nn) = 1._8 - alfa + 2._8*alfa*beta
+
+!	AA = M_inv * tmp_m
+	allocate(AA(nn,nn))
+	do i=1,nn
+		do j=1,nn
+			tmp=0._8
+			do k=1,nn
+				tmp = tmp + M_inv(i,k)*tmp_m(k,j)
+			end do
+			AA(i,j) = tmp
+		end do
+	end do
+			
+!	u_(n+1) = AA * u_(n) + M_inv * v(n) + dt * M_inv * f_u
+	u_1(1) = 0._8
+	do i=1,nn
+		tmp = 0._8
+		do j=1,nn
+			tmp = tmp + AA(i,j)*u_0(j+1) + M_inv(i,j)*&
+				&v_0(j+1)*dt + M_inv(i,j)*f_u(j+1)*dt**2._8
+		end do
+		u_1(i+1) = tmp
+	end do
+	u_1(n) = 0._8
+	
+!	v_(n+1) es explicito
+!	v_1(1) = v_0(1) + dt*alfa*theta*(-2._8*u_1(1)+u_1(2)) &
+!			&+ dt*alfa*(1._8-theta)*(-2._8*u_0(1)+u_0(2)) &
+!			&+ dt*f_v(1)*dt
+
+!	v_1(1) = (3._8*u_1(1)-4._8*u_1(2)+1._8*u_1(3))/(2._8*dt)
+
+	v_1(1)=0d0
+	do i=2,n-1
+		v_1(i) = v_0(i) + alfa*theta*(1._8/dt)*&
+			&(u_1(i-1)-2._8*u_1(i)+u_1(i+1)) &
+				&+ (1._8/dt)*alfa*(1._8-theta)*&
+					&(u_0(i-1)-2._8*u_0(i)+u_0(i+1)) &
+				&+ dt*f_v(i)
+	end do
+!	v_1(n) = v_0(n) + dt*alfa*theta*(-2._8*u_1(n)+u_1(n-1)) &
+!			&+ dt*alfa*(1._8-theta)*(-2._8*u_0(n)+u_0(n-1)) &
+!			&+ f_v(n)*dt
+	
+!	v_1(n) = (3._8*u_1(n)-4._8*u_1(n-1)+1._8*u_1(n-2))/(2._8*dt)
+	
+	v_1(n) = 0d0
+	
+end subroutine
+
+subroutine Ludecomp(a,b,n,tol,x)
+
+	integer::n,er
+	integer::o(n)
+	double precision::a(n,n),b(n),x(n),tol,s(n)
+
+	er=0
+	call Decompose(a,n,tol,o,s,er)
+	if(er/=-1)then
+		call Substitute(a,o,n,b,x)
+	endif
+
+end subroutine
+
+subroutine Decompose(a,n,tol,o,s,er)
+
+	integer::n,er
+	integer::o(n)
+	double precision::a(n,n),tol,s(n)
+
+	do i=1,n
+		o(i)=i
+		s(i)=abs(a(i,1))
+		do j=2,n
+			if(abs(a(i,j))>s(i))then
+				s(i)=abs(a(i,j))
+			endif
+		enddo
+	enddo
+	do k=1,n-1
+		call Pivot(a,o,s,n,k)
+		if(abs(a(o(k),k)/s(o(k)))<tol)then
+			er=-1
+!			write(*,*)a(o(k),k)/s(o(k))
+			exit
+		endif
+		do i=k+1,n
+			factor=a(o(i),k)/a(o(k),k)
+			a(o(i),k)=factor
+			do j=k+1,n
+				a(o(i),j)=a(o(i),j)-factor*a(o(k),j)
+			enddo
+		enddo
+	enddo
+	if(abs(a(o(k),k)/s(o(k)))<tol)then
+		er=-1
+!		write(*,*)a(o(k),k)/s(o(k))
+	endif
+
+end subroutine
+
+subroutine Pivot(a,o,s,n,k)
+
+	integer::n,k,p
+	integer::o(n),dummy1
+	double precision::a(n,n),s(n),big,dummy2
+
+	p=k
+	big=abs(a(o(k),k)/s(o(k)))
+	do ii=k+1,n
+		dummy2=abs(a(o(ii),k)/s(o(ii)))
+		if(dummy>big)then
+			big=dummy2
+			p=ii
+		endif
+	enddo
+	dummy1=o(p)
+	o(p)=o(k)
+	o(k)=dummy1
+
+end subroutine
+
+subroutine Substitute(a,o,n,b,x)
+
+	integer::n
+	integer::o(n)
+	double precision::a(n,n),b(n),x(n),suma
+
+	do i=2,n
+		suma=b(o(i))
+		do j=1,i-1
+			suma=suma-a(o(i),j)*b(o(j))
+		enddo
+		b(o(i))=suma
+	enddo
+	x(n)=b(o(n))/a(o(n),n)
+	do i=n-1,1,-1
+		suma=0d0
+		do j=i+1,n
+			suma=suma+a(o(i),j)*x(j)
+		enddo
+		x(i)=(b(o(i))-suma)/a(o(i),i)
+	enddo
+
+end subroutine
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+subroutine invertir_matriz(a,n,tol,ai)
+
+integer::n,er=0
+integer::o(n)
+double precision::a(n,n),s(n),tol,b(n),x(n),ai(n,n)
+
+	call Decompose(a,n,tol,o,s,er)
+	if(er==0)then
+		do i=1,n
+			do j=1,n
+				if(i==j)then
+					b(j)=1.
+				else
+					b(j)=0.
+				endif
+			enddo
+			call Substitute(a,o,n,b,x)
+			do j=1,n
+				ai(j,i)=x(j)
+			enddo
+		enddo
+	!write(*,*)a
+	else
+	!write(*,*)'sistema mal condicionado'
+	endif
+
+end subroutine
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+\end{lstlisting}
+
+\subsubsection*{Atractor de Lorenz}
+\begin{lstlisting}
+program Pregunta_3
+	!--------------------------------
+	implicit none
+	integer::n,m,i,j
+	real(kind=8) :: tiempo_total,dt,Pr,beta,t
+	real(kind=8),dimension(3) :: z0,z1,Ra
+	real(kind=8),dimension(11)::Ra_2
+	character(len=8)::folder='./datos/'
+	character(len=2),dimension(3) :: ra_n
+	character(len=2),dimension(11) :: ra_n2
+	!--------------------------------
+
+	!discretizacion tiempo	
+	tiempo_total = 6d1
+	t	= 0._8
+	dt	= 0.01_8
+	m	= nint(tiempo_total/dt)
+
+	!parametros
+	Pr	= 10._8
+	Ra	= (/ 0.5_8 , 10._8 , 28._8 /)
+	beta = 8._8/3._8
+
+	!resolucion atractor de lorenz
+	ra_n(1) = '05' ; ra_n(2) = '10' ; ra_n(3) = '28' 
+	do j=1,3
+		open(unit=10, file=folder//'datos_P3_'//&
+			&ra_n(j)//'.dat', action='write')
+		!inicializacion
+		n = 0
+		z0(:) = (/ 0._8 , 1._8 , 0._8 /)
+		write(10,*) n , t , 10._8*z0(1) , 10._8*z0(2) , 10._8*z0(3)
+		!subrutina RK4 -> Ra = 0.5
+		do i=1,m
+			call rk4(Pr,Ra(j),beta,t,dt,z0,z1)
+			z0 = z1
+			n = n+1
+			t = t+dt
+			if ( mod(n,5) .eq. 0 ) then
+				write(10,*) n , t , 10._8*z0(1) , &
+					&10._8*z0(2) , 10._8*z0(3)
+			end if
+		end do
+		close(unit=10)
+	end do
+
+!----------------------------------------
+
+	!variar lentamente Ra
+	Ra_2(:) = (/ (3.0*(j-1) , j=1,11) /)
+
+	ra_n2(1) = '00'
+	ra_n2(2) = '03'
+	ra_n2(3) = '06'
+	ra_n2(4) = '09'
+	ra_n2(5) = '12'
+	ra_n2(6) = '15'
+	ra_n2(7) = '18'
+	ra_n2(8) = '21'
+	ra_n2(9) = '24'
+	ra_n2(10) = '27'
+	ra_n2(11) = '30'
+
+	do j=1,11
+		open(unit=10, file=folder//'datos_P3_'//&
+			&ra_n2(j)//'.dat', action='write')
+		!inicializacion
+		n = 0
+		z0(:) = (/ 0._8 , 1._8 , 0._8 /)
+		write(10,*) n , t , 10._8*z0(1) , 10._8*z0(2)&
+			& , 10._8*z0(3)
+		!subrutina RK4 -> Ra = 0.5
+		do i=1,m
+			call rk4(Pr,Ra(j),beta,t,dt,z0,z1)
+			z0 = z1
+			n = n+1
+			t = t+dt
+			if ( mod(n,5) .eq. 0 ) then
+				write(10,*) n , t , 10._8*z0(1) ,&
+					& 10._8*z0(2) , 10._8*z0(3)
+			end if
+		end do
+		close(unit=10)
+	end do
+	
+	call system('cd gnuplot/ && gnuplot plot_P3.txt')
+end program
+\end{lstlisting}
+
+\subsubsection*{Subrutina: rk4()}
+\begin{lstlisting}
+subroutine rk4(Pr,Ra,beta,t0,dt,y0,y4)
+	!-----------------------------
+	! esta subrutina implementa el método de 
+	! integracion RK4 vectorial (dimension 3)
+	! de la forma dy/dt = g(t,y)
+	!-----------------------------
+	implicit none
+	!entrada
+	real(kind=8),intent(in)	:: t0,dt,Pr,Ra,beta
+	real(kind=8),dimension(3),intent(in)	:: y0
+	!salida
+	real(kind=8),dimension(3),intent(out)	:: y4
+	!local
+	real(kind=8)				:: t1,t2
+	real(kind=8),dimension(3)	:: y1,y2,y3
+	!-----------------------------
+	!tiempo
+	t1 = t0 + 0.5_8*dt	!medio paso
+	t2 = t0 + dt		!un paso
+	!pasos rk4	
+	y1 = y0 + 0.5_8*dt * g(Pr,Ra,beta,t0,y0)
+	y2 = y0 + 0.5_8*dt * g(Pr,Ra,beta,t1,y1)
+	y3 = y0 + dt * g(Pr,Ra,beta,t1,y2)	
+	y4 = y0 +  (dt/6._8) * &
+		& ( g(Pr,Ra,beta,t0,y0) + &
+		& 2._8*g(Pr,Ra,beta,t1,y1) + &
+		& 2._8*g(Pr,Ra,beta,t1,y2) + &
+		& g(Pr,Ra,beta,t2,y3) )
+	!-----------------------------
+	contains
+		function g(Pr,Ra,beta,t,z) result(v)
+		! la funcion g representa el lado derecho
+		! de la ecuacion (rhs) de lorenz
+			real(kind=8),intent(in)::Pr,Ra,beta,t,z(3)
+			real(kind=8)::v(3)
+			v(1) = Pr*(z(2)-z(1))
+			v(2) = Ra*z(1)-z(2)-z(1)*z(3)
+			v(3) = z(1)*z(2)-beta*z(3)
+		end function g
+	!-----------------------------
+end subroutine
+\end{lstlisting}
+
 \newpage
 %---------------------------------------------
 
@@ -163,6 +1462,10 @@ Editorial Springer, 2000, ISBN 0-387-98959-5
 
 \bibitem{met_num} \textsc{Chapra, S.} y \textsc{Canale, R.} , \textit{Métodos numéricos para ingenieros}, 5ta edición,
 Editorial McGraw-Hill, 2007, ISBN-13: 978-970-10-6114-5
+
+\bibitem{inv} \textsc{Moawwad, E.} , \textsc{Abdelrahman, K.} , \textit{Inversion of general tridiagonal matrices}, Applied Mathematics Letters 19, pag. 712-720. 2006
+
 \end{thebibliography}
+
 
 \end{document}

@@ -1,37 +1,29 @@
-#set term png
-#set output "xyz_time.png"
-#set xlabel "<--- T --->"
-#set ylabel "<--- X(T), Y(T), Z(T) --->"
-#set title "X(T), Y(T), Z(T) versus Time"
-#set grid
-#set style data lines
-#plot "lorenz_edo_data.txt" using 1:2 lw 3 linecolor rgb "blue", "" using 1:3 lw 3 linecolor rgb "red", "" using 1:4 lw 3 linecolor rgb "green"
-
-#set output "xyz_3d.png"
-#set xlabel "<--- X(T) --->"
-#set ylabel "<--- Y(T) --->"
-#set zlabel "<--- Z(T) --->"
-#set title "(X(T),Y(T),Z(T)) trajectory"
-#set grid
-#set style data lines
-#splot "lorenz_edo_data.txt" using 2:3:4 lw 1 linecolor rgb "blue"
-
-set terminal pdfcairo enhanced
+set terminal pdfcairo enhanced size 7,3
 set xlabel 'X(T)'
 set ylabel 'Y(T)'
 set zlabel 'Z(T)'
-set title 'Trayectoria'
+set title 'Solución numérica para la ecuación de convección'
 set grid
 set style data lines
 
-#set output '../graficos/grafico_P3_3d_ra05.pdf'
-#splot '../datos/datos_P3_05.dat' using 3:4:5 with lines notitle
 
-#set output '../graficos/grafico_P3_3d_ra10.pdf'
-#splot '../datos/datos_P3_10.dat' using 3:4:5 with lines notitle
+set title 'Solución de la ecuación de convección (Ra=0.5)' font "arial,30"
+set output '../graficos/grafico_P3_3d_ra05.pdf'
+splot '../datos/datos_P3_05.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra05.pdf'
+replot
 
-#set output '../graficos/grafico_P3_3d_ra28.pdf'
-#splot '../datos/datos_P3_28.dat' using 3:4:5 with lines notitle
+set title 'Solución de la ecuación de convección (Ra=10)' font "arial,30"
+set output '../graficos/grafico_P3_3d_ra10.pdf'
+splot '../datos/datos_P3_10.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra10.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=28)' font "arial,30"
+set output '../graficos/grafico_P3_3d_ra28.pdf'
+splot '../datos/datos_P3_28.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra28.pdf'
+replot
 
 #----------------------------------------------------------------
 
@@ -41,21 +33,120 @@ reset
 
 set terminal pdfcairo enhanced size 5,6
 set output '../graficos/FIGURA1.pdf'
-set multiplot layout 3,1 title 'Trayectoria'
-set title '1'
+set multiplot layout 3,1 title 'Solución numérica para la ecuación de convección (Y vs t)'
+set title 'Iteración 0 - 1000'
 plot "<(sed -n '1,200p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-set title '2'
+set title 'Iteración 1000 - 2000'
 plot "<(sed -n '200,400p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-set title '3'
+set title 'Iteración 2000 - 3000'
 plot "<(sed -n '400,600p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
 unset multiplot
 
 set terminal pdfcairo enhanced size 5,6
+set output '../../INFORME/parte4/graficos/FIGURA1.pdf'
+set multiplot layout 3,1 title 'Solución numérica para la ecuación de convección (Y vs t)'
+set title 'Iteración 0 - 1000'
+plot "<(sed -n '1,200p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+set title 'Iteración 1000 - 2000'
+plot "<(sed -n '200,400p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+set title 'Iteración 2000 - 3000'
+plot "<(sed -n '400,600p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+unset multiplot
+
+#----
+
+set terminal pdfcairo enhanced size 5,6
 set output '../graficos/FIGURA2.pdf'
-set multiplot layout 2,1 title 'Trayectoria'
-set title '1'
+set multiplot layout 2,1 title 'Solución numérica para la ecuación de convección'
+set title 'Proyección Y - X'
 plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 4:5 with lines notitle
-set title '2'
+set title 'Proyección X - Y'
 plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 3:4 with lines notitle
 unset multiplot
+
+set terminal pdfcairo enhanced size 5,6
+set output '../../INFORME/parte4/graficos/FIGURA2.pdf'
+set multiplot layout 2,1 title 'Solución numérica para la ecuación de convección'
+set title 'Proyección Y - X'
+plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 4:5 with lines notitle
+set title 'Proyección X - Y'
+plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 3:4 with lines notitle
+unset multiplot
+
+#----------------------------------------------------------------
+
+#variar lentamente Ra
+
+set terminal pdfcairo enhanced size 6,3.5
+set xlabel 'X(T)'
+set ylabel 'Y(T)'
+set zlabel 'Z(T)'
+set grid
+set style data lines
+
+set title 'Solución de la ecuación de convección (Ra=00)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra00.pdf'
+splot '../datos/datos_P3_00.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra00.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=03)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra03.pdf'
+splot '../datos/datos_P3_03.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra03.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=06)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra06.pdf'
+splot '../datos/datos_P3_06.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra06.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=09)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra09.pdf'
+splot '../datos/datos_P3_09.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra09.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=12)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra12.pdf'
+splot '../datos/datos_P3_12.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra12.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=15)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra15.pdf'
+splot '../datos/datos_P3_15.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra15.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=18)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra18.pdf'
+splot '../datos/datos_P3_18.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra18.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=21)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra21.pdf'
+splot '../datos/datos_P3_21.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra21.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=24)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra24.pdf'
+splot '../datos/datos_P3_24.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra24.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=27)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra27.pdf'
+splot '../datos/datos_P3_27.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra27.pdf'
+replot
+
+set title 'Solución de la ecuación de convección (Ra=30)' font "arial,30" 
+set output '../graficos/grafico_P3_3d_ra30.pdf'
+splot '../datos/datos_P3_30.dat' using 3:4:5 with lines notitle
+set output '../../INFORME/parte4/graficos/grafico_P3_3d_ra30.pdf'
+replot
 

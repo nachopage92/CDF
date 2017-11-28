@@ -24,8 +24,6 @@ Particularmente se modela la variación de la presión a lo largo de la arteria 
 (p-p_0) = x \Delta p  \left( a + b cos( \omega_0 t ) \right)
 \end{equation} 
 
-\subsubsection*{Simulación 1}
-
 Se calcula numericamente la ecuación (\ref{PROBLEMA_PARTE2}) con el término fuente (\ref{FUENTE_PARTE2}).  Se uyilizan los siguientes valores realistas para los parámetros físicos:
 \begin{table} [H]
 \centering
@@ -38,61 +36,51 @@ $E$		& = $9 \times 10 ^ {5}$ N m $^{-2}$ 	&				&
 \end{tabular}
 \caption{Parametros utilizados para la simulación 1} \label{PARAMETROS_PARTE2}
 \end{table}
-
 Y considerando a su vez dos parametros de $\beta$:
 \begin{enumerate}[label=(\alph*)]
 \item $\beta = \sqrt{ \alpha }$ 
 \item $\beta = \alpha$
 \end{enumerate}
-
 Se reescribe la ecuación (\ref{PROBLEMA_PARTE2}) como un sustema de ecuaciones lineales. En forma matricial,
-
-\begin{equation} \label{PROBLEMA_PARTE2_CORREGIDO}
-\vec{y'}(t) = \vect{A} \vec{y} + \vec{b}
+\begin{equation} \label{•}\vect{A} \vec{y} + \vec{b}
 \end{equation}
-
 donde $\vec{y} = \begin{vmatrix} y & y' \end{vmatrix}^T$ ($T$ significa transpuesta), y $\vec{b}(t)$ es un vector fuente dependiente del tiempo $t$. La matriz $\vect{A}$ resultante es,
-
 \begin{equation}
 \vect{A} = \begin{pmatrix}
 0 & 1 \\ -\alpha & -\beta
 \end{pmatrix}
 \end{equation}
-
 Los valores propios de $\vect{A}$ se obtienen del desarrollo del polinomio característico,
-
 \begin{equation}
-det(\vect{A} - \lambda \vect{I}) = \begin{vmatrix}
--\lambda & 1 \\
--\alpha & -\lambda -\beta 
-\end{vmatrix} \rightarrow \alpha \lambda^2 + \beta \lambda + 1 = 0
+det(\vect{A} - \Omega \vect{I}) = \begin{vmatrix}
+-\Omega & 1 \\
+-\alpha & -\Omega -\beta 
+\end{vmatrix} \rightarrow \alpha \Omega^2 + \beta \Omega + 1 = 0
 \end{equation}
-
 Luego, los valores propios se calculan como la raíz del polinomio,
-
 \begin{equation}
-\lambda_{1,2} = \dfrac{( -\beta \pm \sqrt{ \beta^2 - 4 \alpha})}{2}
+\Omega_{1,2} = \dfrac{( -\beta \pm \sqrt{ \beta^2 - 4 \alpha})}{2}
 \end{equation}
 
-Notar que para valores de $\beta \geq 2\sqrt{\alpha}$ ambos valores, $\lambda_1$ y $\lambda_2$, resultan reales y negativos, mientras que para valores de $\beta < 2\sqrt{\alpha}$ ambos autovalores resultan números complejos con su componente real negativa. \\
+Notar que para valores de $\beta \geq 2\sqrt{\alpha}$ ambos valores, $\Omega_1$ y $\Omega_2$, resultan reales y negativos, mientras que para valores de $\beta < 2\sqrt{\alpha}$ ambos autovalores resultan números complejos con su componente real negativa. \\
 
 Se implementa una subrutina que permite calcular los valores propios de la matriz $\vect{A}$. Utilizando los valores de la Tabla \ref{PARAMETROS_PARTE2} se obtiene:
 \begin{enumerate} [label=(\alph*)]
 \item $\beta = \sqrt{\alpha} = 6.0 \times 10^3 $
 \begin{equation}
 \vect{A} = \begin{pmatrix} 0 & 1 \\ 36.0 \times 10^6 & 6.0 \times 10^3 \end{pmatrix} \rightarrow 
-\begin{matrix} \lambda_1 = & -3000.00 + 5196.15 i \\ \lambda_2 = & -3000.00 - 5196.15 i \end{matrix}
+\begin{matrix} \Omega_1 = & -3000.00 + 5196.15 i \\ \Omega_2 = & -3000.00 - 5196.15 i \end{matrix}
 \end{equation} 
 \item $\beta = \alpha =  36.0 \times 10^6 $
 \begin{equation}
 \vect{A} = \begin{pmatrix} 0 & 1 \\ 36.0 \times 10^6 & 36.0 \times 10^6 \end{pmatrix} \rightarrow 
-\begin{matrix} \lambda_1 = & -1.0 \\ \lambda_2 = & -36.0 \times 10^6 \end{matrix}
+\begin{matrix} \Omega_1 = & -1.0 \\ \Omega_2 = & -36.0 \times 10^6 \end{matrix}
 \end{equation} 
 \end{enumerate}
 
 %------------------------------------
 
-\subsubsection{Simulación 1: Euler Implicito} 
+\subsubsection{Euler Implicito} 
 
 \paragraph{Discretización de la ecuación diferencial}
 Se implementa una subrutina que permite calcular la ecuacion (\ref{PROBLEMA_PARTE2}) usando el método de Euler Implícito para dos valores de $\beta$. Sea $y(x,t) = y^n_j$ y $\partial y / \partial t (x,t) = z^n_j$, recurriendo a la expresión (\ref{PROBLEMA_PARTE2_CORREGIDO}) e implementando un esquema de integración implícito se tiene que,
@@ -145,112 +133,45 @@ donde
 
 \paragraph{Estabilidad de la solución}
 Se quiere estudiar la estabilidad de la solución transiente de (\ref{PROBLEMA_PARTE2_CORREGIDO}). Para ello se recurre a las expresiones (\ref{analisis_espectral_general}) y (\ref{analisis_espectral_descompuesto}). Luego,
-\begin{align}
-\dfrac{ y^{n+1} - y^n } { \Delta t } & = \Omega_1 y^{n+1} \\
-\dfrac{ z^{n+1} - z^n } { \Delta t } & = \Omega_2 z^{n+1}
-\end{align} 
-
 \begin{equation}
 \dfrac{d \vec{U}}{d t} = \vect{S} \vec{U} + \vec{Q} \rightarrow \left\{ \begin{matrix}
 ( y^{n+1} - y^n ) /  \Delta t  = \Omega_1 y^{n+1} \\
 ( z^{n+1} - z^n ) /  \Delta t  = \Omega_2 z^{n+1}
 \end{matrix} \right.
 \end{equation}
-
 Despejando los terminos evaluados en $t_{n+1}$ en la izquierda de la ecuación
-
 \begin{align}
 y^{n+1} &= \dfrac{ 1 }{ 1 - \Delta t \Omega_1 } y^n \\
 z^{n+1} &= \dfrac{ 1 }{ 1 - \Delta t \Omega_2 } z^n
 \end{align}
-
-Se reconocen los términos $\vec{z}_p$ para $y$ y $z$. Teniendo en cuenta los valores propios $\Omega$ antes calculado
-
+Se define $z_{pj}$ como una aproximación de $G(\Omega_j)$ descrito en la Sección \ref{analisis_espectral_seccion}. 
+\begin{equation}
+\begin{matrix}
+G(\Omega_1) \approx z_{py} = \dfrac{ 1 }{ 1 - \Delta t \Omega_1 } \\
+G(\Omega_2) \approx z_{pz} = \dfrac{ 1 }{ 1 - \Delta t \Omega_2 }
+\end{matrix}
+\end{equation}
+Es de interés conocer el módulo de $z_p$. La condición de estabilidad se garantiza por el cumplimiento de las restricciones expuestas en las ecuaciones (\ref{convg_1}) y (\ref{convg_2})
 \begin{align}
-z_p &= \dfrac{1}{1-\Omega_j \Delta t} \\
-&= \dfrac{1}{ \left[ 1-\Re(\Omega_j) \Delta t \right] - \left[ \Im(\Omega_j) \Delta t \right] i }\\
+z_p &= \dfrac{1}{1-\Omega_j \Delta t} \notag \\
+&= \dfrac{1}{ \left[ 1-\Re(\Omega_j) \Delta t \right] - \left[ \Im(\Omega_j) \Delta t \right] i } \notag \\
 &= \dfrac{\left[ 1- \Re(\Omega_j) \Delta t \right] + \left[ \Im(\Omega_j) \Delta t \right] i }{ \left[ 1-\Re(\Omega_j) \Delta t \right]^2 + \left[ \Im(\Omega_j) \Delta t \right]^2}
 \end{align}
-
-El módulo de $z_p$ viene dado por
-
+Entonces,
 \begin{equation}
 ||z_p|| = \dfrac{ \sqrt{ \left[ 1-\Re(\Omega_j) \Delta t \right]^2 + \left[ \Im(\Omega_j) \Delta t \right]^2 } } { \left[ 1- \Re(\Omega_j) \Delta t \right]^2 + \left[ \Im(\Omega_j) \Delta t \right]^2}
 \end{equation}
+Se observa que $||z_p|| \leq 1 , \hspace{0,2cm} \forall \Omega_j \in \mathbb{C} : \Re(\Omega_j)<0$. Es decir, la solución es incondicionalmente convergente si la parte real de los $j$-ésimos valores propios $\Omega_j$ son menores a cero. A continuación me muestra el cálculo de $\Omega$ para $\beta=\sqrt{\alpha}$ y $\beta=\alpha$ para pasos de tiempo $\Delta t = 10^{-4}$ y $\Delta t = 0.1$. En las Figura \ref{euler_S1_b1} y \ref{euler_S1_b2} se grafica la solución obtenida por la subrutina para $\beta=\sqrt{\alpha}$ y $\beta=\alpha$, respectivamente.  
 
-\begin{enumerate}[label=(\alph*)]
+\subsubsection{Crank Nicolson}
 
-\item $\beta = \alpha$ y $\Delta t = 10^4$
-\begin{center}
-\begin{tabular}{lll}
-$\Omega_1 = −3000.00 + 5196.15i$ & $\rightarrow$ & $z_{p1} = $ \\
-$\Omega_2 = −3000.00 - 5196.15i$ & $\rightarrow$ & $z_{p2} = $
-\end{tabular}
-\end{center}
-
-\item $\beta = \sqrt{\alpha}$ y $\Delta t = 10^4$
-\begin{center}
-\begin{tabular}{lll}
-$\Omega_1 = -1.0$ & $\rightarrow$ & $z_{p1} = $ \\
-$\Omega_2 = -36.0 \times 10^6$ & $\rightarrow$ & $z_{p2} = $
-\end{tabular}
-\end{center}
-
-\end{enumerate}
-
-
-
-%----------------------- FIGURAS SIMULACION 1 -----------------------------
-%----------------------- 	EULER IMPLICITO  -----------------------------
-
-\begin{center}
-\begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
-		\includegraphics{./parte3/graficos/grafico_euler_S1_y_b1.pdf}
-		\caption{} 
-		\label{fig:eulerS1b1_y}
-	\end{subfigure}
-	
-	\begin{subfigure}[b]{0.3\textwidth}
-		\includegraphics{./parte3/graficos/grafico_euler_S1_dy_b1.pdf}
-		\caption{} 
-		\label{fig:eulerS1b1_dy}
-	\end{subfigure}
-\caption{} \label{euler_S1_b1}
-\end{figure}
-\end{center}
-
-
-\begin{center}
-\begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
-		\includegraphics{./parte3/graficos/grafico_euler_S1_y_b2.pdf}
-		\caption{} 
-		\label{fig:eulerS1b2_y}
-	\end{subfigure}
-	
-	\begin{subfigure}[b]{0.3\textwidth}
-		\includegraphics{./parte3/graficos/grafico_euler_S1_dy_b2.pdf}
-		\caption{} 
-		\label{fig:eulerS1b2_dy}
-	\end{subfigure}
-\caption{} \label{euler_S1_b2}
-\end{figure}
-\end{center}
-
-%----------------------------------------------------------------------------
-
-\subsubsection{Simulación 1: Crank Nicolson}
-
-Discretizacion de la ecuación por el método Crank Nicolson
+\paragraph{Discretización de la ecuación diferencial} Se utiliza una subrutina que implementa el esquema de Crank Nicolson para la resolución del problema (\ref{PROBLEMA_PARTE2}). Al igual que en el caso anterior se resuelve el problema equivalente (\ref{PROBLEMA_PARTE2_CORREGIDO})
 
 \begin{align}
 \dfrac{y^{n+1}-y^n}{\Delta t} & = \dfrac{1}{2} \left( z^{n+1} + z^n \right) \\
 \dfrac{z^{n+1}-z^n}{\Delta t} &= \dfrac{1}{2} \left( -\alpha y^{n+1} - \beta y^{n+1} + \gamma (p_{n+1}-p_0) \right) + \dfrac{1}{2} \left( -\alpha y^{n} - \beta y^{n} + \gamma (p_{n}-p_0) \right)  
 \end{align}
-
 La relación anterior se escribe en forma matricial,
-
 \begin{equation}
 \vect{A} \cdot
 \begin{Bmatrix}
@@ -264,25 +185,21 @@ y^n \\ z^n
 0 \\ \left( \gamma (p_{n+1}-p_0) + \gamma (p_{n}-p_0) \right)
 \end{Bmatrix}
 \end{equation}
-
 donde,
-
 \begin{equation}
 \vect{A} = \begin{pmatrix}
-1 & -\dfrac{\Delta t}{2} \\
-\dfrac{\alpha \Delta t}{2} & 1+ \dfrac{\beta \Delta t}{2}
+1 & -\Delta t /2 \\
+\alpha \Delta t / 2 & 1+ \beta \Delta t / 2
 \end{pmatrix} 
 \end{equation}
 
 \begin{equation}
 \vect{B} = \begin{pmatrix}
-1 & \dfrac{\Delta t}{2} \\
--\dfrac{\alpha \Delta t}{2} & 1-\dfrac{\beta \Delta t}{2}
+1 & \Delta t / 2 \\
+-\alpha \Delta t / 2 & 1-\beta \Delta t / 2
 \end{pmatrix}
 \end{equation}
-
-Despejando las variables incognitas se obtiene,
-
+Despejando las variables incognitas $y^{n+1}$ y $z^{n+1}$ se obtiene,
 \begin{equation}
 \begin{Bmatrix}
 y^{n+1} \\ z^{n+1} 
@@ -295,185 +212,323 @@ y^n \\ z^n
 0 \\ \left( \gamma (p_{n+1}-p_0) + \gamma (p_{n}-p_0) \right)
 \end{Bmatrix}
 \end{equation}
-
-donde 
-
+donde,
 \begin{equation}
 \vect{A}^{-1} = \dfrac{1}{1 + \beta \dfrac{\Delta t}{2} + \alpha \left( \dfrac{\Delta t}{2} \right)^2 } 
 \begin{pmatrix}
-1 + \dfrac{\beta \Delta t}{2} & \dfrac{\Delta t}{2}\\
--\dfrac{\alpha \Delta t}{2} & 1 
+1 + \beta \Delta t / 2 & \Delta t / 2 \\
+-\alpha \Delta t / 2 & 1 
 \end{pmatrix}
 \end{equation}
 
-Se grafican los resultados y se exponen en las Figura \ref{cn_S1_b1} y \ref{cn_S1_b2}
-
-Se quiere estudiar la estabilidad de la solución transiente (homogénea) de (QUE ECUACIÓN). Para ello se ...
-
-\begin{align}
-\dfrac{ y^{n+1} - y^n } { \Delta t } & = \Omega_1 \dfrac{1}{2} \left( y^{n+1} + y^{n} \right) \\
-\dfrac{ z^{n+1} - z^n } { \Delta t } & = \Omega_2 \dfrac{1}{2} \left( z^{n+1} + z^{n} \right)
-\end{align} 
-
-Despejando los terminos evaluados en $t_{n+1}$ en la izquierda de la ecuación
-
-\begin{align}
-y^{n+1} &= \dfrac{ 1 + \Delta t \Omega_1 }{ 1 - \Delta t \Omega_1 } y^n \\
-z^{n+1} &= \dfrac{ 1 + \Delta t \Omega_2 }{ 1 - \Delta t \Omega_2 } z^n
-\end{align}
-
-Se reconocen los términos $\vec{z}_p$ para $y$ y $z$. Teniendo en cuenta los valores propios $\Omega$ antes calculado
-
-\begin{align}
-z_p &= \dfrac{1+\Omega_j \Delta t}{1-\Omega_j \Delta t / 2} \\
-&= \dfrac{\left[ 1-\Re(\Omega_j) \Delta t / 2 \right] + \left[ \Im(\Omega_j) \Delta t / 2 \right] i}
-		 {\left[ 1- \Re(\Omega_j) \Delta t / 2 \right] - \left[ \Im(\Omega_j) \Delta t / 2 \right] i} \\
-&= \dfrac{\left[ \left( 1- \Re(\Omega_j) \Delta t / 2 \right) + \left( \Im(\Omega_j) \Delta t / 2 \right) i \right] \cdot \left[ \left( 1+ \Re(\Omega_j) \Delta t / 2 \right) + \left( \Im(\Omega_j) \Delta t / 2 \right) i \right]}
-		 {\left[ 1- \Re(\Omega_j) \Delta t / 2 \right]^2 + \left[ \Im(\Omega_j) \Delta t / 2 \right]^2} \\
-&= \dfrac{ \left[ 1 - \Re(\Omega_j)\Delta t / 2 - \Im(\Omega_j)\Delta t / 2 \right] + \left[ \Im (\Omega_j) \Delta t / 2 \right] i  } {\left[ 1-\Delta t \Re(\Omega_j) \right]^2 + \left[ \Delta t \Im(\Omega_j) \right]^2}
-\end{align}
-
-El módulo de $z_p$ viene dado por
-
+\paragraph{Estabilidad de la solución} Se quiere estudiar la estabilidad de la solución transiente. Al igual que para el caso de resolción mediante Euler Implícito,
 \begin{equation}
-||z_p|| = \dfrac{ \sqrt{ \left[ 1 - \dfrac{\Re(\Omega_j)\Delta t}{2} - \dfrac{\Im(\Omega_j)\Delta t}{2} \right]^2 + \left[ \dfrac{\Im \Delta t}{2}\right]^2 } } {\left[ \dfrac{1-\Delta t \Re(\Omega_j)}{2} \right]^2 + \left[ \dfrac{\Delta t \Im(\Omega_j)}{2} \right]^2}
+\dfrac{d \vec{U}}{d t} = \vect{S} \vec{U} + \vec{Q} \rightarrow \left\{ \begin{matrix}
+(y^{n+1}-y^n)/\Delta t = (\Omega_1^{n+1}/2) y^{n+1} + (\Omega_1^n/2) y^n \\
+(z^{n+1}-z^n)/\Delta t = (\Omega_1^{n+1}/2) z^{n+1} + (\Omega_1^n/2) z^n
+\end{matrix} \right.
 \end{equation}
+Como $\Omega_j^n = \Omega_j^{n+1} = \Omega_j'$ 
+\begin{align}
+\dfrac{ y^{n+1} - y^n } { \Delta t } & = \Omega_1' \dfrac{1}{2} \left( y^{n+1} + y^{n} \right) \\
+\dfrac{ z^{n+1} - z^n } { \Delta t } & = \Omega_2' \dfrac{1}{2} \left( z^{n+1} + z^{n} \right)
+\end{align} 
+Despejando los terminos evaluados en $t_{n+1}$ en la izquierda de la ecuación
+\begin{align}
+y^{n+1} &= \left( \dfrac{ 1 + \Omega_1 \Delta t /2 }{ 1 - \Omega_1 \Delta t / 2} \right) y^n \\
+z^{n+1} &= \left( \dfrac{ 1 + \Omega_2 \Delta t / 2}{ 1 - \Omega_2 \Delta t / 2} \right) z^n
+\end{align}
+Se reconocen los términos $\vec{z}_{pj}$ que aproximan a $G(\Omega_j)$
+\begin{equation} \label{zp_cn}
+z_p = \dfrac{1+\Omega_j \Delta t / 2}{1-\Omega_j \Delta t / 2} 
+\end{equation}
+Se observa que para $\Re(\Omega_j)<0$ el modulo del numerador de (\ref{zp_cn}) es menor que el denominador, es decir,
+\begin{equation}
+|| 1+\dfrac{\Omega_j \Delta t}{ 2 } || < ||1 - \dfrac{\Omega_j \Delta t}{ 2 }||
+\end{equation}
+Luego, se deduce que $||z_p||<1$ por lo tanto el esquema es incondicionalmente estable para $\Re(\Omega_j)<0$. \\
 
+En las Figura \ref{cn_S1_b1} y \ref{cn_S1_b2} se grafica la solución obtenida por la subrutina para $\beta=\sqrt{\alpha}$ y $\beta=\alpha$, respectivamente.
+
+%-------------------------------------------------------------------------
+
+\subsubsection{Resultados}
+
+La ecuación (\ref{PROBLEMA_PARTE2}) es una ecuación diferencial ordinaria lineal de segundo orden con coeficientes constantes. Se resuelve el problema equivalente (\ref{PROBLEMA_PARTE2_CORREGIDO}). Se obtiene un sistema de ecuaciones con dos incognitas $y(t)$ y $z(t)=dt/dt$, se pueden interpretar como un problema de 2 grados de libertad (Se obtiene una matriz $\vect{A}_{2 \times 2}$). En las Tablas \ref{tabla_euler} y \ref{tabla_cn} se muestran los valores $||z_p||$ para los valores propios complejos ($ \Im(\Omega_j) \neq 0 $) y los valores de $zp$ para los valores propios reales ($\Im(\Omega_j) = 0$)\\
+
+Se puede ver que los esquemas poseen son estables en el tiempo para ambos esquemas de discretización ya que $ || zp \hspace{0,1cm}(\approx G(\Omega_j)) || < 1 $. Notar que los valores propios tienen una significancia asociada a las características de la ecuación diferencial y no del esquema de discretización espacial. $\Omega_1$ está asociado a $y$ y $\Omega_2$ a su derivada $dy/dt$. \\
+
+Para los casos (a) se tiene que los valores propios son números con parte imaginaria distinta de cero. La parte real es negativa, por lo que la solución converge a la solución permanente, pero su componente imaginaria produce perturbaciones de forma oscilatoria. Luego, la solución transiente es una oscilación amortiguada en el tiempo ; Para los casos (b) se obtienen valores propios reales negativos, por lo que la solución transiente es una exponencial que decae a la solución estacionaria. \\
+
+En el esquema de Euler Implícito el modulo de $z_p$ es mayor para pasos de tiempo más reducidos. Esto se debe a que al aumentar el tamaño del paso de tiempo se reducen la cantidad de pasos de tiempos, por lo que la solución debe debe converger con mayor rapidez, dicho de otra manera, si $z_{pa} < z_{pb}$ entonces $z_{pa}^k$ converge más rápido que $z_{pb}^k$ para un mismo $k$. Euler implícito es un esquema de orden 1, por lo que se caracteriza por ser un esquema disipativo\\
+
+El esquema de Crank Nicolson ocurre lo contrario: el módulo de $z_p$ es menor para pasos de tiempo más reducidos. Para el caso (b) donde se obtiene valores propios reales se observa que $z_p$ asociado $z=dy/dt$ es negativo, entonces el comportamiento de $z_p^k$ es oscilatorio (para $k$ pasos de tiempo). Como se ve en las Figuras, el esquema presenta una estabilidad marginal. Esto se condice con el hecho que Crank Nicolson es un esquema de orden 2, por lo tanto se caracteriza por ser un esquema dispersivo  
+
+\begin{table}[H]
+
+\paragraph{Euler Implícito}
 \begin{enumerate}[label=(\alph*)]
+\item $\beta = \sqrt{\alpha}$ 
 
-\item $\beta = \alpha$ y $\Delta t = 10^4$
+\begin{itemize}
+
+\item Para $\Delta t = 10^{-4}$ (Simulación 1)
 \begin{center}
 \begin{tabular}{lll}
-$\Omega_1 = −3000.00 + 5196.15i$ & $\rightarrow$ & $z_{p1} = $ \\
-$\Omega_2 = −3000.00 - 5196.15i$ & $\rightarrow$ & $z_{p2} = $
+$\Omega_1 = −3000.00 + 5196.15i$ & $\rightarrow$ & $||z_{p1}|| = 0.152501$ \\
+$\Omega_2 = −3000.00 - 5196.15i$ & $\rightarrow$ & $||z_{p2}|| = ||z_{p1}||$
 \end{tabular}
 \end{center}
 
-\item $\beta = \sqrt{\alpha}$ y $\Delta t = 10^4$
+\item Para $\Delta t = 0.1$ (Simulación 2)
 \begin{center}
 \begin{tabular}{lll}
-$\Omega_1 = -1.0$ & $\rightarrow$ & $z_{p1} = $ \\
-$\Omega_2 = -36.0 \times 10^6$ & $\rightarrow$ & $z_{p2} = $
+$\Omega_1 = −3000.00 + 5196.15i$ & $\rightarrow$ & $||z_{p1}|| = 0.00166531 $ \\
+$\Omega_2 = −3000.00 - 5196.15i$ & $\rightarrow$ & $||z_{p2}|| = ||z_{p1}||$
 \end{tabular}
 \end{center}
+
+\end{itemize}
+
+\item $\beta = \alpha$
+
+\begin{itemize}
+
+\item Para $\Delta t = 10^{-4}$ (Simulación 1)
+\begin{center}
+\begin{tabular}{lll}
+$\Omega_1 = -1.0$ & $\rightarrow$ & $z_{p1} = 0.9999$ \\
+$\Omega_2 = -36.0 \times 10^6$ & $\rightarrow$ & $z_{p2} = 2.777 \times 10^{-4}$
+\end{tabular}
+\end{center}
+
+\item Para $\Delta t = 0.1$ (Simulación 2)
+\begin{center}
+\begin{tabular}{lll}
+$\Omega_1 = -1.0$ & $\rightarrow$ & $z_{p1} = 0.9090$ \\
+$\Omega_2 = -36.0 \times 10^6$ & $\rightarrow$ & $z_{p2} = 2.780 \times 10^{-7} $
+\end{tabular}
+\end{center}
+
+\end{itemize}
 
 \end{enumerate}
+\caption{} \label{tabla_euler}
+\end{table}
+
+%--------------------
+
+\begin{table}[H]
+
+\paragraph{Crank Nicolson}
+
+\begin{enumerate}[label=(\alph*)]
+\item $\beta = \sqrt{\alpha}$
+
+\begin{itemize}
+
+\item Para $\Delta t = 10^{-4}$ (Simulación 1)
+\begin{center}
+\begin{tabular}{lll}
+$\Omega_1 = −3000.00 + 5196.15i$ & $\rightarrow$ & $||z_{p1}|| = 0.84907$ \\
+$\Omega_2 = −3000.00 - 5196.15i$ & $\rightarrow$ & $||z_{p2}|| = ||z_{p1}||$
+\end{tabular}
+\end{center}
+
+\item Para $\Delta t = 0.1$ (Simulación 2)
+\begin{center}
+\begin{tabular}{lll}
+$\Omega_1 = −3000.00 + 5196.15i$ & $\rightarrow$ & $||z_{p1}|| = 0.9983$ \\
+$\Omega_2 = −3000.00 - 5196.15i$ & $\rightarrow$ & $||z_{p2}|| = ||z_{p1}||$
+\end{tabular}
+\end{center}
+
+\end{itemize}
+
+\item $\beta = \alpha$
+
+\begin{itemize}
+
+\item Para $\Delta t = 10^{-4}$ (Simulación 1)
+\begin{center}
+\begin{tabular}{lll}
+$\Omega_1 = -1.0$ & $\rightarrow$ & $z_{p1} = 0.9999$ \\
+$\Omega_2 = -36.0 \times 10^6$ & $\rightarrow$ & $z_{p2} = -0.9989$
+\end{tabular}
+\end{center}
+
+\item Para $\Delta t = 0.1$ (Simulación 2)
+\begin{center}
+\begin{tabular}{lll}
+$\Omega_1 = -1.0$ & $\rightarrow$ & $z_{p1} = 0.9048$ \\
+$\Omega_2 = -36.0 \times 10^6$ & $\rightarrow$ & $z_{p2} = -0.9999 $
+\end{tabular}
+\end{center}
+
+\end{itemize}
+
+\end{enumerate}
+
+\caption{} \label{tabla_cn}
+\end{table}
+
+
+%----------------------- FIGURAS SIMULACION 1 -----------------------------
+%----------------------- 	EULER IMPLICITO  -----------------------------
+
+\begin{center}
+\begin{figure} [H]
+	\begin{subfigure}[b]{0.8\textwidth}
+		\centering
+		\includegraphics{./parte3/graficos/grafico_euler_S1_y_b1.pdf}
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
+		\label{fig:eulerS1b1_y}
+	\end{subfigure}
+	
+	\begin{subfigure}[b]{0.8\textwidth}
+		\includegraphics{./parte3/graficos/grafico_euler_S1_dy_b1.pdf}
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
+		\label{fig:eulerS1b1_dy}
+	\end{subfigure}
+\caption{Simulación 1: Solución numérica empleando Euler Implícito para $\beta=\sqrt{\alpha}$ } \label{euler_S1_b1}
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure} [H]
+	\begin{subfigure}[b]{0.8\textwidth}
+		\includegraphics{./parte3/graficos/grafico_euler_S1_y_b2.pdf}
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
+		\label{fig:eulerS1b2_y}
+	\end{subfigure}
+	
+	\begin{subfigure}[b]{0.8\textwidth}
+		\includegraphics{./parte3/graficos/grafico_euler_S1_dy_b2.pdf}
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
+		\label{fig:eulerS1b2_dy}
+	\end{subfigure}
+\caption{Simulación 1: Solución numérica empleando Euler Implícito para $\beta=\alpha$ } \label{euler_S1_b2}
+\end{figure}
+\end{center}
+
+%--------------------------------------------------------------------------
 
 %----------------------- FIGURAS SIMULACION 1 -----------------------------
 %----------------------- 	CRANK NICOLSON -----------------------------
 
 \begin{center}
 \begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S1_y_b1.pdf}
-		\caption{} 
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
 		\label{fig:cnS1b1_y}
 	\end{subfigure}
 	
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S1_dy_b1.pdf}
-		\caption{} 
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
 		\label{fig:cnS1b1_dy}
 	\end{subfigure}
-\caption{} \label{cn_S1_b1}
+\caption{Simulación 1: Solución numérica empleando Crank Nicolson para $\beta=\sqrt{\alpha}$ } \label{cn_S1_b1}
 \end{figure}
 \end{center}
 
 \begin{center}
 \begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S1_y_b2.pdf}
-		\caption{} 
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
 		\label{fig:cnS1b2_y}
 	\end{subfigure}
 	
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S1_dy_b2.pdf}
-		\caption{} 
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=10^{-4}$} 
 		\label{fig:cnS1b2_dy}
 	\end{subfigure}
-\caption{} \label{cn_S1_b2}
+\caption{Simulación 1: Solución numérica empleando Crank Nicolson para $\beta=\sqrt{\alpha}$ } \label{cn_S1_b2}
 \end{figure}
 \end{center}
 
-%-------------------------------------------------------------------------
-
-\subsubsection{Simulación 2}
+%--------------------------------------------------------------------------
 
 %----------------------- FIGURAS SIMULACION 2 -----------------------------
 %----------------------- 	EULER IMPLICITO  -----------------------------
 
 \begin{center}
 \begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_euler_S2_y_b1.pdf}
-		\caption{} 
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=0.1$} 
 		\label{fig:eulerS2b1_y}
 	\end{subfigure}
 	
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_euler_S2_dy_b1.pdf}
-		\caption{} 
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=0.1$}  
 		\label{fig:eulerS2b1_dy}
 	\end{subfigure}
+\caption{Simulación 2: Solución numérica empleando Euler Implícito para $\beta=\alpha$}
 \end{figure}
 \end{center}
 
 \begin{center}
 \begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_euler_S2_y_b2.pdf}
-		\caption{} 
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=0.1$} 
 		\label{fig:eulerS2b2_y}
 	\end{subfigure}
 	
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_euler_S2_dy_b2.pdf}
-		\caption{} 
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Euler Implícito. $x=0.5[mm]$ y $\Delta t=0.1$} 
 		\label{fig:eulerS2b2_dy}
 	\end{subfigure}
+\caption{Simulación 2: Solución numérica empleando Euler Implícito para $\beta=\sqrt{\alpha}$}
 \end{figure}
 \end{center}
 
 %--------------------------------------------------------------------------
-
 
 %----------------------- FIGURAS SIMULACION 2 -----------------------------
 %-----------------------	CRANK NICOLSON -----------------------------
 
 \begin{center}
 \begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S2_y_b1.pdf}
-		\caption{} 
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=0.1$}  
 		\label{fig:cnS2b1_y}
 	\end{subfigure}
 	
 	\begin{subfigure}[b]{0.3\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S2_dy_b1.pdf}
-		\caption{} 
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=0.1$}   
 		\label{fig:cnS2b1_dy}
 	\end{subfigure}
+\caption{Simulación 2: Solución numérica empleando Crank Nicolson para $\beta=\alpha$}
 \end{figure}
 \end{center}
 
 \begin{center}
 \begin{figure} [H]
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S2_y_b2.pdf}
-		\caption{} 
+		\caption{Grafico de $y$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=0.1$}  
 		\label{fig:cnS2b2_y}
 	\end{subfigure}
 	
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.8\textwidth}
 		\includegraphics{./parte3/graficos/grafico_cn_S2_dy_b2.pdf}
-		\caption{} 
+		\caption{Grafico de $dy/dt$ vs $t$ empleando un esquema de integración de Crank Nicolson. $x=0.5[mm]$ y $\Delta t=0.1$} 
 		\label{fig:cnS2b2_dy}
 	\end{subfigure}
+\caption{Simulación 2: Solución numérica empleando Crank Nicolson para $\beta=\sqrt{\alpha}$}
 \end{figure}
 
 \end{center}
 
-%------------------------------------------------------------------------
+%------------------------------------------------------------------------ 
 
-COMENTAR RESULTADOS Y ESTUDIAR SI ES POSIBLE UTILIZAR UNA SOLUCIÓN 
+\newpage

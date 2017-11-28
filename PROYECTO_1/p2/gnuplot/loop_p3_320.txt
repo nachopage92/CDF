@@ -1,0 +1,5 @@
+if (j==2) \
+plot '../datos/S3/datos_S3_2.txt' using 1:i+1 with lines title columnhead(i) 
+
+i=i+1
+if (i<=320) reread

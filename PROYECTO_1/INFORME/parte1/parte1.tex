@@ -120,13 +120,13 @@ Los esquemas Leap-Frog corresponden a una discretizacion central de la derivada 
 \end{equation}
 Se calcula el valor de $\phi$ en el tiempo $t_{n+1}$ a partir de dos valores anteriores $t_n$ y $t_{n-1}$. Estos tipos de esquema son llamadas de tres pasos (\textit{three level scheme})
 
-\subsubsection{Esquema Newmark}
+\subsubsection{Esquema Newmark} \label{esquema_newmark_seccion}
 Consiste en un esquema de dos pasos para el cálculo de $\phi$ y su derivada $\partial \phi (t) / \partial t$. Sea $\psi(t) = \partial \phi(t) / \partial t$, se integra $\psi$ utilizando un esquema $\Theta$,
-\begin{equation}
+\begin{equation} \label{newmark_v}
 \psi_{n+1} = \psi_n + \Delta t \left[ \Theta \dfrac{\partial \psi}{\partial t}^{n} \Big|_t + (1-\Theta) \dfrac{\partial \psi}{\partial t}^{n+1} \Big|_t \right]
 \end{equation}
 Para integrar $\phi$ se utiliza un esquema explícito donde el último término utiliza un esquema $\Theta$
-\begin{equation}
+\begin{equation} \label{newmark_u}
 \phi_{n+1} = \phi_n + \Delta t \psi + (\Delta t)^2 \left[ \beta \dfrac{\partial \psi}{\partial t}^n \Big|_t + (1-\beta) \dfrac{\partial \psi}{\partial t}^{n+1} \Big|_t \right]
 \end{equation}
 donde $\beta$ es un parámetro que reemplaza a $\Theta$ e integra al factor $2$ del desarrollo de la serie de Taylor.
@@ -152,7 +152,7 @@ Luego, se puede expresar como:
 \phi_{n+1} &= \phi_n + \dfrac{\Delta t}{6} \left[ f(t_n,\phi_n) + 2 f(t_{n+1/2},\phi^*_{n+1/2}) + 2 f(t_{n+1/2},\phi^{**}_{n+1/2}) + f(t_{n+1},\phi^*_{n+1}) \right] 
 \end{align}
 
-\subsection{Analisis Espectral}
+\subsection{Analisis Espectral} \label{analisis_espectral_seccion}
 La discretización de una ecuación diferencial de $u=u(\vec{x},t)$ se puede expresar en una notación matricial: Sea $\vec{U}$ el vector que contiene los valores $u_i$ $ (i=1, \ldots ,n)$.
 \begin{equation} \label{analisis_espectral_general}
 \dfrac{d \vec{U}}{d t} = \vect{S} \vec{U} + \vec{Q}
@@ -204,13 +204,13 @@ G = e^{\Omega_j n \Delta t}
 
 Para garantizar que la solución transiente sea estable se debe cumplir que,
 
-\begin{equation}
+\begin{equation} \label{convg_1}
 | G(\Omega_j) | = | e^{ \left[ \Re(\Omega_j) \right] + \left[ \Im(\Omega_j) n \Delta t \right] i} | < 1
 \end{equation}
 
 lo que implica que
 
-\begin{equation}
+\begin{equation} \label{convg_2}
 \Re(\Omega_j) \leq 0
 \end{equation}
 

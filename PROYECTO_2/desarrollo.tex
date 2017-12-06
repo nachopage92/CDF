@@ -1,0 +1,279 @@
+\section{Ecuación de Navier Stokes discretizado}
+
+Ecuación de Navier-Stokes adimensional para un fluido monofásico, newtoniano e incompresible en coordenadas cartesianas:
+
+\begin{equation}
+St \dfrac{\partial v_i^*}{\partial t^*} + v_j^* \dfrac{\partial v_i^*}{\partial x_j^*} = - \dfrac{\partial P^*}{\partial x_i^*} + \dfrac{1}{Re} \Gamma^* \dfrac{\partial^2 v_i^*}{\partial x_j^* \, \partial x_j^*}
+\end{equation}
+
+Donde $St$ y $Re$ son los números de Strouhal y Reynolds. El número de Strouhal permite describir el comportamiento oscilatorio de un fluido. Este parametro depende. Si $St \rightarrow 1$ predomina la viscosidad respecto a la oscilación. Suponeniendo obtener un flujo laminar desarrollado se asume $St \approx 1$, luego:
+
+\begin{equation}
+\dfrac{\partial v_i^*}{\partial t^*} + v_j^* \dfrac{\partial v_i^*}{\partial x_j^*} = - \dfrac{\partial P^*}{\partial x_i^*} + \dfrac{1}{Re} \Gamma^* \dfrac{\partial^2 v_i^*}{\partial x_j^* \, \partial x_j^*}
+\end{equation}  
+
+Para precindir de la notación ($^*$) se asume que todas las variables a utilizar están adimensionadas
+
+\section{Desarrollo: Discretización de ecuaciones}
+
+Ecuación de conservación/transporte de un escalar pasivo:
+
+\begin{equation}
+\dfrac{\partial \rho \phi}{\partial t} + \nabla \cdot J = \vec{\nabla} P 
+\end{equation}
+
+donde $J$ representa la contribución del flujo convectivo y difusivo.
+
+\begin{equation}
+J = \rho u \phi - \Gamma \Delta \phi
+\end{equation}
+
+Para obtener la formulación en volumenes finitos se aplica el método de residuos ponderados a la ecuación, con soporte compacto y utilizando el método de Galerkin se obtiene:
+
+\begin{equation}\dfrac{\partial}{\partial t} \iiint_{\Omega_{cv}} \rho \phi d \Omega = - \oiint_{A_{cv}} \vec{F} \cdot \vec{n} d A_n + \iiint_{\Omega_{cv}} S_{\phi} d \Omega
+\end{equation}  
+
+Donde,
+
+\begin{equation}
+\vec{F} = \underbrace{\vec{F}_C}_{\rho \phi \vec{u}} + \underbrace{\vec{F}_D}_{-D \nabla \phi}
+\end{equation}
+
+Se recurre al teorema de valor medio representar la integral en función de terminos centrales. Sea $\phi_J$ un valor aproximado que caracteriza al escalar dentro del volumen de control $\Omega_{cv} = \Omega_J$. La ecuación discretizada resulta
+
+\begin{equation}
+\dfrac{\partial}{\partial t} \left( \rho \phi_J \Omega_J \right) + \sum \left( F_i \, A_i \right)_J = \left( S_{\phi} \right)_J
+\end{equation} 
+
+\subsection{Discretización del flujo convectivo/difusivo en 2D}
+
+Se escoge la discretización propuesta por Patankar ($\Delta z = 1$)
+
+\begin{equation} \label{ecuacion_patankar}
+\dfrac{\partial \phi}{\partial t} \rho_P^0 \Delta x \Delta y = a_E \phi_E + a_W \phi_W + a_N \phi_N + a_S \phi_S + a_E \phi_E + a_P \phi_P + b
+\end{equation} 
+
+donde 
+
+\begin{align} \label{coeficientes_patankar}
+\begin{split}
+a_E &= D_e A(|P_e|) + \mbox{max}(-F_e,0) \\
+a_W &= D_w A(|P_w|) + \mbox{max}(F_w,0) \\
+a_N &= D_n A(|P_n|) + \mbox{max}(-F_n,0) \\
+a_S &= D_s A(|P_s|) + \mbox{max}(F_s,0) \\
+a_P &= -a_E -a_W -a_N -a_S \\
+b &= S \Delta x \Delta y
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+F_e &= (\rho^* u^*)_e \, \Delta y \\
+F_w &= (\rho^* u^*)_w \, \Delta y \\
+F_n &= (\rho^* v^*)_n \, \Delta x \\
+F_s &= (\rho^* v^*)_s \, \Delta x
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+D_e &= \dfrac{\Gamma_e}{\Delta x \, \rho \, u_e} \Delta y = \dfrac{\Gamma^*}{Re_e} \Delta y \\
+D_w &= \dfrac{\Gamma_w}{\Delta x \, \rho \, u_w} \Delta y = \dfrac{\Gamma^*}{Re_w} \Delta y \\
+D_n &= \dfrac{\Gamma_n}{\Delta y \, \rho \, v_n} \Delta x = \dfrac{\Gamma^*}{Re_n} \Delta x \\
+D_s &= \dfrac{\Gamma_s}{\Delta y \, \rho \, v_s} \Delta x = \dfrac{\Gamma^*}{Re_s} \Delta x
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+P_e &= \dfrac{F_e}{D_e} \\
+P_w &= \dfrac{F_w}{D_w} \\
+P_n &= \dfrac{F_n}{D_n} \\
+P_s &= \dfrac{F_s}{D_s}
+\end{split}
+\end{align}
+
+\begin{table} [H]
+\centering
+\begin{tabular}{l|l}
+Esquema & Fórmula para $A(|P|)$ \\ \hline \hline
+CDS	&	$1-0.5|p|$	\\
+UDS	&	$1$	\\
+Hybrid	&	$\mbox{max}(0,1-0.5|P|)$	\\
+Power law	&	$\mbox{max}(0,(1-0.1|P|)^5)$	\\
+Exponential	&	$|P|/\left[ \mbox{exp}(|P|) -1 \right]$
+\end{tabular}
+\end{table}
+
+Este conjunto de ecuaciones discretiza el campo $\phi$ mediante la aplicación de las ecuaciones de conservación de la masa y la ecuación de conservación de la cantidad lineal. Sea $\vec{v} = \{u,v\}^T$ el campo de velocidad en el dominio de control entonces se plantean los sistemas de ecuaciones donde $\phi=u$ y $\phi=v$, donde $u$ y $v$ son escalares asociados a cada malla desplazada (\textit{staggered grid}). Si $\phi = u$, entonces:
+
+\begin{equation}
+\dfrac{\partial u}{\partial t} \Delta x \Delta y = a_E^u u_E + a_W^u u_W + a_N^u u_N + a_S^u u_S + a_P^u u_P + b^u
+\end{equation} 
+
+donde 
+
+\begin{align}
+\begin{split}
+a_E^u &= D_e^u A(|P_e^u|) + \mbox{max}(-F_e^u,0) \\
+a_W^u &= D_w^u A(|P_w^u|) + \mbox{max}(F_w^u,0) \\
+a_N^u &= D_n^u A(|P_n^u|) + \mbox{max}(-F_n^u,0) \\
+a_S^u &= D_s^u A(|P_s^u|) + \mbox{max}(F_s^u,0) \\
+a_P^u &= -a_E^u -a_W^u -a_N^u -a_S^u \\
+b^u &= S^u \Delta x \Delta y
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+F_e^u &= (\rho^* u^*)_e \, \Delta y \\
+F_w^u &= (\rho^* u^*)_w \, \Delta y \\
+F_n^u &= (\rho^* v^*)_n \, \Delta x \\
+F_s^u &= (\rho^* v^*)_s \, \Delta x
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+D_e^u &= \dfrac{\Gamma^*}{Re_e^u} \Delta y \\
+D_w^u &= \dfrac{\Gamma^*}{Re_w^u} \Delta y \\
+D_n^u &= \dfrac{\Gamma^*}{Re_n^u} \Delta x \\
+D_s^u &= \dfrac{\Gamma^*}{Re_s^u} \Delta x
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+P_e^u &= \dfrac{F_e^u}{D_e^u} \\
+P_w^u &= \dfrac{F_w^u}{D_w^u} \\
+P_n^u &= \dfrac{F_n^u}{D_n^u} \\
+P_s^u &= \dfrac{F_s^u}{D_s^u}
+\end{split}
+\end{align}
+
+Análogo para $\phi=v$
+
+\subsection{Término convectivo}
+
+\begin{equation}
+H(u) = \underbrace{\mbox{max}(F_w^u,0) u_W \Delta y + \mbox{max}(-F_e^u,0) u_E \Delta y}_{\partial u^2 / \partial x} +  \underbrace{\mbox{max}(F_s^u,0) u_S \Delta x + \mbox{max}(-F_n^u,0) u_N \Delta x}_{\partial uv / \partial y}
+\end{equation}
+
+\begin{equation}
+H(v) =  \underbrace{\mbox{max}(F_w^v,0) v_W \Delta y + \mbox{max}(-F_e^v,0) v_E \Delta y}_{\partial uv / \partial x} +  \underbrace{\mbox{max}(F_s^v,0) v_S \Delta x + \mbox{max}(-F_n^v,0) v_N \Delta x}_{\partial v^2 / \partial y} 
+\end{equation}
+
+Por simplicidad,
+
+\begin{equation}
+H(u) = h_W^u u_W + h_E^u u_E + h_S^u u_S + h_N^u u_N
+\end{equation}
+
+\begin{equation}
+H(v) = h_W^v v_W + h_E^v v_E + h_S^v v_S + h_N^v v_N
+\end{equation}
+
+\subsection{Término difusivo}
+
+\begin{equation}
+G(u) = \dfrac{1}{Re_w^u} A(|P_w^u|) u_W \Delta y + \dfrac{1}{Re_e^u} A(|P_e^u|) u_E \Delta y + \dfrac{1}{Re_s^u} A(|P_s^u|) u_S \Delta x + \dfrac{1}{Re_n^u} A(|P_n^u|) u_N \Delta x 
+\end{equation}
+
+\begin{equation}
+G(v) =  \dfrac{1}{Re_w^v} A(|P_w^v|) v_W \Delta y + \dfrac{1}{Re_e^v} A(|P_e^v|) v_E \Delta y + \dfrac{1}{Re_s^v} A(|P_s^v|) v_S \Delta x + \dfrac{1}{Re_n^v} A(|P_n^v|) v_N \Delta x 
+\end{equation}
+
+Por simplicidad,
+
+\begin{equation}
+G(u) = g_W^u u_W + g_E^u u_E + g_S^u u_S + g_N^u u_N
+\end{equation}
+
+\begin{equation}
+G(v) = g_W^v v_W + g_E^v v_E + g_S^v v_S + g_N^v v_N
+\end{equation}
+
+\section{Discretización temporal}
+
+Se plantea un esquema BFD2 (\textit{Backward Differentiation Formula 2nd Order}), tambien llamado esquema de Gear. La derivada (\ref{ecuacion_patankar}) se aproxima mediante
+
+\begin{equation}
+\dfrac{\partial \vec{v}}{\partial t} ^ {n+1} = \dfrac{3 \vec{v}^{n+1} -4\vec{v}^n + \vec{v}^{n-1}}{2 \Delta t} + \Theta(\Delta t^2) 
+\end{equation}
+
+El término convectivo en $t_{n+1}$ se obtiene por extrapolación:
+
+\begin{equation}
+H(\vec{v}^{n+1}) = 2 H(\vec{v}^n) - H(\vec{v}^{n-1})
+\end{equation}
+
+La ecuación a resolver mediante el método de volumenes finitos es:
+
+\begin{equation} \label{ecuación_gobernante}
+\dfrac{3 \vec{v}^{n+1} -4\vec{v}^n + \vec{v}^{n-1}}{2 \Delta t} + H(\vec{v}^{n+1}) = -\vec{\nabla} P + G(\vec{v}^{n+1})
+\end{equation}
+
+Los pasos a seguir son los siguientes
+\begin{enumerate}
+\item Predicción del campo de velocidad no solenoidal $\vec{v}^*$
+\item Resolución de la ecuación de Poisson sobre la presión
+\item Corrección del campo de velocidad
+\end{enumerate}
+
+\subsection{Predicción del campo de velocidad no solenoidal $\vec{v}^*$}
+
+\begin{equation}
+\dfrac{3 \vec{v}^{*} -4\vec{v}^n + \vec{v}^{n-1}}{2 \Delta t} + H(\vec{v}^{n+1}) = -\vec{\nabla} P + G(\vec{v}^{*})
+\end{equation}
+
+Mediante una manipulación algebráica de la ecuación (\ref{ecuación_gobernante}) se obtiene una ecuación equivalente. Sea $\delta V = \vec{v}^* - \vec{v}^n $
+
+\begin{equation} \label{ecuación_gobernante_modificada}
+\left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \Delta \right) \delta V = \dfrac{\vec{v}^n-\vec{v}^{n-1}}{3} - \dfrac{2 \Delta t}{3} \left( H(\vec{v}^{n+1}) + \vec{\nabla} P - G(\vec{v}^n) \right)
+\end{equation} 
+
+Aplicando el método ADI (pasos fraccionados) para descomponer al operador de Helmholtz ($I - \frac{2 \Gamma \Delta t}{3 \, Re} \Delta $)
+
+\begin{equation}
+\left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \Delta \right) \approx \left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \dfrac{\partial^2}{\partial y^2} \right) \left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \dfrac{\partial^2}{\partial x^2} \right)
+\end{equation}
+
+Luego, resolver (\ref{ecuación_gobernante_modificada}) es equivalente de manera aproximada a resolver
+
+\begin{equation}
+\left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \dfrac{\partial^2}{\partial y^2} \right) \underbrace{ \left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \dfrac{\partial^2}{\partial x^2} \right) \delta V }_{\Delta \delta \overline{V}} = \underbrace{ \dfrac{\vec{v}^n-\vec{v}^{n-1}}{3} - \dfrac{2 \Delta t}{3} \left( H(\vec{v}^{n+1}) + \vec{\nabla} P - G(\vec{v}^n) \right) }_{RHS^n} 
+\end{equation}
+
+O bien
+
+\begin{align}
+\begin{split}
+\left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \dfrac{\partial^2}{\partial x^2} \right) \delta \overline{V} &= RHS^n \\ 
+\left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \dfrac{\partial^2}{\partial y^2} \right) \delta V &= \overline{V} \\  
+\end{split}
+\end{align}
+
+\paragraph{en X}
+
+\subparagraph{1er paso} 
+
+\begin{equation}
+\left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re} \dfrac{\partial^2}{\partial y^2} \right) \delta \overline{V} = \dfrac{\vec{v}^n-\vec{v}^{n-1}}{3} - \dfrac{2 \Delta t}{3} \left( H(\vec{v}^{n+1}) + \vec{\nabla} P - G(\vec{v}^n) \right) = RHS^n
+\end{equation}
+
+Se recurre al método de residuos ponderados:
+
+\begin{equation}
+\iiint_{\Omega} \Psi_i \left[ \left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re}  \dfrac{\partial^2}{\partial y^2} \right) \delta \overline{V}_i - RHS^n \right] \, dV = 0
+\end{equation}
+
+Se aplica la formulación en volúmenes finitos. Desarrrollando el primer término de la izquierda
+
+\begin{align}
+\begin{split}
+\iiint_{\Omega_J} \left[ \left( I - \dfrac{2 \Gamma \Delta t}{3 \, Re}  \dfrac{\partial^2}{\partial y^2} \right) \delta \overline{V} \, dV & = \iiint_{\Omega_J} \delta \overline{V} \, dV - \dfrac{2 \Gamma \Delta t}{3 \, Re} \iiint_{\Omega_J} \dfrac{\partial^2 (\delta \overline{V})}{\partial x^2} \, dV \\ 
+& = \delta \overline{V} \Delta x \Delta y - \dfrac{2 \Gamma \Delta t}{3 \, Re} \iint_{\\partial Omega_J} \dfrac{\partial (\delta \overline{V})}{\partial x} \cdot \vec{n} \, dA
+\end{split}
+& = \delta \overline{V} \Delta x \Delta y - \dfrac{2 \Gamma \Delta t}{3 \, Re} \iint_{\\partial Omega_J} \dfrac{\partial (\delta \overline{V})}{\partial x} \cdot \vec{n} \, dA
+\end{split}
+\end{align}

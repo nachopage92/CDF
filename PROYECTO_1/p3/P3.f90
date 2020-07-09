@@ -67,7 +67,7 @@ program Pregunta_3
 		write(10,*) n , t , 10._8*z0(1) , 10._8*z0(2) , 10._8*z0(3)
 		!subrutina RK4 -> Ra = 0.5
 		do i=1,m
-			call rk4(Pr,Ra(j),beta,t,dt,z0,z1)
+			call rk4(Pr,Ra_2(j),beta,t,dt,z0,z1)
 			z0 = z1
 			n = n+1
 			t = t+dt

@@ -31,38 +31,38 @@ replot
 
 reset
 
-set terminal pdfcairo enhanced size 5,6
-set output '../graficos/FIGURA1.pdf'
-set multiplot layout 3,1 title 'Solución numérica para la ecuación de convección (Y vs t)'
-set title 'Iteración 0 - 1000'
-plot "<(sed -n '1,200p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-set title 'Iteración 1000 - 2000'
-plot "<(sed -n '200,400p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-set title 'Iteración 2000 - 3000'
-plot "<(sed -n '400,600p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-unset multiplot
-
-set terminal pdfcairo enhanced size 5,6
-set output '../../INFORME/parte4/graficos/FIGURA1.pdf'
-set multiplot layout 3,1 title 'Solución numérica para la ecuación de convección (Y vs t)'
-set title 'Iteración 0 - 1000'
-plot "<(sed -n '1,200p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-set title 'Iteración 1000 - 2000'
-plot "<(sed -n '200,400p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-set title 'Iteración 2000 - 3000'
-plot "<(sed -n '400,600p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
-unset multiplot
-
-#----
-
-set terminal pdfcairo enhanced size 5,6
-set output '../graficos/FIGURA2.pdf'
-set multiplot layout 2,1 title 'Solución numérica para la ecuación de convección'
-set title 'Proyección Y - X'
-plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 4:5 with lines notitle
-set title 'Proyección X - Y'
-plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 3:4 with lines notitle
-unset multiplot
+#set terminal pdfcairo enhanced size 5,6
+#set output '../graficos/FIGURA1.pdf'
+#set multiplot layout 3,1 title 'Solución numérica para la ecuación de convección (Y vs t)'
+#set title 'Iteración 0 - 1000'
+#plot "<(sed -n '1,200p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+#set title 'Iteración 1000 - 2000'
+#plot "<(sed -n '200,400p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+#set title 'Iteración 2000 - 3000'
+#plot "<(sed -n '400,600p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+#unset multiplot
+#
+#set terminal pdfcairo enhanced size 5,6
+#set output '../../INFORME/parte4/graficos/FIGURA1.pdf'
+#set multiplot layout 3,1 title 'Solución numérica para la ecuación de convección (Y vs t)'
+#set title 'Iteración 0 - 1000'
+#plot "<(sed -n '1,200p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+#set title 'Iteración 1000 - 2000'
+#plot "<(sed -n '200,400p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+#set title 'Iteración 2000 - 3000'
+#plot "<(sed -n '400,600p' ../datos/datos_P3_28.dat)" using 2:4 with lines notitle
+#unset multiplot
+#
+##----
+#
+#set terminal pdfcairo enhanced size 5,6
+#set output '../graficos/FIGURA2.pdf'
+#set multiplot layout 2,1 title 'Solución numérica para la ecuación de convección'
+#set title 'Proyección Y - X'
+#plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 4:5 with lines notitle
+#set title 'Proyección X - Y'
+#plot "<(sed -n '280,380p' ../datos/datos_P3_28.dat)" using 3:4 with lines notitle
+#unset multiplot
 
 set terminal pdfcairo enhanced size 5,6
 set output '../../INFORME/parte4/graficos/FIGURA2.pdf'
